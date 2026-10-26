@@ -1,7 +1,7 @@
 export default function Header() {
     return (
         <header>
-            Generic header
+            Stylish header
         </header>
     );
 }

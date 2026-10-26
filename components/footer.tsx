@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
         <footer>
-            Generic footer
+            Stylish footer
         </footer>
     );
 }
