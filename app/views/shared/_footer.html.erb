@@ -1,0 +1,32 @@
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <%= image_tag "wachh/logo.png", alt: "World Affairs Council Hilton Head" %>
+      <p>A nonpartisan, 501(c)(3) nonprofit connecting the Lowcountry to the world.</p>
+    </div>
+    <div>
+      <h2>Explore</h2>
+      <%= link_to "About us", about_path %>
+      <%= link_to "Programs", programs_path %>
+      <%= link_to "Calendar", calendar_path %>
+      <%= link_to "Get involved", get_involved_path %>
+    </div>
+    <div>
+      <h2>Visit & contact</h2>
+      <p>19 Bow Circle, Suite A1<br>Hilton Head Island, SC 29928</p>
+      <a href="tel:+18433846758">843-384-6758</a>
+      <a href="mailto:execdirector@wachh.org">execdirector@wachh.org</a>
+    </div>
+    <div>
+      <h2>Stay informed</h2>
+      <p>Get program announcements and global affairs news in your inbox.</p>
+      <a class="button button--light button--small" href="https://wachh.org/Email-Newsletter">Email newsletter</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© <%= Time.current.year %> World Affairs Council of Hilton Head</span>
+    <a href="https://wachh.org/Privacy-Notice">Privacy</a>
+    <a href="https://www.facebook.com/WorldAffairsCouncilHiltonHead">Facebook</a>
+    <a href="https://www.youtube.com/@worldaffairscouncilhiltonhead">YouTube</a>
+  </div>
+</footer>

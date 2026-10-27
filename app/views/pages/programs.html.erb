@@ -1,0 +1,36 @@
+<% content_for :title, "Programs | World Affairs Council of Hilton Head" %>
+
+<main id="main-content">
+  <section class="page-hero page-hero--image">
+    <%= image_tag "wachh/event.jpg", alt: "A featured speaker at a Council program" %>
+    <div class="page-hero__overlay"></div>
+    <div class="container page-hero__content">
+      <p class="eyebrow eyebrow--sky">Programs</p>
+      <h1>Go beyond the headlines.</h1>
+      <p>Hear global perspectives, ask better questions and exchange ideas with an engaged community.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container program-detail-list">
+      <article id="speakers" class="program-detail">
+        <span class="program-detail__index">01</span>
+        <div><p class="eyebrow">Flagship program</p><h2>Distinguished Speaker Series</h2><p>Leading experts address major international issues on the first and third Fridays from October through May. Programs are held at First Presbyterian Church and welcome members and guests.</p><%= link_to "See upcoming speakers", calendar_path, class: "text-link" %></div>
+      </article>
+      <article class="program-detail">
+        <span class="program-detail__index">02</span>
+        <div><p class="eyebrow">A view from abroad</p><h2>Global Speakers Program</h2><p>International voices bring perspectives that reach beyond a strictly American view of world events.</p></div>
+      </article>
+      <article id="discussions" class="program-detail">
+        <span class="program-detail__index">03</span>
+        <div><p class="eyebrow">Participate</p><h2>Great Decisions & discussion groups</h2><p>Small-group programs give members the opportunity to examine critical global issues, share their knowledge and learn from one another.</p></div>
+      </article>
+      <article id="book-club" class="program-detail">
+        <span class="program-detail__index">04</span>
+        <div><p class="eyebrow">Read together</p><h2>Book Club</h2><p>Members and non-members explore world affairs and domestic politics through timely books, stimulating discussion and new friendships.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="cta-band"><div class="container"><div><p class="eyebrow eyebrow--light">Find your next conversation</p><h2>There is always more to understand.</h2></div><%= link_to "Browse the calendar", calendar_path, class: "button button--light" %></div></section>
+</main>

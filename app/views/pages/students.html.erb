@@ -1,0 +1,33 @@
+<% content_for :title, "Student Programs | World Affairs Council of Hilton Head" %>
+
+<main id="main-content">
+  <section class="page-hero page-hero--image page-hero--students">
+    <%= image_tag "wachh/students.jpg", alt: "Academic WorldQuest student participants" %>
+    <div class="page-hero__overlay"></div>
+    <div class="container page-hero__content">
+      <p class="eyebrow eyebrow--sky">Student programs</p>
+      <h1>Tomorrow’s leaders start here.</h1>
+      <p>We help Lowcountry students build global knowledge, diplomatic skills and confidence.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-card-grid">
+      <article class="large-info-card">
+        <span>01</span><p class="eyebrow">Knowledge competition</p><h2>Academic WorldQuest</h2>
+        <p>High school teams test their knowledge of international affairs, geography, history and global policy in a spirited local competition tied to the national World Affairs Councils of America program.</p>
+      </article>
+      <article class="large-info-card large-info-card--blue">
+        <span>02</span><p class="eyebrow eyebrow--sky">Diplomacy in action</p><h2>Model United Nations</h2>
+        <p>Students represent countries, research global challenges, negotiate with peers and experience how diplomacy works through a hands-on UN simulation.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container intro-grid">
+      <div><p class="eyebrow">Support student learning</p><h2>Invest in a wider world view.</h2></div>
+      <div class="prose prose--large"><p>Volunteers, educators and donors make these experiences possible for students across Beaufort County.</p><%= link_to "Learn how to help", get_involved_path, class: "button" %></div>
+    </div>
+  </section>
+</main>

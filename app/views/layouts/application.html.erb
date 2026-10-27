@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "World Affairs Council of Hilton Head" %></title>
+    <meta name="description" content="The World Affairs Council of Hilton Head engages, educates and inspires our community about world affairs.">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :app %>
+    <%= javascript_include_tag "easter_egg", defer: true %>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <%= render "shared/header" %>
+    <%= yield %>
+    <%= render "shared/footer" %>
+    <%= render "shared/snake_game" %>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<div class="snake-game" data-snake-game hidden>
+  <button class="snake-game__backdrop" type="button" data-snake-close aria-label="Close Snake game"></button>
+
+  <section class="snake-console" role="dialog" aria-modal="true" aria-labelledby="snake-game-title" aria-describedby="snake-game-help">
+    <div class="snake-console__topbar">
+      <span>WAC · MOBILE</span>
+      <span aria-hidden="true">●●●</span>
+    </div>
+
+    <div class="snake-console__brand">
+      <span class="snake-console__globe" aria-hidden="true">◎</span>
+      <div>
+        <p>World Affairs Council</p>
+        <h2 id="snake-game-title">Global Snake</h2>
+      </div>
+      <span class="snake-console__year">1981</span>
+    </div>
+
+    <div class="snake-screen">
+      <div class="snake-screen__status">
+        <span>SCORE <strong data-snake-score>000</strong></span>
+        <span>BEST <strong data-snake-best>000</strong></span>
+      </div>
+      <div class="snake-screen__board">
+        <canvas width="320" height="320" data-snake-canvas aria-label="Snake game board"></canvas>
+        <div class="snake-screen__message" data-snake-message hidden>
+          <strong data-snake-message-title>Game over</strong>
+          <span data-snake-message-copy>Press restart to try again</span>
+        </div>
+      </div>
+      <p id="snake-game-help">Use arrow keys or WASD. Collect the globe. Avoid the walls and your own trail.</p>
+    </div>
+
+    <div class="snake-controls" aria-label="Game controls">
+      <button type="button" data-snake-direction="up" aria-label="Move up">▲</button>
+      <div>
+        <button type="button" data-snake-direction="left" aria-label="Move left">◀</button>
+        <button class="snake-controls__center" type="button" data-snake-pause aria-label="Pause game">●</button>
+        <button type="button" data-snake-direction="right" aria-label="Move right">▶</button>
+      </div>
+      <button type="button" data-snake-direction="down" aria-label="Move down">▼</button>
+    </div>
+
+    <div class="snake-console__actions">
+      <button type="button" class="snake-action" data-snake-restart>Restart</button>
+      <span>Engage · Educate · Inspire</span>
+      <button type="button" class="snake-action" data-snake-close>Close</button>
+    </div>
+  </section>
+</div>

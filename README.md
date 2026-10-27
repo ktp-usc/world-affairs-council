@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# World Affairs Council
 
-## Getting Started
+A lightweight, server-rendered Ruby on Rails website.
 
-First, run the development server:
+## Requirements
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Ruby 3.2 or newer (Ruby 4.0.9 is used by this repository)
+- SQLite 3
+
+## Setup
+
+On Apple Silicon, make sure Homebrew Ruby comes before macOS's system Ruby:
+
+```sh
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+ruby --version
+bundle --version
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To keep this setting for future terminal sessions, add the `export` line to
+`~/.zshrc`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Then prepare and start the application:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+bin/setup --skip-server
+bin/rails server
+```
 
-## Learn More
+`bin/setup` also detects the Homebrew installation automatically if the
+system Ruby is still first in `PATH`.
 
-To learn more about Next.js, take a look at the following resources:
+Then open <http://localhost:3000>.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Site structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `/` — mission, featured programs and upcoming events
+- `/about` — mission, commitments and history
+- `/programs` — speaker series, discussion groups and book club
+- `/student-programs` — Academic WorldQuest and Model UN
+- `/calendar` — upcoming public events
+- `/get-involved` — membership, giving and volunteering
+- `/news` — Council announcements and updates
 
-## Deploy on Vercel
+Membership, donation and member-login links continue to use the Council's
+existing Wild Apricot services until those workflows are migrated.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tests
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sh
+bin/rails test
+```
+
+The application intentionally uses Rails' minimal stack. It has no Node.js,
+React, JavaScript bundler, Action Cable, Active Storage, or background-job
+dependency. These can be added later if the site's requirements grow.

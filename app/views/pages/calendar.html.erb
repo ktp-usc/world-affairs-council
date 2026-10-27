@@ -1,0 +1,21 @@
+<% content_for :title, "Calendar | World Affairs Council of Hilton Head" %>
+
+<main id="main-content">
+  <section class="page-hero"><div class="container page-hero__grid"><div><p class="eyebrow eyebrow--sky">Calendar</p><h1>What’s happening next.</h1></div><p>Join us for expert speakers, thoughtful reading and conversations that connect Hilton Head to the world.</p></div></section>
+  <section class="section">
+    <div class="container calendar-list">
+      <% [
+        ["2026-10-30", "Oct", "30", "Distinguished Speaker Series", "Peter Ammon: A European Perspective on the War in Ukraine and the Future of NATO", "10:00 AM", "First Presbyterian Church, 540 William Hilton Pkwy"],
+        ["2026-11-12", "Nov", "12", "Book Club", "The Jackal: The Rise and Fall of Carlos, the World's First Super Terrorist", "4:30 PM", "Island Recreation Center, 20 Wilborn Road"],
+        ["2026-11-13", "Nov", "13", "Distinguished Speaker Series", "Joby Warrick: Twilight of the Jackal", "10:00 AM", "First Presbyterian Church, 540 William Hilton Pkwy"],
+        ["2026-12-04", "Dec", "04", "Distinguished Speaker Series", "John McKay: The Future of U.S.-Canada Relations", "10:00 AM", "First Presbyterian Church, 540 William Hilton Pkwy"]
+      ].each do |date, month, day, type, title, time, location| %>
+        <article class="calendar-event">
+          <time datetime="<%= date %>"><span><%= month %></span><strong><%= day %></strong></time>
+          <div><p class="eyebrow"><%= type %></p><h2><%= title %></h2><p><strong><%= time %></strong> · <%= location %></p></div>
+          <a href="https://wachh.org/Calendar" aria-label="View event details on the current WACHH calendar">Details ↗</a>
+        </article>
+      <% end %>
+    </div>
+  </section>
+</main>

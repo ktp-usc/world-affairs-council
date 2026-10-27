@@ -1,0 +1,130 @@
+<% content_for :title, "World Affairs Council of Hilton Head" %>
+
+<main id="main-content">
+  <section class="hero">
+    <%= image_tag "wachh/programs.jpg", class: "hero__image", alt: "A World Affairs Council speaker addresses a full community audience" %>
+    <div class="hero__shade"></div>
+    <div class="container hero__content">
+      <p class="eyebrow eyebrow--light">Understand the world. Engage your community.</p>
+      <h1>Global issues.<br>Local conversations.</h1>
+      <p class="hero__lead">We bring compelling speakers, thoughtful programs and curious people together in Hilton Head.</p>
+      <div class="button-row">
+        <%= link_to "Explore upcoming events", calendar_path, class: "button button--light" %>
+        <%= link_to "Become a member", get_involved_path, class: "button button--outline-light" %>
+      </div>
+    </div>
+    <div class="hero__note">Nonpartisan · Nonprofit · Open to all</div>
+  </section>
+
+  <section class="section intro-section">
+    <div class="container intro-grid">
+      <div>
+        <p class="eyebrow">Welcome to the Council</p>
+        <h2>Make sense of a complicated world.</h2>
+      </div>
+      <div class="prose prose--large">
+        <p>The World Affairs Council of Hilton Head engages, educates and inspires our community about world affairs. Our programs welcome members, the general public and students.</p>
+        <%= link_to "Discover who we are", about_path, class: "text-link" %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--navy" aria-labelledby="events-heading">
+    <div class="container">
+      <div class="section-heading section-heading--split">
+        <div>
+          <p class="eyebrow eyebrow--sky">On the calendar</p>
+          <h2 id="events-heading">Upcoming events</h2>
+        </div>
+        <%= link_to "View full calendar", calendar_path, class: "text-link text-link--light" %>
+      </div>
+
+      <div class="event-list">
+        <article class="event-card">
+          <time class="event-date" datetime="2026-10-30"><span>Oct</span><strong>30</strong></time>
+          <div class="event-card__body">
+            <p class="event-type">Distinguished Speaker Series</p>
+            <h3>Peter Ammon: A European Perspective on the War in Ukraine and the Future of NATO</h3>
+            <p>10:00 AM · First Presbyterian Church, Hilton Head Island</p>
+          </div>
+          <span class="event-arrow" aria-hidden="true">↗</span>
+        </article>
+        <article class="event-card">
+          <time class="event-date" datetime="2026-11-12"><span>Nov</span><strong>12</strong></time>
+          <div class="event-card__body">
+            <p class="event-type">Book Club</p>
+            <h3><em>The Jackal</em> by Joby Warrick</h3>
+            <p>4:30 PM · Island Recreation Center</p>
+          </div>
+          <span class="event-arrow" aria-hidden="true">↗</span>
+        </article>
+        <article class="event-card">
+          <time class="event-date" datetime="2026-11-13"><span>Nov</span><strong>13</strong></time>
+          <div class="event-card__body">
+            <p class="event-type">Distinguished Speaker Series</p>
+            <h3>Joby Warrick: Twilight of the Jackal</h3>
+            <p>10:00 AM · First Presbyterian Church, Hilton Head Island</p>
+          </div>
+          <span class="event-arrow" aria-hidden="true">↗</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="programs-heading">
+    <div class="container">
+      <div class="section-heading section-heading--split">
+        <div>
+          <p class="eyebrow">Learn. Discuss. Connect.</p>
+          <h2 id="programs-heading">Programs for global thinkers</h2>
+        </div>
+        <p>From major speakers to intimate discussion groups, every format offers a new way into the issues shaping our world.</p>
+      </div>
+      <div class="program-grid">
+        <%= link_to programs_path(anchor: "speakers"), class: "program-card program-card--feature" do %>
+          <%= image_tag "wachh/event.jpg", alt: "A speaker presenting at a World Affairs Council event" %>
+          <span class="program-card__overlay"></span>
+          <span class="program-card__content"><small>Flagship program</small><strong>Distinguished Speaker Series</strong><span>Explore the series →</span></span>
+        <% end %>
+        <%= link_to programs_path(anchor: "discussions"), class: "program-card" do %>
+          <%= image_tag "wachh/community.jpg", alt: "Council members taking part in a discussion" %>
+          <span class="program-card__overlay"></span>
+          <span class="program-card__content"><small>Exchange ideas</small><strong>Discussion Groups</strong><span>Learn more →</span></span>
+        <% end %>
+        <%= link_to programs_path(anchor: "book-club"), class: "program-card" do %>
+          <%= image_tag "wachh/discussion.jpg", alt: "Audience members discussing a global affairs topic" %>
+          <span class="program-card__overlay"></span>
+          <span class="program-card__content"><small>Read together</small><strong>Book Club</strong><span>Learn more →</span></span>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature-split">
+    <div class="feature-split__image">
+      <%= image_tag "wachh/students.jpg", alt: "Local students participating in Academic WorldQuest" %>
+    </div>
+    <div class="feature-split__content">
+      <p class="eyebrow eyebrow--sky">The next generation</p>
+      <h2>Building globally aware student leaders.</h2>
+      <p>Academic WorldQuest and Model UN challenge area students to explore international affairs, diplomacy and the power of informed civic participation.</p>
+      <%= link_to "Explore student programs", student_programs_path, class: "button button--light" %>
+    </div>
+  </section>
+
+  <section class="section join-section">
+    <div class="container join-grid">
+      <div>
+        <p class="eyebrow">Join the conversation</p>
+        <h2>Curiosity brings us together.</h2>
+      </div>
+      <div>
+        <p>Meet neighbors who care about the world, hear from leading experts and support global education across the Lowcountry.</p>
+        <div class="button-row">
+          <%= link_to "Become a member", get_involved_path, class: "button" %>
+          <%= link_to "Make a donation", "https://wachh.org/Donation-Form", class: "button button--outline" %>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

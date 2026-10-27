@@ -1,0 +1,37 @@
+<header class="site-header">
+  <div class="utility-bar">
+    <div class="container utility-bar__inner">
+      <span>Engaging, educating and inspiring our community</span>
+      <nav aria-label="Member links">
+        <a href="https://wachh.org/Sys/Login">Member login</a>
+        <a href="https://wachh.org/Donation-Form">Donate</a>
+      </nav>
+    </div>
+  </div>
+  <div class="container nav-shell">
+    <%= link_to root_path, class: "brand", aria: { label: "World Affairs Council of Hilton Head home" } do %>
+      <%= image_tag "wachh/logo.png", alt: "World Affairs Council Hilton Head" %>
+    <% end %>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <%= link_to "About", about_path, class: current_page?(about_path) ? "is-active" : nil %>
+      <%= link_to "Programs", programs_path, class: current_page?(programs_path) ? "is-active" : nil %>
+      <%= link_to "Student Programs", student_programs_path, class: current_page?(student_programs_path) ? "is-active" : nil %>
+      <%= link_to "Calendar", calendar_path, class: current_page?(calendar_path) ? "is-active" : nil %>
+      <%= link_to "News", news_path, class: current_page?(news_path) ? "is-active" : nil %>
+      <%= link_to "Get Involved", get_involved_path, class: "button button--small js-snake-trigger", data: { snake_trigger: true } %>
+    </nav>
+
+    <details class="mobile-nav">
+      <summary aria-label="Open navigation">Menu</summary>
+      <nav aria-label="Mobile navigation">
+        <%= link_to "About", about_path %>
+        <%= link_to "Programs", programs_path %>
+        <%= link_to "Student Programs", student_programs_path %>
+        <%= link_to "Calendar", calendar_path %>
+        <%= link_to "News", news_path %>
+        <%= link_to "Get Involved", get_involved_path, class: "js-snake-trigger", data: { snake_trigger: true } %>
+      </nav>
+    </details>
+  </div>
+</header>
