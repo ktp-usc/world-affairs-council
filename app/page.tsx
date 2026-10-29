@@ -10,11 +10,13 @@ import {
 import { FormEvent, useEffect, useState } from "react";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import image1 from "../components/ui/images/WACHH-Banner-Logo2022.png"
+
+import speaker_image from "../components/ui/images/speaker1.jpg"
+import great_decisions_image from "../components/ui/images/great_decisions.png"
 
 const aboutImages = [
-    { src: image1, alt: "Image 1" },
-    { src: image1, alt: "Image 1" },
+    { src: speaker_image, alt: "Speaker at Podium" },
+    { src: great_decisions_image, alt: "Great Decisions Program"},
 ];
 
 const programs = [
@@ -39,7 +41,7 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  useEffect(() => {
+  useEffect(() => { // on component mount, this will start an interval to change the active image every 5 seconds
     if (aboutImages.length < 2) return;
 
     const intervalId = window.setInterval(() => {
@@ -76,7 +78,7 @@ export default function Home() {
                 className="w-auto bg-[#b8893b] p-4 border-white border-[1px] active:border-black"
                 type="button"
               >
-                <a href="#calendar">See upcoming events</a>
+                <a className="font-bold" href="#calendar">See upcoming events</a>
               </button>
             </div>
           </div>
@@ -87,8 +89,8 @@ export default function Home() {
           id="about"
         >
           <div className="w-full md:w-2/5">
-            <h2 className="text-3xl text-[#1b2a41] font-bold">Check out our various programs!</h2>
-            <p>
+            <h2 className="text-5xl text-[#1b2a41] font-bold">Check out our various programs!</h2>
+            <p className="text-2xl mt-4 mb-8">
               The world is a complicated place and the World Affairs Council of 
               Hilton Head will help you make sense of what is happening. The
               Council engages, educates and inspires our community about world
@@ -96,18 +98,21 @@ export default function Home() {
               public, and students. We invite you to come to a speaker event and
               become a global thinker too!
             </p>
-            <div className="flex gap-4">
-              <a className="text-link" href="#programs">
-                Event Calendar <ArrowRight size={17} />
+            <div className="flex gap-8">
+              <a className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e]" href="#calendar">
+                Event Calendar <ArrowRight size={25} />
               </a>
-              <a className="text-link" href="#events">
-                Book Club <ArrowRight size={17} />
+              <a className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e]" href="#bookclub">
+                Book Club <ArrowRight size={25} />
+              </a>
+              <a className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e]" href="#member">
+                Membership <ArrowRight size={25} />
               </a>
             </div>
           </div>
           <div
             aria-label="Program photos"
-            className="relative aspect-video w-full flex-none overflow-hidden bg-black md:flex-1"
+            className="relative aspect-video w-full flex-none overflow-hidden bg-slate-200 md:flex-1"
             role="region"
           >
             {aboutImages.length > 0 && (
