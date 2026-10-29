@@ -2,13 +2,28 @@
 
 import { CalendarDays, ChevronDown, LogIn, Menu, RefreshCw, X } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image"
+import logo from "./ui/images/WACHH-Banner-Logo2022.png"
 
 const navItems = [
-    { label: "About", href: "#about" },
-    { label: "Events", href: "#events" },
+    {
+        label: "About Us",
+        menu: [
+            "Annual Report",
+            "Board of Directors",
+            "Administration",
+            "Program Committee",
+            "WACA"
+        ]
+    },
+    {
+        label: "Events",
+        menu: [
+
+        ]
+    },
     {
         label: "Programs",
-        href: "#programs",
         menu: [
             "Distinguished Speaker Series",
             "Global Speakers Program",
@@ -20,24 +35,19 @@ const navItems = [
             "Model UN",
         ],
     },
-    { label: "Membership", href: "#membership" },
-    { label: "Support Us", href: "#support" },
-    { label: "News", href: "#news" },
+    { label: "Get Involved",
+        menu: [
+            "Become a member",
+            "Be a guest",
+            "Volunteer",
+            "Opportunities to give",
+            "Donation form",
+            "Sponsor a speaker",
+        ]
+     },
+    { label: "Support Us", },
+    { label: "News",  },
 ];
-
-function Logo({ compact = false }: { compact?: boolean }) {
-    return (
-        <a className="brand" href="#" aria-label="WACHH home">
-            <span className="brand-mark" aria-hidden="true">
-                <span />
-            </span>
-            <span className="brand-copy">
-                <strong>WACHH</strong>
-                {!compact && <small>WORLD AFFAIRS COUNCIL<br />OF HILTON HEAD</small>}
-            </span>
-        </a>
-    );
-}
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -58,11 +68,11 @@ export default function Header() {
             </div>
             <div className="main-nav">
                 <div className="nav-inner">
-                    <Logo />
+                    <Image src={logo} alt="WACHH banned logo" className="w-80" />
                     <nav className={mobileOpen ? "nav-links mobile-open" : "nav-links"} aria-label="Main navigation">
                         {navItems.map((item) => (
                             <div className="nav-item" key={item.label}>
-                                <a href={item.href} onClick={() => item.menu && setProgramsOpen(!programsOpen)}>
+                                <a onClick={() => item.menu && setProgramsOpen(!programsOpen)}>
                                     {item.label}{item.menu && <ChevronDown size={13} />}
                                 </a>
                                 {item.menu && programsOpen && (
