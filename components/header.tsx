@@ -4,7 +4,7 @@ import { CalendarDays, ChevronDown, LogIn, Menu, RefreshCw, X } from "lucide-rea
 import { useState } from "react";
 
 const navItems = [
-    { label: "About", href: "#about" },
+    { label: "About", href: "/about" },
     { label: "Events", href: "#events" },
     {
         label: "Programs",

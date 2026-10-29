@@ -1,0 +1,170 @@
+/* About section styles.
+   Fonts, sizes, colors and spacing reuse what app/globals.css on main already uses:
+   64px hero title, 48px section headings, 31px statement, 25px card titles, 20px intro,
+   18px body, 16px small body, 15px nav, 13px tracked labels. */
+
+.root, .hero, .intro, .block, .stats, .centerBlock, .history, .members, .tabBar {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --placeholder: #e9e5dd;
+}
+
+/* ---------- Tabs (styled like main's nav links) ---------- */
+.tabBar { position: sticky; top: 0; z-index: 20; background: white; border-bottom: 1px solid var(--line); }
+.tabInner { display: flex; justify-content: center; gap: 40px; overflow-x: auto; scrollbar-width: none; width: min(1120px, calc(100% - 64px)); margin: 0 auto; }
+.tab { position: relative; flex-shrink: 0; display: flex; align-items: center; min-height: 56px; color: var(--navy); font-size: 15px; font-weight: 700; opacity: 0.7; transition: opacity 200ms ease; }
+.tab::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: var(--gold); transform: scaleX(0); transition: transform 240ms var(--ease-out); }
+.tab:hover, .tabActive { opacity: 1; }
+.tabActive::after { transform: scaleX(1); }
+.tab:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* ---------- Photo slots ---------- */
+.photo { position: relative; margin: 0; overflow: hidden; background: var(--placeholder); }
+.photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.photoEmpty { display: grid; place-items: center; color: #555; }
+.photoNote { display: flex; align-items: flex-start; gap: 12px; max-width: 300px; padding: 20px; font-size: 15px; line-height: 1.5; }
+.photoNote svg { flex-shrink: 0; margin-top: 2px; color: var(--teal); }
+.photoNote strong { display: block; color: var(--navy); }
+
+/* ---------- Hero (full-height photo, centered title, scroll button) ---------- */
+.hero { min-height: max(460px, calc(100svh - 240px)); justify-content: center; text-align: center; }
+.heroImg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero:has(.heroImg)::before { content: ""; position: absolute; inset: 0; z-index: 1; background: rgba(27, 42, 65, 0.35); }
+.heroContent { position: relative; z-index: 2; }
+.heroContent h1 { margin: 0 auto; }
+.heroNote { margin: 20px 0 0; font-size: 15px; color: #e6e9ed; }
+.scroller {
+    position: absolute; z-index: 2; left: 50%; bottom: 32px; transform: translateX(-50%);
+    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.5); color: white; transition: background-color 200ms ease;
+}
+.scroller:hover { background: rgba(255, 255, 255, 0.12); }
+
+/* ---------- Tagline (centered statement between two lines) ---------- */
+.intro { padding: 112px 0; border-bottom: 1px solid var(--line); text-align: center; }
+.tagline { max-width: 880px; margin: 0 auto; font: 31px/1.35 var(--serif); color: var(--navy); font-weight: 400; }
+
+/* ---------- Side-by-side blocks (half text, half photo, alternating) ---------- */
+.block { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); }
+.blockText { display: flex; justify-content: flex-end; padding: 112px 0; }
+.blockTextInner { width: 100%; max-width: 560px; padding: 0 64px 0 32px; }
+.blockReverse .blockText { order: 2; justify-content: flex-start; }
+.blockReverse .blockTextInner { padding: 0 32px 0 64px; }
+.blockPhoto { min-height: 100%; border-left: 1px solid var(--line); }
+.blockReverse .blockPhoto { border-left: 0; border-right: 1px solid var(--line); }
+.blockText p { margin: 0 0 18px; font-size: 18px; line-height: 1.7; }
+.blockLead { font: 25px/1.25 var(--serif) !important; color: var(--navy); }
+.blockTitle { margin: 0 0 20px; font: 48px/1.15 var(--serif); color: var(--navy); }
+
+/* ---------- Stats (four figures in a row) ---------- */
+.stats { padding: 92px 0; background: white; border-bottom: 1px solid var(--line); }
+.statGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin: 0 auto; text-align: center; }
+.stat { display: flex; flex-direction: column; gap: 10px; }
+.stat dd { margin: 0; font: 48px/1.15 var(--serif); color: var(--navy); }
+.stat dt { font-size: 13px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--teal); }
+
+/* ---------- Centered block (annual reports) ---------- */
+.centerBlock { padding: 112px 0; text-align: center; border-bottom: 1px solid var(--line); }
+.centerTitle { margin: 0 0 20px; font: 48px/1.15 var(--serif); color: var(--navy); text-align: center; }
+.titleGap { margin-bottom: 48px; }
+.centerText { max-width: 620px; margin: 0 auto 48px; font-size: 18px; line-height: 1.7; color: #666; }
+.reportGrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.report {
+    display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 32px 20px;
+    background: white; border: 1px solid var(--line); color: var(--navy);
+    transition: border-color 200ms ease, transform 160ms var(--ease-out);
+}
+.report svg { color: var(--teal); }
+.report:hover { border-color: var(--teal); }
+.report:active { transform: scale(0.98); }
+.report:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+.reportYear { font: 25px/1.25 var(--serif); }
+.reportLabel { font-size: 16px; color: #555; }
+
+/* ---------- History slider (years across the top, photo + caption, side arrows) ---------- */
+.history { padding: 112px 0; background: white; }
+.slider { margin-top: 12px; }
+.years { list-style: none; margin: 0 0 40px; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 8px; }
+.year {
+    position: relative; min-width: 56px; min-height: 44px; padding: 0 8px; border: 0; background: none; cursor: pointer;
+    font: 700 15px var(--sans); color: var(--navy); opacity: 0.55; transition: opacity 200ms ease;
+}
+.year::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 6px; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 240ms var(--ease-out); }
+.year:hover, .yearActive { opacity: 1; }
+.yearActive::after { transform: scaleX(1); }
+.year:focus-visible, .arrow:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.slideRow { display: grid; grid-template-columns: 64px minmax(0, 940px) 64px; justify-content: center; align-items: start; gap: 24px; }
+.slide { animation: slideIn 240ms var(--ease-out); }
+.slidePhoto { aspect-ratio: 940 / 425; }
+.slideCaption { max-width: 800px; margin: 28px auto 0; font-size: 20px; line-height: 1.55; color: var(--charcoal); text-align: center; }
+.arrow {
+    margin-top: calc((min(940px, 100vw - 240px) * 425 / 940) * 0.5 - 32px);
+    display: grid; place-items: center; width: 64px; height: 64px; border: 0; background: none; cursor: pointer;
+    color: var(--gold); transition: transform 160ms var(--ease-out), opacity 200ms ease;
+}
+.arrow:active:not(:disabled) { transform: scale(0.94); }
+.arrow:disabled { opacity: 0.25; cursor: default; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(16px); } }
+
+/* ---------- Team (centered title, category titles, card grid) ---------- */
+.members { padding: 112px 0; background: white; }
+.category { margin-top: 72px; }
+.categoryTitle { margin: 0 0 32px; font-size: 13px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--teal); text-align: center; }
+.memberGrid { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 32px 20px; --cols: 4; }
+.memberGrid > li { flex: 0 0 calc((100% - (var(--cols) - 1) * 20px) / var(--cols)); min-width: 0; }
+.member { display: flex; flex-direction: column; }
+.memberImage { display: grid; place-items: center; aspect-ratio: 1; background: var(--placeholder); transition: background-color 200ms ease; }
+.memberImage::before { content: attr(data-initials); font: 48px/1 var(--serif); color: var(--navy); }
+.member:hover .memberImage { background: #e0dbd0; }
+.memberName { margin-top: 16px; font: 25px/1.25 var(--serif); color: var(--navy); }
+.memberRole { margin-top: 4px; font-size: 16px; color: #555; }
+.contactLine { margin: 32px 0 0; font-size: 16px; color: #555; text-align: center; }
+.contactLine a { color: var(--teal); font-weight: 700; }
+
+/* ---------- Community (one key figure, then a gallery) ---------- */
+.bigStat { text-align: center; }
+.bigStatValue { margin: 0; font: 64px/1.08 var(--serif); color: var(--navy); letter-spacing: -1.5px; }
+.bigStatText { margin: 12px auto 0; max-width: 520px; font-size: 18px; line-height: 1.7; color: #666; }
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.galleryItem { aspect-ratio: 4 / 3; }
+
+/* ---------- Motion: each section fades up as it scrolls in ---------- */
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .intro > *, .blockTextInner, .statGrid, .centerBlock > *, .history > *, .category {
+            animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 40%;
+        }
+    }
+}
+@keyframes rise { from { opacity: 0.15; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+    .slide { animation: none; }
+    .tab::after, .year::after, .report, .arrow, .memberImage { transition: none; }
+}
+
+/* ---------- Responsive (same breakpoints as main: 900px and 600px) ---------- */
+@media (max-width: 900px) {
+    .block { grid-template-columns: 1fr; }
+    .blockText, .blockReverse .blockText { order: 2; justify-content: flex-start; padding: 64px 0 72px; }
+    .blockTextInner, .blockReverse .blockTextInner { max-width: none; padding: 0 32px; }
+    .blockPhoto, .blockReverse .blockPhoto { order: 1; min-height: 0; aspect-ratio: 4 / 3; border: 0; }
+    .statGrid { grid-template-columns: repeat(2, 1fr); row-gap: 48px; }
+    .reportGrid { grid-template-columns: repeat(2, 1fr); }
+    .memberGrid { --cols: 3; }
+    .slideRow { grid-template-columns: 1fr; }
+    .arrow { display: none; }
+    .gallery { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+    .tabInner { width: min(100% - 40px, 1120px); justify-content: flex-start; gap: 28px; }
+    .intro, .centerBlock, .history, .members { padding: 75px 0; }
+    .stats { padding: 64px 0; }
+    .tagline { font-size: 25px; }
+    .blockTextInner, .blockReverse .blockTextInner { padding: 0 20px; }
+    .stat dd { font-size: 31px; }
+    .memberGrid { --cols: 2; column-gap: 20px; row-gap: 24px; }
+    .memberName { font-size: 20px; }
+    .memberImage::before { font-size: 31px; }
+    .slideCaption { font-size: 18px; }
+    .bigStatValue { font-size: 46px; }
+    .gallery { grid-template-columns: 1fr; }
+}
