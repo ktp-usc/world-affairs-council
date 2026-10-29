@@ -25,10 +25,12 @@ export default function Home() {
                 <section className="hero" aria-labelledby="hero-title">
                     <div className="hero-rings" aria-hidden="true" />
                     <div className="content-width hero-content">
-                        <p className="eyebrow gold">WORLD AFFAIRS COUNCIL OF HILTON HEAD</p>
-                        <h1 id="hero-title">A distinguished, welcoming<br className="desktop-break" /> voice for world affairs.</h1>
+                        <h1 id="hero-title">Engaging, educating, and<br/> inspiring our community.</h1>
                         <p className="hero-intro">We bring leading voices and thoughtful neighbors together to better understand our interconnected world.</p>
-                        <div className="hero-values"><span>ENGAGING</span><i /><span>EDUCATING</span><i /><span>INSPIRING</span></div>
+                        <div className="hero-actions">
+                            <button className="w-30 bg-[#b8893b] p-4" type="button">Book Club</button>
+                            <button className="w-30 bg-[#b8893b] p-4" type="button">See events</button>
+                        </div>
                     </div>
                 </section>
 
