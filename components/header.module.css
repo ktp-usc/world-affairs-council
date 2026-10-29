@@ -1,0 +1,135 @@
+/* Site header: a 48px translucent bar with the logo, the site's sections, and Log in / Join / Donate.
+   Hovering a section fades in a dropdown listing that section's pages; the page behind it blurs.
+   Below 960px it becomes a full-screen menu. WACHH colours from app/globals.css. Text is DM Sans. */
+
+.nav {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --bar-h: 48px;
+    --bar-bg: rgba(255, 255, 255, 0.82);
+    --ink: var(--navy);
+    --muted: #5f6670;
+    position: sticky; top: 0; z-index: 60;
+    background: var(--bar-bg);
+    -webkit-backdrop-filter: saturate(1.8) blur(20px);
+    backdrop-filter: saturate(1.8) blur(20px);
+    border-bottom: 1px solid rgba(27, 42, 65, 0.08);
+}
+.navOpen { background: #fbfbf9; }
+
+.bar { height: var(--bar-h); }
+/* Three groups on one row: logo left, sections centred, actions right. */
+.list {
+    list-style: none; margin: 0 auto; padding: 0 22px; height: 100%;
+    max-width: 1200px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+}
+.list > li { height: 100%; display: flex; align-items: center; }
+.sections ul { list-style: none; margin: 0; padding: 0; height: 100%; display: flex; align-items: center; gap: 12px; }
+.sections ul > li { height: 100%; display: flex; align-items: center; }
+
+.logo { display: flex; align-items: center; gap: 8px; height: 100%; padding: 0 8px; color: var(--ink); }
+.logo span { font: 20px/1 var(--serif); letter-spacing: -0.3px; }
+.mark { fill: none; stroke: var(--teal); stroke-width: 1.6; }
+
+.sectionItem { position: relative; }
+.link {
+    display: flex; align-items: center; height: 100%; padding: 0 8px;
+    font-size: 15px; font-weight: 500; letter-spacing: -0.1px; color: var(--ink); opacity: 0.82;
+    transition: opacity 200ms ease;
+}
+.link:hover, .linkActive, .linkCurrent { opacity: 1; }
+.linkActive { box-shadow: inset 0 -2px 0 var(--teal); }
+.sectionItem .link { padding-right: 26px; }
+
+/* Keyboard-only menu button: invisible until focused. */
+.menuButton {
+    position: absolute; right: 0; top: 50%; translate: 0 -50%;
+    width: 18px; height: 18px; display: grid; place-items: center; padding: 0;
+    border: 0; background: none; color: var(--ink); cursor: pointer; opacity: 0;
+}
+.menuButton:focus-visible { opacity: 1; outline: 2px solid var(--teal); outline-offset: 1px; border-radius: 4px; }
+.menuButton svg { transition: transform 200ms var(--ease-out); }
+.menuButton[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+/* Actions: Log in as a quiet link, Join outlined, Donate highlighted. */
+.actions { justify-content: flex-end; gap: 10px; }
+.login { display: inline-flex; align-items: center; height: 34px; padding: 0 8px; white-space: nowrap; font-size: 15px; font-weight: 500; color: var(--ink); opacity: 0.82; transition: opacity 200ms ease; }
+.login:hover { opacity: 1; }
+.join, .donate {
+    display: inline-flex; align-items: center; height: 34px; padding: 0 16px; border-radius: 980px;
+    font-size: 14px; font-weight: 700; white-space: nowrap;
+    transition: background-color 200ms ease, color 200ms ease, transform 160ms var(--ease-out);
+}
+.join { color: var(--teal); box-shadow: inset 0 0 0 1.5px var(--teal); }
+.join:hover { background: var(--teal); color: white; }
+.donate { background: var(--gold); color: var(--navy); }
+.donate:hover { background: #c99a4a; }
+.join:active, .donate:active { transform: scale(0.96); }
+.link:focus-visible, .login:focus-visible, .join:focus-visible, .donate:focus-visible, .logo:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; border-radius: 6px; }
+
+/* ---------- Shared flyout: appears with a quick fade, no slide ---------- */
+.flyout {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: #fbfbf9;
+    box-shadow: 0 18px 30px -24px rgba(27, 42, 65, 0.35);
+    opacity: 0; visibility: hidden; transition: opacity 150ms ease, visibility 0s linear 150ms;
+}
+.flyoutOpen { opacity: 1; visibility: visible; transition: opacity 150ms ease, visibility 0s; }
+.flyoutInner { max-width: 1200px; margin: 0 auto; padding: 36px 30px 48px; display: grid; grid-template-columns: minmax(0, 1fr); }
+.groupLabel { margin: 0 0 12px; font-size: 13px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; color: var(--teal); }
+.links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-rows: repeat(3, auto); grid-auto-flow: column; grid-auto-columns: max-content; column-gap: 72px; row-gap: 2px; }
+.links a { display: inline-block; padding: 6px 0; font-size: 17px; font-weight: 600; line-height: 1.35; color: var(--ink); transition: color 150ms ease; }
+.links a:hover { color: var(--teal); }
+.links a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 4px; }
+
+/* ---------- Page behind the flyout blurs ---------- */
+.curtain {
+    position: fixed; inset: 0; z-index: 55; pointer-events: none;
+    background: rgba(232, 230, 224, 0.4);
+    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+    opacity: 0; visibility: hidden;
+    transition: opacity 260ms var(--ease-out), visibility 0s linear 260ms;
+}
+.curtainOn { opacity: 1; visibility: visible; transition: opacity 260ms var(--ease-out), visibility 0s; }
+
+/* ---------- Ribbon under the bar ---------- */
+.ribbon { background: #f3ead6; color: var(--navy); text-align: center; font-size: 14px; padding: 12px 20px; }
+.ribbon a { display: inline-flex; align-items: center; gap: 2px; color: var(--teal); font-weight: 700; }
+.ribbon a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Mobile: switches to the full-screen menu below 960px, where the full row stops fitting ---------- */
+.mobileOnly { display: none !important; }
+.burger { width: 44px; height: 44px; display: grid; place-items: center; border: 0; background: none; color: var(--ink); cursor: pointer; }
+.burger:focus-visible { outline: 2px solid var(--teal); border-radius: 6px; }
+.sheet {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ink: var(--navy); --muted: #5f6670;
+    position: fixed; top: 48px; left: 0; right: 0; bottom: 0; z-index: 59; background: #fbfbf9; overflow-y: auto;
+}
+.sheetPage { padding: 24px 32px 48px; }
+@media (prefers-reduced-motion: no-preference) {
+    .sheetPage { animation: sheetFade 150ms ease both; }
+}
+@keyframes sheetFade { from { opacity: 0; } }
+.sheetBig { list-style: none; margin: 0 0 28px; padding: 0; }
+.sheetBig button, .sheetBig a {
+    display: flex; width: 100%; align-items: center; justify-content: space-between; min-height: 52px;
+    border: 0; background: none; padding: 0; cursor: pointer; text-align: left;
+    font: 600 22px/1.25 var(--sans); color: var(--ink);
+}
+.sheetBig svg { color: var(--muted); }
+.sheetSmall { list-style: none; margin: 0; padding: 0; }
+.sheetSmall a { display: flex; align-items: center; min-height: 52px; font: 600 22px/1.25 var(--sans); color: var(--ink); }
+.back { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; margin: -12px 0 12px -6px; border: 0; background: none; cursor: pointer; font-size: 16px; color: var(--muted); }
+
+@media (max-width: 1100px) {
+    .sections ul { gap: 0; }
+    .sectionItem .link { padding-left: 6px; padding-right: 22px; }
+    .actions { gap: 6px; }
+    .join, .donate { padding: 0 12px; }
+}
+@media (max-width: 960px) {
+    .sections, .join { display: none !important; }
+    .mobileOnly { display: flex !important; }
+    .list { display: flex; gap: 4px; padding: 0 12px; }
+    .list > li:first-child { margin-right: auto; }
+    .flyout, .curtain { display: none; }
+}

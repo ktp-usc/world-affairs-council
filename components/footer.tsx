@@ -1,35 +1,60 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { memberActions, contact, navSections, type NavLink } from "@/components/site-nav";
+import styles from "./footer.module.css";
+
+// Site footer: Contact Us leads, a thin accent rule, every section as a column
+// of links under an uppercase heading, then the logo and legal line. Links come from components/site-nav.ts.
+
+function FooterLink({ link, className }: { link: NavLink; className?: string }) {
+    return link.external ? <a className={className} href={link.href}>{link.label}</a> : <Link className={className} href={link.href}>{link.label}</Link>;
+}
+
 export default function Footer() {
     return (
-        <footer className="site-footer">
-            <div className="footer-grid">
-                <div>
-                    <a className="footer-brand" href="#" aria-label="WACHH home">
-                        <span className="footer-mark" aria-hidden="true"><span /></span>
-                        <strong>WACHH</strong>
-                    </a>
-                    <p className="footer-tagline">Connecting our community<br />to the world.</p>
+        <footer className={styles.footer}>
+            <div className={styles.inner}>
+                <section className={styles.contact} aria-labelledby="footer-contact">
+                    <div>
+                        <h2 id="footer-contact" className={styles.contactTitle}>
+                            <a href={`mailto:${contact.email}`}>Contact us <ArrowRight size={36} strokeWidth={1.5} aria-hidden="true" /></a>
+                        </h2>
+                        <p className={styles.contactText}>Questions about membership, programs, or giving? The Council office is glad to help.</p>
+                    </div>
+                    <div className={styles.contactDetails}>
+                        <a href={`mailto:${contact.email}`}>{contact.email}</a>
+                        <a href={`tel:${contact.phone.replace(/-/g, "")}`}>{contact.phone}</a>
+                        <p>{contact.office}<br />Mail: {contact.mail}</p>
+                    </div>
+                </section>
+
+                <nav className={styles.columns} aria-label="Site map">
+                    {navSections.map((section) => (
+                        <div key={section.label}>
+                            <h3 className={styles.heading}><Link href={section.href}>{section.label}</Link></h3>
+                            <ul>
+                                {section.links.map((link) => <li key={link.label}><FooterLink link={link} /></li>)}
+                            </ul>
+                        </div>
+                    ))}
+                </nav>
+
+                <div className={styles.bottom}>
+                    <Link href="/" className={styles.brand} aria-label="WACHH home">
+                        <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+                            <circle cx="16" cy="16" r="14.5" />
+                            <circle cx="16" cy="16" r="9.5" />
+                            <circle cx="16" cy="16" r="5" />
+                        </svg>
+                        <span>WACHH</span>
+                    </Link>
+                    <ul className={styles.quick}>
+                        <li><FooterLink link={memberActions.login} /></li>
+                        <li><FooterLink link={memberActions.donate} /></li>
+                        <li><FooterLink link={memberActions.join} /></li>
+                    </ul>
+                    <p className={styles.legal}>© 2026 World Affairs Council of Hilton Head · A 501(c)(3) nonprofit</p>
                 </div>
-                <div>
-                    <h3>Quick Links</h3>
-                    <a href="#about">About WACHH</a>
-                    <a href="#membership">Membership</a>
-                    <a href="#events">Events</a>
-                </div>
-                <div>
-                    <h3>Explore</h3>
-                    <a href="#programs">Programs</a>
-                    <a href="#news">News &amp; Insights</a>
-                    <a href="#support">Support Us</a>
-                </div>
-                <div>
-                    <h3>Contact</h3>
-                    <p>World Affairs Council<br />of Hilton Head</p>
-                    <a href="mailto:hello@wachh.org">hello@wachh.org</a>
-                </div>
-            </div>
-            <div className="footer-bottom">
-                <span>© 2026 World Affairs Council of Hilton Head</span>
-                <span>Engaging · Educating · Inspiring</span>
             </div>
         </footer>
     );

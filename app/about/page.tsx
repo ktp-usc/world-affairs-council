@@ -20,7 +20,7 @@ export default function AboutPage() {
 
             <section id="introduction" className={styles.intro}>
                 <div className="content-width">
-                    <h2 className={styles.tagline}>{tagline}</h2>
+                    <p className={styles.tagline}>{tagline}</p>
                 </div>
             </section>
 
