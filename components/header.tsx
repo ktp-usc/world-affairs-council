@@ -1,6 +1,7 @@
 "use client";
 
 import { CalendarDays, ChevronDown, LogIn, Menu, RefreshCw, X } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 const navItems = [
@@ -8,16 +9,17 @@ const navItems = [
     { label: "Events", href: "#events" },
     {
         label: "Programs",
-        href: "#programs",
+        href: "/programs",
         menu: [
-            "Distinguished Speaker Series",
-            "Global Speakers Program",
-            "Great Decisions",
-            "Book Club",
-            "Past Book Club Selections",
-            "Student Programs",
-            "Academic WorldQuest",
-            "Model UN",
+            { label: "Programs Overview", href: "/programs" },
+            { label: "Distinguished Speaker Series", href: "/programs/distinguished-speaker-series" },
+            { label: "Global Speakers Program", href: "/programs/global-speakers-program" },
+            { label: "Great Decisions", href: "/programs/great-decisions" },
+            { label: "Book Club", href: "/programs/book-club" },
+            { label: "Past Book Club Selections", href: "/programs/past-book-club-selections" },
+            { label: "Student Programs", href: "/programs/student-programs" },
+            { label: "Academic WorldQuest", href: "/programs/academic-worldquest" },
+            { label: "Model UN", href: "/programs/model-un" },
         ],
     },
     { label: "Membership", href: "#membership" },
@@ -62,16 +64,17 @@ export default function Header() {
                     <nav className={mobileOpen ? "nav-links mobile-open" : "nav-links"} aria-label="Main navigation">
                         {navItems.map((item) => (
                             <div className="nav-item" key={item.label}>
-                                <a href={item.href} onClick={() => item.menu && setProgramsOpen(!programsOpen)}>
-                                    {item.label}{item.menu && <ChevronDown size={13} />}
-                                </a>
+                                {item.menu ? (
+                                    <button className="nav-parent" type="button" onClick={() => setProgramsOpen(!programsOpen)} aria-expanded={programsOpen}>
+                                        {item.label}<ChevronDown size={13} />
+                                    </button>
+                                ) : <a href={item.href}>{item.label}</a>}
                                 {item.menu && programsOpen && (
                                     <div className="program-menu">
-                                        {item.menu.map((entry, index) => (
-                                            <a href="#programs" key={entry}>
-                                                {entry}
-                                                {index === 0 && <span className="preview-tag">Preview</span>}
-                                            </a>
+                                        {item.menu.map((entry) => (
+                                            <Link href={entry.href} key={entry.label} onClick={() => { setProgramsOpen(false); setMobileOpen(false); }}>
+                                                {entry.label}
+                                            </Link>
                                         ))}
                                     </div>
                                 )}
