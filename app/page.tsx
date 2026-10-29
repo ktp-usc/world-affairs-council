@@ -1,9 +1,21 @@
 "use client";
 
-import { ArrowRight, CalendarDays, CheckCircle2 } from "lucide-react";
-import { FormEvent, useState } from "react";
+import Image from "next/image";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CalendarDays,
+  CheckCircle2,
+} from "lucide-react";
+import { FormEvent, useEffect, useState } from "react";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
+import image1 from "../components/ui/images/WACHH-Banner-Logo2022.png"
+
+const aboutImages = [
+    { src: image1, alt: "Image 1" },
+    { src: image1, alt: "Image 1" },
+];
 
 const programs = [
   {
@@ -25,6 +37,20 @@ const programs = [
 
 export default function Home() {
   const [submitted, setSubmitted] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  useEffect(() => {
+    if (aboutImages.length < 2) return;
+
+    const intervalId = window.setInterval(() => {
+      setActiveImageIndex((currentIndex) =>
+        (currentIndex + 1) % aboutImages.length,
+      );
+    }, 5000);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
+
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);
@@ -57,7 +83,7 @@ export default function Home() {
         </section>
 
         <section
-          className="flex flex-col gap-8 px-16 py-32 md:flex-row"
+          className="flex flex-col items-start gap-8 px-6 py-16 md:flex-row md:px-16 md:py-32"
           id="about"
         >
           <div className="w-full md:w-2/5">
@@ -79,7 +105,55 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <div className="min-h-[20rem] bg-black md:min-h-0 md:flex-1" />
+          <div
+            aria-label="Program photos"
+            className="relative aspect-video w-full flex-none overflow-hidden bg-black md:flex-1"
+            role="region"
+          >
+            {aboutImages.length > 0 && (
+              <>
+                <Image
+                  alt={aboutImages[activeImageIndex].alt}
+                  className="object-contain"
+                  fill
+                  sizes="(min-width: 768px) 60vw, 100vw"
+                  src={aboutImages[activeImageIndex].src}
+                  unoptimized
+                />
+                {aboutImages.length > 1 && (
+                  <>
+                    <button
+                      aria-label="Previous image"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-2 text-white"
+                      onClick={() =>
+                        setActiveImageIndex(
+                          (currentIndex) =>
+                            (currentIndex - 1 + aboutImages.length) %
+                            aboutImages.length,
+                        )
+                      }
+                      type="button"
+                    >
+                      <ArrowLeft size={20} />
+                    </button>
+                    <button
+                      aria-label="Next image"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-2 text-white"
+                      onClick={() =>
+                        setActiveImageIndex(
+                          (currentIndex) =>
+                            (currentIndex + 1) % aboutImages.length,
+                        )
+                      }
+                      type="button"
+                    >
+                      <ArrowRight size={20} />
+                    </button>
+                  </>
+                )}
+              </>
+            )}
+          </div>
         </section>
 
         <section className="program-section" id="programs">
