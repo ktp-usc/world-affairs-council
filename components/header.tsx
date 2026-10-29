@@ -55,6 +55,7 @@ export default function Header() {
 
     return (
         <header className="site-header">
+            {/*
             <div className="renew-banner">
                 It&apos;s time to renew your membership for 2026–2027. <a href="#membership">Renew now <span aria-hidden="true">→</span></a>
             </div>
@@ -66,6 +67,7 @@ export default function Header() {
                     <a className="donate-link" href="#support">Donate</a>
                 </div>
             </div>
+            */}
             <div className="main-nav">
                 <div className="nav-inner">
                     <Image src={logo} alt="WACHH banned logo" className="w-80" />
