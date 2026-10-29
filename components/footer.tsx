@@ -29,6 +29,7 @@ export default function Footer() {
                             <li key={ item.href }><Link href={ item.href } className="hover:text-white">{ item.label }</Link></li>
                         )) }
                         <li><Link href="/news" className="hover:text-white">News &amp; Updates</Link></li>
+                        <li><Link href="/news/resources" className="hover:text-white">Resources and Links</Link></li>
                     </ul>
                 </div>
 

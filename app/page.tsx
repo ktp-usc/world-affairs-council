@@ -59,7 +59,7 @@ export default function Home() {
                     </p>
                     <div className="mt-10 flex flex-wrap gap-3">
                         <Button asChild size="lg" className="bg-gold text-navy-deep hover:bg-gold/90">
-                            <Link href="/get-involved#membership">Become a Member</Link>
+                            <Link href="/get-involved/membership">Become a Member</Link>
                         </Button>
                         <Button asChild size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white">
                             <Link href="/calendar">See Upcoming Events</Link>
@@ -123,7 +123,7 @@ export default function Home() {
                         our programs for local students.
                     </p>
                     <div className="mt-8 flex flex-wrap gap-3">
-                        <Button asChild size="lg"><Link href="/get-involved#membership">Join Us</Link></Button>
+                        <Button asChild size="lg"><Link href="/get-involved/membership">Join Us</Link></Button>
                         <Button asChild size="lg" variant="outline"><Link href="/news#newsletter">Get the Newsletter</Link></Button>
                     </div>
                 </div>

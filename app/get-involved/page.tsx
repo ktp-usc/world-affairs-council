@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Gift, HandHeart, Mic, UserPlus, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHero, { Section } from "@/components/page-hero";
-import { contact } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Get Involved" };
 
@@ -12,16 +11,16 @@ const ways = [
         icon: UserPlus,
         title: "Become a Member",
         body: "Membership includes admission to the Distinguished Speaker Series, member-only events and our newsletter — and it sustains everything we do.",
-        cta: "Join now",
-        href: "https://wachh.org/join",
+        cta: "Join or renew",
+        href: "/get-involved/membership",
     },
     {
         id: "guests",
         icon: Users,
         title: "Be a Guest",
         body: "Curious before you commit? Non-members may attend speaker programs as guests, subject to our guest policy and seating availability.",
-        cta: "Ask about guest seats",
-        href: `mailto:${ contact.email }?subject=Guest%20attendance`,
+        cta: "See upcoming speakers",
+        href: "/get-involved/guests",
     },
     {
         id: "volunteer",
@@ -29,15 +28,15 @@ const ways = [
         title: "Volunteer",
         body: "Greet attendees, help with student competitions, host speakers or serve on a committee. Volunteers keep the Council running.",
         cta: "Volunteer with us",
-        href: `mailto:${ contact.email }?subject=Volunteering`,
+        href: "/get-involved/volunteer",
     },
     {
         id: "give",
         icon: Gift,
         title: "Ways to Give",
         body: "As a nonprofit, we rely on donations to bring top speakers to the island and to fund student programs. Gifts of any size make a difference.",
-        cta: "Donate",
-        href: "https://wachh.org/online-donation-form",
+        cta: "See ways to give",
+        href: "/get-involved/give",
     },
     {
         id: "sponsor",
@@ -45,7 +44,7 @@ const ways = [
         title: "Sponsor a Speaker",
         body: "Businesses and individuals can underwrite a program and be recognized before our audience and on our website.",
         cta: "Become a sponsor",
-        href: `mailto:${ contact.email }?subject=Speaker%20sponsorship`,
+        href: "/get-involved/sponsor",
     },
 ];
 

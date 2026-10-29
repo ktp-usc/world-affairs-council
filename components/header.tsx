@@ -53,7 +53,7 @@ export default function Header() {
                         <Link href="/get-involved#give">Donate</Link>
                     </Button>
                     <Button asChild size="sm">
-                        <Link href="/get-involved#membership">Become a Member</Link>
+                        <Link href="/get-involved/membership">Become a Member</Link>
                     </Button>
                 </div>
 
@@ -89,7 +89,7 @@ export default function Header() {
                     )) }
                     <div className="mt-4 grid grid-cols-2 gap-2">
                         <Button asChild variant="outline"><Link href="/get-involved#give" onClick={ () => setOpen(false) }>Donate</Link></Button>
-                        <Button asChild><Link href="/get-involved#membership" onClick={ () => setOpen(false) }>Join</Link></Button>
+                        <Button asChild><Link href="/get-involved/membership" onClick={ () => setOpen(false) }>Join</Link></Button>
                     </div>
                     <a href={ memberLogin } className="mt-4 block text-center text-sm text-muted-foreground">Member log in</a>
                 </nav>
