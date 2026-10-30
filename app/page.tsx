@@ -5,18 +5,23 @@ import { FormEvent, useState } from "react";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 
-const programs = [
-    { date: "NOV 14", title: "Distinguished Speaker Series", text: "Ideas, perspectives, and conversations that connect Hilton Head to the wider world." },
-    { date: "DEC 05", title: "Global Speakers Program", text: "Meet the thinkers shaping the future of international affairs." },
-    { date: "JAN 18", title: "Great Decisions 2027", text: "Join an informed community conversation on the issues that matter most." },
-];
+import { client } from "@/sanity/lib/client";
+import { EVENTS_QUERY } from "@/sanity/lib/queries";
 
-export default function Home() {
+type eventProps = {
+  date: string,
+  title: string,
+  text: string
+}
+
+export default async function Home() {
     const [submitted, setSubmitted] = useState(false);
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setSubmitted(true);
     };
+
+    const events = await client.fetch(EVENTS_QUERY);
 
     return (
         <div className="site-shell">
@@ -48,11 +53,11 @@ export default function Home() {
                             <div><h2>Ideas that shape<br />our world.</h2><p>Thoughtful programming for curious minds.</p></div>
                         </div>
                         <div className="program-grid">
-                            {programs.map((program) => (
-                                <article className="program-card" key={program.title}>
-                                    <div className="program-date">{program.date}</div>
-                                    <h3>{program.title}</h3>
-                                    <p>{program.text}</p>
+                            {events.map((event : eventProps) => (
+                                <article className="program-card" key={event.title}>
+                                    <div className="program-date">{event.date}</div>
+                                    <h3>{event.title}</h3>
+                                    <p>{event.text}</p>
                                     <a className="text-link" href="#events">Learn more <ArrowRight size={17} /></a>
                                 </article>
                             ))}
