@@ -13,7 +13,6 @@ type eventProps = {
 
 export default async function Home() {
     const events = await client.fetch(EVENTS_QUERY);
-    console.log(events)
     return (
         <div className="site-shell">
             <Header />
