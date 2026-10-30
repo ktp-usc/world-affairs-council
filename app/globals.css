@@ -15,8 +15,6 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--off-white); color: var(--charcoal); font-family: var(--sans); }
-a { color: inherit; text-decoration: none; }
-button, input { font: inherit; }
 .content-width { width: min(1120px, calc(100% - 64px)); margin: 0 auto; }
 
 .renew-banner { background: #ead7ac; color: var(--navy); font-size: 15px; font-weight: 700; text-align: center; padding: 14px 20px; }

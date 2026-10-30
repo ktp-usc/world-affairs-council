@@ -12,6 +12,7 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 
 import ImageGallery from "@/components/ImageGallery";
+import NewsFormBox from "@/components/NewsFormBox";
 
 const programs = [
   {
@@ -121,37 +122,20 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="newsletter" id="news">
-          <div className="content-width newsletter-inner">
-            <div>
-              <p className="eyebrow gold">STAY CONNECTED</p>
-              <h2>Global insight, delivered.</h2>
-              <p>
-                Receive program news and thoughtful resources in your inbox.
-              </p>
-            </div>
-            {submitted ? (
-              <div className="form-success">
-                <CheckCircle2 size={22} /> You&apos;re on the list. Thank you!
-              </div>
-            ) : (
-              <form onSubmit={submit}>
-                <label>
-                  <span>First name</span>
-                  <input required name="firstName" placeholder="First name" />
-                </label>
-                <label>
-                  <span>Email address</span>
-                  <input
-                    required
-                    type="email"
-                    name="email"
-                    placeholder="you@example.com"
-                  />
-                </label>
-                <button type="submit">Subscribe</button>
-              </form>
-            )}
+        <section id="news">
+          <div className="flex justify-center p-8 bg-[#2f6f7e] gap-12">
+            <p className="text-4xl text-[#b8893b] font-bold">
+              Sign up for our <br /> email newsletter!
+            </p>
+            <NewsFormBox placeholder="First Name" width="10rem" />
+            <NewsFormBox placeholder="Last Name" width="10rem" />
+            <NewsFormBox placeholder="Email Address" width="20rem" />
+            <button
+              className="w-auto bg-[#b8893b] p-4 border-white border-[1px] active:border-black hover:bg-[#ea8c2f] text-white"
+              type="button"
+            >
+              <p className="font-bold text-lg">Subscribe</p>
+            </button>
           </div>
         </section>
       </main>
