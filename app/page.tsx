@@ -56,7 +56,7 @@ export default function Home() {
             </p>
             <div className="hero-actions">
               <button
-                className="w-auto bg-[#b8893b] p-4 border-white border-[1px] active:border-black"
+                className="w-auto bg-[#b8893b] p-4 border-white border-[1px] active:border-black hover:bg-[#ea8c2f]"
                 type="button"
               >
                 <a className="font-bold" href="#calendar">See upcoming events</a>
@@ -66,13 +66,13 @@ export default function Home() {
         </section>
 
         <section
-          className="flex flex-col items-start gap-8 px-6 py-16 md:flex-row md:px-16 md:py-32"
+          className="flex flex-col items-start gap-8 px-6 py-8 lg:flex-row lg:px-16 lg:py-16"
           id="about"
         >
-          <div className="w-full md:w-2/5">
+          <div className="w-full lg:w-2/5">
             <h2 className="text-5xl text-[#1b2a41] font-bold">Check out our various programs!</h2>
             <p className="text-2xl mt-4 mb-8">
-              The world is a complicated place and the World Affairs Council of 
+              The world is a complicated place and the World Affairs Council of
               Hilton Head will help you make sense of what is happening. The
               Council engages, educates and inspires our community about world
               affairs. Our programs are for everyone — members, the general
@@ -80,31 +80,27 @@ export default function Home() {
               become a global thinker too!
             </p>
             <div className="flex gap-8">
-              <a className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e]" href="#calendar">
+              <a className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e] transition-all duration-200 hover:text-[#b8893b]" href="#calendar">
                 Event Calendar <ArrowRight size={25} />
               </a>
-              <a className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e]" href="#bookclub">
+              <a className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e] transition-all duration-200 hover:text-[#b8893b]" href="#bookclub">
                 Book Club <ArrowRight size={25} />
               </a>
-              <a className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e]" href="#member">
+              <a className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e] transition-all duration-200 hover:text-[#b8893b]" href="#member">
                 Membership <ArrowRight size={25} />
               </a>
             </div>
           </div>
           <ImageGallery />
-                 </section>
+        </section>
 
         <section className="program-section" id="programs">
           <div className="content-width">
-            <div className="section-heading">
-              <div className="section-label">02 / PROGRAMS</div>
+            <div className="text-center">
               <div>
-                <h2>
-                  Ideas that shape
-                  <br />
-                  our world.
+                <h2 className="font-bold text-4xl text-[#1b2a41] mb-8">
+                  Upcoming events:
                 </h2>
-                <p>Thoughtful programming for curious minds.</p>
               </div>
             </div>
             <div className="program-grid">

@@ -7,7 +7,7 @@ import great_decisions_image from "../components/ui/images/great_decisions.png"
 
 const aboutImages = [
     { src: speaker_image, alt: "Speaker at Podium" },
-    { src: great_decisions_image, alt: "Great Decisions Program"},
+    { src: great_decisions_image, alt: "Great Decisions Program" },
 ];
 export default function ImageGallery() {
     const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -26,7 +26,7 @@ export default function ImageGallery() {
     return (
         <div
             aria-label="Program photos"
-            className="relative aspect-video w-full flex-none overflow-hidden bg-slate-200 md:flex-1"
+            className="relative aspect-video w-full flex-none overflow-hidden bg-slate-200 md:flex-1 self-center"
             role="region"
         >
             {aboutImages.length > 0 && (
