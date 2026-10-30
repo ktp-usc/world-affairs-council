@@ -1,7 +1,4 @@
-"use client";
-
 import { ArrowRight, CalendarDays, CheckCircle2 } from "lucide-react";
-import { FormEvent, useState } from "react";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 
@@ -15,14 +12,8 @@ type eventProps = {
 }
 
 export default async function Home() {
-    const [submitted, setSubmitted] = useState(false);
-    const submit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setSubmitted(true);
-    };
-
     const events = await client.fetch(EVENTS_QUERY);
-
+    console.log(events)
     return (
         <div className="site-shell">
             <Header />
@@ -73,15 +64,6 @@ export default async function Home() {
                             <h2>Global insight, delivered.</h2>
                             <p>Receive program news and thoughtful resources in your inbox.</p>
                         </div>
-                        {submitted ? (
-                            <div className="form-success"><CheckCircle2 size={22} /> You&apos;re on the list. Thank you!</div>
-                        ) : (
-                            <form onSubmit={submit}>
-                                <label><span>First name</span><input required name="firstName" placeholder="First name" /></label>
-                                <label><span>Email address</span><input required type="email" name="email" placeholder="you@example.com" /></label>
-                                <button type="submit">Subscribe</button>
-                            </form>
-                        )}
                     </div>
                 </section>
             </main>
