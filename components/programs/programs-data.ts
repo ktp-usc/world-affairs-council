@@ -1,3 +1,5 @@
+import { expandedProgramPages } from "./expanded-programs-data";
+
 export type ProgramFact = {
     label: string;
     value: string;
@@ -15,7 +17,16 @@ export type ProgramEvent = {
     date: string;
     name: string;
     detail: string;
+    note?: string;
 };
+
+export type ProgramTopic = { title: string; description: string };
+export type ProgramCard = { title: string; text: string; href?: string; kicker?: string; image?: string };
+export type ProgramSpeaker = { date: string; name: string; role: string; topic: string; image?: string };
+export type ProgramSpeakerSeason = { season: string; speakers: ProgramSpeaker[] };
+export type ProgramBook = { date: string; title: string; author: string; description: string; image: string };
+export type ProgramGroup = { name: string; time: string; location: string; dates: string };
+export type ProgramGalleryImage = { src: string; alt: string };
 
 export type ProgramPageData = {
     slug: string;
@@ -29,9 +40,19 @@ export type ProgramPageData = {
     facts: ProgramFact[];
     sections: ProgramSection[];
     events?: ProgramEvent[];
-    topics?: string[];
-    cards?: { title: string; text: string; href?: string; kicker?: string }[];
+    topics?: Array<string | ProgramTopic>;
+    cards?: ProgramCard[];
     books?: { date: string; title: string; author: string }[];
+    speakerArchive?: ProgramSpeakerSeason[];
+    featuredBooks?: ProgramBook[];
+    discussionGroups?: ProgramGroup[];
+    quote?: { text: string; attribution: string };
+    sponsors?: { level: string; names: string[] }[];
+    gallery?: ProgramGalleryImage[];
+    galleryTitle?: string;
+    logoImage?: string;
+    video?: { embedUrl: string; title: string; caption: string };
+    testimonial?: { text: string; attribution: string; image?: string };
     callout: { eyebrow: string; title: string; text: string };
 };
 
@@ -40,7 +61,7 @@ export const programCards = [
         title: "Distinguished Speaker Series",
         text: "Leading voices from diplomacy, journalism, academia, business, and public service.",
         href: "/programs/distinguished-speaker-series",
-        image: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&w=1200&q=82",
+        image: "/programs/main/programs-speaker-crowd.png",
     },
     {
         title: "Global Speakers Program",
@@ -64,7 +85,7 @@ export const programCards = [
         title: "Student Programs",
         text: "Academic WorldQuest and Model UN prepare Beaufort County students to become informed global citizens.",
         href: "/programs/student-programs",
-        image: "https://images.unsplash.com/photo-1709054172839-17880c040f22?auto=format&fit=crop&w=1200&q=82",
+        image: "/programs/student-programs/students-banner.jpg",
     },
 ];
 
@@ -113,9 +134,9 @@ export const programPages: Record<string, ProgramPageData> = {
         slug: "global-speakers-program",
         title: "Global Speakers Program",
         eyebrow: "WACHH programs",
-        deck: "Hear what the world is thinking and feeling—firsthand.",
+        deck: "Hear firsthand what the world is thinking and feeling.",
         overviewTitle: "A truly global point of view",
-        overview: "Twice each year, the Robert & Lynn Burt Global Speakers Program brings an international voice to the Distinguished Speaker Series—one in the fall and one in the spring.",
+        overview: "Twice each year, the Robert & Lynn Burt Global Speakers Program brings an international voice to the Distinguished Speaker Series, with one speaker in the fall and another in the spring.",
         heroImage: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1800&q=85",
         heroAlt: "An international conference audience",
         facts: [
@@ -225,7 +246,7 @@ export const programPages: Record<string, ProgramPageData> = {
         eyebrow: "Book Club archive",
         deck: "A growing library of ideas that informed our conversations.",
         overviewTitle: "Explore the reading list",
-        overview: "The archive reflects the breadth of WACHH Book Club conversations—from global power and political economy to diplomacy, technology, conflict, and democratic life.",
+        overview: "The archive reflects the breadth of WACHH Book Club conversations, including global power, political economy, diplomacy, technology, conflict, and democratic life.",
         heroImage: "https://images.unsplash.com/photo-1604297992396-5df2499ba816?auto=format&fit=crop&w=1800&q=85",
         heroAlt: "A collection of books on shelves",
         facts: [
@@ -363,6 +384,7 @@ export const programPages: Record<string, ProgramPageData> = {
     },
 };
 
+Object.assign(programPages, expandedProgramPages);
 export const programNavigation = [
     { label: "Programs Overview", href: "/programs" },
     { label: "Distinguished Speaker Series", href: "/programs/distinguished-speaker-series" },
