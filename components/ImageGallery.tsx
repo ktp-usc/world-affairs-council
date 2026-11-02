@@ -2,12 +2,19 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-import speaker_image from "../components/ui/images/speaker1.jpg"
-import great_decisions_image from "../components/ui/images/great_decisions.png"
+import speaker_image from "./ui/images/speaker1.jpg";
+import great_decisions_image from "./ui/images/great_decisions.png";
+import speaker_image2 from "./ui/images/speaker2.jpg";
+import workshop_image from "./ui/images/workshop.jpg";
+import bookclub_image from "./ui/images/bk_wac_mem.jpg";
+
 
 const aboutImages = [
     { src: speaker_image, alt: "Speaker at Podium" },
     { src: great_decisions_image, alt: "Great Decisions Program" },
+    { src: speaker_image2, alt: "Speaker" },
+    { src: workshop_image, alt: "Youth workshop" },
+    { src: bookclub_image, alt: "Book Club" },
 ];
 export default function ImageGallery() {
     const [activeImageIndex, setActiveImageIndex] = useState(0);

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
@@ -13,6 +12,7 @@ import Header from "@/components/header";
 
 import ImageGallery from "@/components/ImageGallery";
 import NewsFormBox from "@/components/NewsFormBox";
+import council_image from "../components/ui/images/council.jpg";
 
 const programs = [
   {
@@ -45,7 +45,8 @@ export default function Home() {
       <Header />
       <main>
         <section className="hero" aria-labelledby="hero-title">
-          <div className="hero-rings" aria-hidden="true" />
+          <img src={council_image.src} alt="Council image" className="absolute w-full h-auto" />
+          <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-black/30 to-black/70 pointer-events-none" />
           <div className="content-width hero-content">
             <h1 id="hero-title">
               Engaging, educating, and
@@ -73,10 +74,7 @@ export default function Home() {
           <div className="w-full lg:w-2/5">
             <h2 className="text-5xl text-[#1b2a41] font-bold">Check out our various programs!</h2>
             <p className="text-2xl mt-4 mb-8">
-              The world is a complicated place and the World Affairs Council of
-              Hilton Head will help you make sense of what is happening. The
-              Council engages, educates and inspires our community about world
-              affairs. Our programs are for everyone — members, the general
+              Our programs are for everyone — members, the general
               public, and students. We invite you to come to a speaker event and
               become a global thinker too!
             </p>
@@ -124,14 +122,14 @@ export default function Home() {
 
         <section id="news">
           <div className="flex justify-center p-8 bg-[#2f6f7e] gap-12">
-            <p className="text-4xl text-[#b8893b] font-bold">
+            <p className="text-4xl text-white font-bold">
               Sign up for our <br /> email newsletter!
             </p>
             <NewsFormBox placeholder="First Name" width="10rem" />
             <NewsFormBox placeholder="Last Name" width="10rem" />
             <NewsFormBox placeholder="Email Address" width="20rem" />
             <button
-              className="w-auto bg-[#b8893b] p-4 border-white border-[1px] active:border-black hover:bg-[#ea8c2f] text-white"
+              className="w-auto bg-[#1b2a41] p-4 border-white border-[1px] active:border-black hover:bg-[#ea8c2f] text-white"
               type="button"
             >
               <p className="font-bold text-lg">Subscribe</p>
