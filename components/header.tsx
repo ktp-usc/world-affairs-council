@@ -6,22 +6,8 @@ import Image from "next/image"
 import logo from "./ui/images/WACHH-Banner-Logo2022.png"
 
 const navItems = [
-    {
-        label: "About Us",
-        menu: [
-            "Annual Report",
-            "Board of Directors",
-            "Administration",
-            "Program Committee",
-            "WACA"
-        ]
-    },
-    {
-        label: "Events",
-        menu: [
-
-        ]
-    },
+    { label: "About", href: "/about" },
+    { label: "Events", href: "#events" },
     {
         label: "Programs",
         menu: [
