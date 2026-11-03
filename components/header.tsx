@@ -1,12 +1,23 @@
 "use client";
 
-import { CalendarDays, ChevronDown, LogIn, Menu, RefreshCw, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import Image from "next/image"
-import logo from "./ui/images/WACHH-Banner-Logo2022.png"
+import Image from "next/image";
+import logo from "./ui/images/WACHH-Banner-Logo2022.png";
 
-const navItems = [
+type MenuItem = {
+    label: string;
+    href: string;
+};
+
+type NavItem = {
+    label: string;
+    href?: string;
+    menu?: MenuItem[];
+};
+
+const navItems: NavItem[] = [
     { label: "About", href: "/about" },
     { label: "Events", href: "#events" },
     {
@@ -26,21 +37,21 @@ const navItems = [
     },
     { label: "Get Involved",
         menu: [
-            "Become a member",
-            "Be a guest",
-            "Volunteer",
-            "Opportunities to give",
-            "Donation form",
-            "Sponsor a speaker",
+            { label: "Become a member", href: "#membership" },
+            { label: "Be a guest", href: "#guest" },
+            { label: "Volunteer", href: "#volunteer" },
+            { label: "Opportunities to give", href: "#support" },
+            { label: "Donation form", href: "#donate" },
+            { label: "Sponsor a speaker", href: "#sponsor" },
         ]
      },
-    { label: "Support Us", },
-    { label: "News",  },
+    { label: "Support Us", href: "#support" },
+    { label: "News", href: "#news" },
 ];
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [programsOpen, setProgramsOpen] = useState(false);
+    const [openMenu, setOpenMenu] = useState<string | null>(null);
 
     return (
         <header className="site-header">
@@ -59,19 +70,21 @@ export default function Header() {
             */}
             <div className="main-nav">
                 <div className="nav-inner">
-                    <Image src={logo} alt="WACHH banned logo" className="w-80" />
+                    <Link href="/" aria-label="World Affairs Council of Hilton Head home">
+                        <Image src={logo} alt="WACHH banner logo" className="w-80" />
+                    </Link>
                     <nav className={mobileOpen ? "nav-links mobile-open" : "nav-links"} aria-label="Main navigation">
                         {navItems.map((item) => (
                             <div className="nav-item" key={item.label}>
                                 {item.menu ? (
-                                    <button className="nav-parent" type="button" onClick={() => setProgramsOpen(!programsOpen)} aria-expanded={programsOpen}>
+                                    <button className="nav-parent" type="button" onClick={() => setOpenMenu(openMenu === item.label ? null : item.label)} aria-expanded={openMenu === item.label}>
                                         {item.label}<ChevronDown size={13} />
                                     </button>
                                 ) : <a href={item.href}>{item.label}</a>}
-                                {item.menu && programsOpen && (
+                                {item.menu && openMenu === item.label && (
                                     <div className="program-menu">
                                         {item.menu.map((entry) => (
-                                            <Link href={entry.href} key={entry.label} onClick={() => { setProgramsOpen(false); setMobileOpen(false); }}>
+                                            <Link href={entry.href} key={entry.label} onClick={() => { setOpenMenu(null); setMobileOpen(false); }}>
                                                 {entry.label}
                                             </Link>
                                         ))}
