@@ -2,12 +2,11 @@ import React from "react";
 
 export default function PageHero({ eyebrow, title, children }: { eyebrow: string; title: string; children?: React.ReactNode }) {
     return (
-        <section className="relative overflow-hidden bg-primary text-primary-foreground">
-            <div aria-hidden className="absolute inset-0 bg-[radial-gradient(800px_400px_at_85%_0%,oklch(0.78_0.12_80/0.18),transparent_70%)]" />
-            <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-20">
-                <p className="mb-3 text-sm font-semibold tracking-[0.2em] text-gold uppercase">{ eyebrow }</p>
-                <h1 className="max-w-3xl font-serif text-4xl font-semibold md:text-5xl">{ title }</h1>
-                { children && <div className="mt-5 max-w-2xl text-lg text-white/80">{ children }</div> }
+        <section className="bg-[var(--navy)] text-white">
+            <div className="mx-auto w-[min(1040px,calc(100%-48px))] py-12 md:py-16">
+                <p className="mb-3 text-sm font-bold tracking-[.12em] text-[var(--header-gold)] uppercase">{eyebrow}</p>
+                <h1 className="max-w-[820px] font-[family-name:var(--serif)] text-[42px] leading-[1.1] font-medium text-white md:text-[58px]">{title}</h1>
+                {children && <div className="mt-5 max-w-[740px] text-lg leading-relaxed text-slate-200">{children}</div>}
             </div>
         </section>
     );
@@ -15,10 +14,10 @@ export default function PageHero({ eyebrow, title, children }: { eyebrow: string
 
 export function Section({ id, title, children, muted = false }: { id?: string; title?: string; children: React.ReactNode; muted?: boolean }) {
     return (
-        <section id={ id } className={ muted ? "bg-muted" : undefined }>
-            <div className="mx-auto max-w-6xl px-6 py-16">
-                { title && <h2 className="mb-6 font-serif text-3xl font-semibold text-primary">{ title }</h2> }
-                { children }
+        <section id={id} className={muted ? "border-y border-[#d9d7d1] bg-[var(--off-white)]" : "bg-white"}>
+            <div className="mx-auto w-[min(1040px,calc(100%-48px))] py-12 md:py-16">
+                {title && <h2 className="mb-6 font-[family-name:var(--serif)] text-[30px] font-medium text-[var(--navy)] md:text-[35px]">{title}</h2>}
+                {children}
             </div>
         </section>
     );

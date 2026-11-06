@@ -32,12 +32,12 @@ export default function SponsorForm() {
     }
 
     return (
-        <form onSubmit={ onSubmit } className="rounded-xl border bg-card p-7 shadow-sm">
+        <form onSubmit={ onSubmit } className="border border-[#d9d7d1] bg-card p-7">
             <fieldset>
                 <legend className={ label }>Sponsorship level</legend>
                 <div className="grid gap-3 sm:grid-cols-3">
                     { sponsorship.levels.map((l) => (
-                        <label key={ l.id } className="cursor-pointer rounded-lg border p-4 hover:bg-muted has-[:checked]:border-primary has-[:checked]:bg-secondary has-[:checked]:ring-1 has-[:checked]:ring-primary">
+                        <label key={ l.id } className="cursor-pointer border p-4 hover:bg-muted has-[:checked]:border-primary has-[:checked]:bg-secondary">
                             <input type="radio" name="level" value={ l.id } checked={ level === l.id } onChange={ () => setLevel(l.id) } className="sr-only" />
                             <span className="block font-serif text-2xl font-semibold text-primary">${ l.amount.toLocaleString() }</span>
                             <span className="text-sm font-medium">{ l.name.replace(" Sponsorship", "") }</span>

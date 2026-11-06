@@ -50,7 +50,7 @@ export default function ImageGallery() {
                         <>
                             <button
                                 aria-label="Previous image"
-                                className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-2 text-white"
+                                className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 p-2 text-white"
                                 onClick={() =>
                                     setActiveImageIndex(
                                         (currentIndex) =>
@@ -64,7 +64,7 @@ export default function ImageGallery() {
                             </button>
                             <button
                                 aria-label="Next image"
-                                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-2 text-white"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 p-2 text-white"
                                 onClick={() =>
                                     setActiveImageIndex(
                                         (currentIndex) =>

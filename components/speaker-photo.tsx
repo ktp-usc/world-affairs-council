@@ -6,7 +6,7 @@ import type { Event } from "@/lib/site";
 export default function SpeakerPhoto({ event, className }: { event: Event; className?: string }) {
     const name = event.speaker ?? event.title;
     return (
-        <div className={ cn("relative aspect-[5/6] overflow-hidden rounded-lg bg-primary", className) }>
+        <div className={ cn("relative aspect-[5/6] overflow-hidden bg-primary", className) }>
             { event.photo ? (
                 <Image src={ event.photo } alt={ name } fill sizes="(min-width: 768px) 260px, 100vw" className="object-cover object-top" />
             ) : (

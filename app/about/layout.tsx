@@ -4,7 +4,7 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
     return (
         <div className="site-shell">
             <AboutTabs />
-            <main>{children}</main>
+            <main className="bg-white">{children}</main>
         </div>
     );
 }
