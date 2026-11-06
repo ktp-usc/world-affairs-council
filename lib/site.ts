@@ -5,7 +5,9 @@ export const contact = {
     email: "execdirector@wachh.org",
 };
 
-export const memberLogin = "https://wachh.org/Sys/Login";
+export const wildApricotBaseUrl = "https://wachh.wildapricot.org";
+
+export const memberLogin = `${wildApricotBaseUrl}/Sys/Login`;
 
 export type NavItem = { label: string; href: string; children?: { label: string; href: string }[] };
 
@@ -232,9 +234,16 @@ export function formatPostDate(post: Post) {
 
 export const membership = {
     renewalYear: "2026-2027",
-    joinOnline: "https://wachh.org/join",
+
+    // Opens the signup page in our new website.
+    joinOnline: "/join",
+
+    // These stay on Wild Apricot when wachh.org moves to our new website.
+    hostedJoin: `${wildApricotBaseUrl}/join`,
+    widgetJoin: `${wildApricotBaseUrl}/widget/join`,
     renew: memberLogin,
-    printForm: "/membership-form.pdf", // drop the PDF into public/
+
+    printForm: "/membership-form.pdf",
 };
 
 export const memberBenefits: { benefit: string; nonMember: boolean }[] = [

@@ -7,7 +7,11 @@ export default function PageHero({ eyebrow, title, children }: { eyebrow: string
             <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-20">
                 <p className="mb-3 text-sm font-semibold tracking-[0.2em] text-gold uppercase">{ eyebrow }</p>
                 <h1 className="max-w-3xl font-serif text-4xl font-semibold md:text-5xl">{ title }</h1>
-                { children && <div className="mt-5 max-w-2xl text-lg text-white/80">{ children }</div> }
+                {children && (
+                    <div className="mt-5 max-w-2xl text-lg text-primary-foreground">
+                        {children}
+                    </div>
+                )}
             </div>
         </section>
     );
