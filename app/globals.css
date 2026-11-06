@@ -12,6 +12,28 @@
   --sans: "DM Sans", Arial, sans-serif;
 }
 
+@theme inline {
+  --color-background: var(--off-white);
+  --color-foreground: var(--charcoal);
+  --color-primary: var(--navy);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #ead7ac;
+  --color-secondary-foreground: var(--navy);
+  --color-card: #ffffff;
+  --color-card-foreground: var(--charcoal);
+  --color-muted: #eeebe5;
+  --color-muted-foreground: #4b5563;
+  --color-accent: #e8edf2;
+  --color-accent-foreground: var(--navy);
+  --color-border: var(--line);
+  --color-input: var(--line);
+  --color-ring: var(--teal);
+  --color-gold: #e7c37e;
+  --color-destructive: #b91c1c;
+  --font-serif: var(--serif);
+  --font-sans: var(--sans);
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--off-white); color: var(--charcoal); font-family: var(--sans); }
