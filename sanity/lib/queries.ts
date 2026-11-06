@@ -7,3 +7,7 @@ export const EVENTS_QUERY = defineQuery(`
     "text" : description
   }
 `);
+
+export const TEAM_MEMBERS_QUERY = defineQuery(`
+  *[_type == "]
+`);
