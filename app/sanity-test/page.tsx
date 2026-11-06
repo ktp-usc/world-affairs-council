@@ -11,12 +11,9 @@ export default async function AdminsPage() {
   const team_members = await client.fetch(TEAM_MEMBERS_QUERY, {}, { next: { revalidate: 60 } })
 
   return (
-    <main>
+    <main className="flex">
       {team_members.map((team_member: TeamMemberCardData) => (
-        // the slug from sanity becomes the url
-        <Link key={team_member._id} href={`/admin/${team_member.slug}`}>
-          <TeamMemberCard member={team_member} />
-        </Link>
+        <TeamMemberCard key={team_member._id} member={team_member} />
       ))}
     </main>
   )

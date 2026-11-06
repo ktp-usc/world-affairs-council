@@ -28,7 +28,7 @@ export function TeamMemberCard({ member }: { member: TeamMemberCardData }) {
     // the whole card is the link, so the click target is big and keyboard users can tab to it
     <Link
       href={`/sanity-test/${member.slug}`}
-      className="group block rounded-2xl border border-neutral-200 bg-white p-4 transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 max-h-[20%] max-w-[20%]"
+      className="group block rounded-2xl border border-neutral-200 bg-white p-4 transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 max-h-[20%] max-w-[20%] min-w-[20%]"
     >
       {/* fixed square so cards line up even when the photos are different sizes */}
       <div className="relative aspect-square overflow-hidden rounded-xl bg-neutral-100">

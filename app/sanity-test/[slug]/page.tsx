@@ -25,7 +25,7 @@ export default async function AdminPage({
   if (!admin) notFound()
 
   return (
-    <main>
+    <main className="min-h-250">
       <h1>{admin.name}</h1>
       <p>{admin.role}</p>
       {/* portable text turns sanity rich text blocks into html */}
