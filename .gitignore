@@ -46,3 +46,9 @@ next-env.d.ts
 out
 gen
 
+# Local design reference project
+/Style Guide World Affairs/
+
+# Original program image source files (runtime copies live in public/programs)
+/programs_pictures/
+
