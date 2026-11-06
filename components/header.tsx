@@ -19,7 +19,7 @@ type NavItem = {
 
 const navItems: NavItem[] = [
     { label: "About", href: "/about" },
-    { label: "Events", href: "#events" },
+    { label: "Events", href: "/get-involved/guests" },
     {
         label: "Programs",
         href: "/programs",
@@ -37,16 +37,16 @@ const navItems: NavItem[] = [
     },
     { label: "Get Involved",
         menu: [
-            { label: "Become a member", href: "#membership" },
-            { label: "Be a guest", href: "#guest" },
-            { label: "Volunteer", href: "#volunteer" },
-            { label: "Opportunities to give", href: "#support" },
-            { label: "Donation form", href: "#donate" },
-            { label: "Sponsor a speaker", href: "#sponsor" },
+            { label: "Get Involved Overview", href: "/get-involved" },
+            { label: "Become a member", href: "/get-involved/membership" },
+            { label: "Be a guest", href: "/get-involved/guests" },
+            { label: "Volunteer", href: "/get-involved/volunteer" },
+            { label: "Opportunities to give", href: "/get-involved/give" },
+            { label: "Sponsor a speaker", href: "/get-involved/sponsor" },
         ]
      },
-    { label: "Support Us", href: "#support" },
-    { label: "News", href: "#news" },
+    { label: "Support Us", href: "/get-involved/give" },
+    { label: "News", href: "/#news" },
 ];
 
 export default function Header() {
@@ -80,7 +80,7 @@ export default function Header() {
                                     <button className="nav-parent" type="button" onClick={() => setOpenMenu(openMenu === item.label ? null : item.label)} aria-expanded={openMenu === item.label}>
                                         {item.label}<ChevronDown size={13} />
                                     </button>
-                                ) : <a href={item.href}>{item.label}</a>}
+                                ) : <Link href={item.href ?? "/"}>{item.label}</Link>}
                                 {item.menu && openMenu === item.label && (
                                     <div className="program-menu">
                                         {item.menu.map((entry) => (
@@ -92,7 +92,7 @@ export default function Header() {
                                 )}
                             </div>
                         ))}
-                        <a className="member-button" href="#membership">Become a Member</a>
+                        <Link className="member-button" href="/get-involved/membership">Become a Member</Link>
                     </nav>
                     <button className="mobile-toggle" aria-label={mobileOpen ? "Close menu" : "Open menu"} onClick={() => setMobileOpen(!mobileOpen)}>
                         {mobileOpen ? <X /> : <Menu />}
