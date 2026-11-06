@@ -14,7 +14,7 @@ export default function CommunityPage() {
     const galleryPhotos = photos.gallery.filter((photo) => photo.src);
     return (
         <>
-            <Hero title="Community" photo={photos.communityHero} nextId="community-intro" />
+            <Hero title="Community" photo={photos.communityHero} nextId="community-intro" breadcrumbs={[{ label: "Home", href: "/" }, { label: "About Us", href: "/about" }, { label: "Community" }]} />
 
             <section id="community-intro" className={styles.intro}>
                 <div className="content-width">

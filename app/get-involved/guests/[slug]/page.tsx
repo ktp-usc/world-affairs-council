@@ -33,7 +33,7 @@ export default async function GuestEventPage({ params }: Props) {
 
     return (
         <>
-            <PageHero eyebrow={ event.kind === "Global Speaker" ? "Global Speaker" : "Distinguished Speaker Series" } title={ `${ event.speaker }: ${ event.title }` } />
+            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved", href: "/get-involved" }, { label: "Be a guest", href: "/get-involved/guests" }, { label: `${ event.speaker }: ${ event.title }` }]} title={ `${ event.speaker }: ${ event.title }` } />
 
             <Section>
                 <div className="grid gap-10 md:grid-cols-[260px_1fr]">

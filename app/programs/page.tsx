@@ -13,7 +13,7 @@ export default function ProgramsPage() {
         <main className="min-h-screen bg-white font-[var(--sans)] text-[18px] leading-[1.65] text-[var(--charcoal)]">
             <section className="bg-[var(--navy)] py-12 text-white md:py-16">
                 <div className="mx-auto w-[min(1040px,calc(100%-48px))]">
-                    <p className="mb-3 text-sm font-bold tracking-[.12em] text-[var(--header-gold)] uppercase">WACHH Programs</p>
+                    <nav className="mb-6 flex flex-wrap gap-2 text-sm text-slate-300" aria-label="Breadcrumb"><Link className="underline underline-offset-4 hover:text-white" href="/">Home</Link><span aria-hidden="true">/</span><span aria-current="page">Programs</span></nav>
                     <h1 className="font-[family-name:var(--serif)] text-[42px] leading-[1.1] font-medium text-white md:text-[58px]">Programs</h1>
                     <p className="mt-5 max-w-[700px] text-lg leading-relaxed text-slate-200">WACHH offers speaker programs, discussion groups, a book club, and student programs focused on international affairs.</p>
                 </div>

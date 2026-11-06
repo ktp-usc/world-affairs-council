@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Volunteer" };
 export default function VolunteerPage() {
     return (
         <>
-            <PageHero eyebrow="Get Involved" title="Volunteer with WACHH">
+            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved", href: "/get-involved" }, { label: "Volunteer" }]} title="Volunteer with WACHH">
                 Volunteers help plan programs, welcome guests, support student activities, and keep the Council connected to the community.
                 <Button asChild size="lg" variant="secondary" className="mt-8 flex w-fit"><a href="#volunteer-form">Volunteer form</a></Button>
             </PageHero>

@@ -20,7 +20,7 @@ const heritage = [
 export default function GivePage() {
     return (
         <>
-            <PageHero eyebrow="Support WACHH" title="Ways to give">
+            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved", href: "/get-involved" }, { label: "Ways to give" }]} title="Ways to give">
                 Donations support the Council’s public programs, distinguished speakers, and educational opportunities for local students.
                 <Button asChild size="lg" variant="secondary" className="mt-8 flex w-fit"><a href={ giving.donateOnline }>Donate online</a></Button>
             </PageHero>

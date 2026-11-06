@@ -14,7 +14,7 @@ const reasons = [
 export default function MembershipPage() {
     return (
         <>
-            <PageHero eyebrow="Get Involved" title="Become a Member">
+            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved", href: "/get-involved" }, { label: "Become a Member" }]} title="Become a Member">
                 Membership supports the Council and provides access to speaker programs, member resources, and discussion groups.
                 <div className="mt-7 flex flex-wrap gap-3">
                     <a className="inline-flex min-h-12 items-center bg-[var(--gold)] px-5 py-3 font-bold text-[var(--navy)]" href={membership.joinOnline}>Join online</a>

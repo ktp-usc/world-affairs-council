@@ -20,6 +20,7 @@ export default function AboutPage() {
                 title="About Us"
                 photo={photos.aboutHero}
                 nextId="introduction"
+                breadcrumbs={[{ label: "Home", href: "/" }, { label: "About Us" }]}
                 subtitle={tagline}
             />
 

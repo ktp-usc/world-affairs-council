@@ -16,7 +16,7 @@ const ways = [
 export default function GetInvolvedPage() {
     return (
         <>
-            <PageHero eyebrow="Get Involved" title="Ways to participate">
+            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved" }]} title="Ways to participate">
                 Membership, guest attendance, volunteering, donations, and speaker sponsorships each support the Council&apos;s work.
             </PageHero>
 

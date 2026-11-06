@@ -20,7 +20,7 @@ const teamGroups = [
 export default function TeamPage() {
     return (
         <>
-            <Hero title="Our Team" photo={photos.teamHero} nextId="members" />
+            <Hero title="Our Team" photo={photos.teamHero} nextId="members" breadcrumbs={[{ label: "Home", href: "/" }, { label: "About Us", href: "/about" }, { label: "Our Team" }]} />
 
             <section id="members" className={styles.members} aria-labelledby="members-title">
                 <div className="content-width">

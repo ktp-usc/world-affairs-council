@@ -9,7 +9,7 @@ export default function NewsPage() {
     const posts = sortedPosts();
     return (
         <>
-            <PageHero eyebrow="WACHH" title="News and updates">
+            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "News" }]} title="News and updates">
                 Council announcements, leadership updates, and information for members and the community.
             </PageHero>
             <Section title="Latest updates">

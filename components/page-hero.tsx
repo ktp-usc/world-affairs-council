@@ -1,10 +1,24 @@
 import React from "react";
+import Link from "next/link";
 
-export default function PageHero({ eyebrow, title, children }: { eyebrow: string; title: string; children?: React.ReactNode }) {
+export type Breadcrumb = { label: string; href?: string };
+
+export default function PageHero({ title, breadcrumbs, children }: { title: string; breadcrumbs: Breadcrumb[]; children?: React.ReactNode }) {
     return (
         <section className="bg-[var(--navy)] text-white">
             <div className="mx-auto w-[min(1040px,calc(100%-48px))] py-12 md:py-16">
-                <p className="mb-3 text-sm font-bold tracking-[.12em] text-[var(--header-gold)] uppercase">{eyebrow}</p>
+                <nav className="mb-6 flex flex-wrap items-center gap-2 text-sm text-slate-300" aria-label="Breadcrumb">
+                    {breadcrumbs.map((breadcrumb, index) => (
+                        <React.Fragment key={breadcrumb.label}>
+                            {index > 0 && <span aria-hidden="true">/</span>}
+                            {breadcrumb.href ? (
+                                <Link className="underline underline-offset-4 hover:text-white" href={breadcrumb.href}>{breadcrumb.label}</Link>
+                            ) : (
+                                <span aria-current="page">{breadcrumb.label}</span>
+                            )}
+                        </React.Fragment>
+                    ))}
+                </nav>
                 <h1 className="max-w-[820px] font-[family-name:var(--serif)] text-[42px] leading-[1.1] font-medium text-white md:text-[58px]">{title}</h1>
                 {children && <div className="mt-5 max-w-[740px] text-lg leading-relaxed text-slate-200">{children}</div>}
             </div>
