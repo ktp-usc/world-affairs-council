@@ -1,8 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Award, BookOpen, CalendarDays, Globe2, MapPin, Users } from "lucide-react";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
 import ProgramGallery from "./program-gallery";
 import type { ProgramFact, ProgramPageData } from "./programs-data";
 
@@ -36,7 +34,6 @@ export default function ProgramPage({ program }: { program: ProgramPageData }) {
 
     return (
         <div className="min-h-screen bg-white font-[var(--sans)] text-[17px] leading-[1.6] text-[var(--charcoal)] md:text-[18px]">
-            <Header />
             <main>
                 <section className="bg-[var(--navy)]">
                     <div
@@ -256,7 +253,6 @@ export default function ProgramPage({ program }: { program: ProgramPageData }) {
                     </div>
                 </section>
             </main>
-            <Footer />
         </div>
     );
 }

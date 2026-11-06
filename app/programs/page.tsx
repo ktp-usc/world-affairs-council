@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
 import { programCards } from "@/components/programs/programs-data";
 
 export const metadata: Metadata = {
@@ -13,7 +11,6 @@ export const metadata: Metadata = {
 export default function ProgramsPage() {
     return (
         <div className="min-h-screen bg-white font-[var(--sans)] text-[18px] leading-[1.6] text-[var(--charcoal)]">
-            <Header />
             <main>
                 <section className="relative overflow-hidden bg-[linear-gradient(90deg,rgba(27,42,65,.97)_0%,rgba(27,42,65,.88)_52%,rgba(27,42,65,.62)_100%),url('/programs/main/programs-speaker-crowd.png')] bg-cover bg-[center_42%] pt-16 pb-14 text-white md:pt-22 md:pb-18">
                     <div className="relative z-10 mx-auto w-[min(1200px,calc(100%-48px))]">
@@ -53,7 +50,6 @@ export default function ProgramsPage() {
                     </div>
                 </section>
             </main>
-            <Footer />
         </div>
     );
 }

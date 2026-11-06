@@ -7,9 +7,6 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
-
 import ImageGallery from "@/components/ImageGallery";
 import NewsFormBox from "@/components/NewsFormBox";
 import council_image from "../components/ui/images/council.jpg";
@@ -42,7 +39,6 @@ export default function Home() {
 
   return (
     <div className="site-shell">
-      <Header />
       <main>
         <section className="hero" aria-labelledby="hero-title">
           <img src={council_image.src} alt="Council image" className="absolute w-full h-auto" />
@@ -137,7 +133,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }
