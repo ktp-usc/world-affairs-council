@@ -12,7 +12,6 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    "Style Guide for WACHH Website/**",
   ]),
 ]);
 

@@ -1,88 +1,68 @@
 import type { Metadata } from "next";
-import { ArrowRight, FileText } from "lucide-react";
-import Hero from "./_components/hero";
-import PhotoSlot from "./_components/photo-slot";
-import Timeline from "./_components/timeline";
-import { milestones, mission, origins, photos, reports, stats, tagline, waca, whoWeAre } from "./_data/about-content";
-import styles from "./about.module.css";
+import PageHero, { Section } from "@/components/page-hero";
+import { contact } from "@/lib/site";
 
-export const metadata: Metadata = {
-    title: "About Us | World Affairs Council of Hilton Head",
-    description: "Our mission, our history since 1981, our annual reports, and our place in the World Affairs Councils of America.",
-};
+export const metadata: Metadata = { title: "About Us" };
 
-// Section order:
-// hero → tagline → two side-by-side blocks → stats → centered block (reports) → history slider.
+const groups = [
+    { title: "Board of Directors", body: "Volunteer directors who set the Council's strategy, oversee its finances and guide its growth." },
+    { title: "Administration", body: "Our executive director and staff run day-to-day operations, membership and events." },
+    { title: "Program Committee", body: "Members who scout, invite and host the speakers who appear on our stage each season." },
+];
+
 export default function AboutPage() {
     return (
         <>
-            <Hero title="About Us" photo={photos.aboutHero} nextId="introduction" />
+            <PageHero eyebrow="About Us" title="A nonpartisan forum for global understanding">
+                We believe that understanding the world makes us better neighbors, voters and citizens.
+            </PageHero>
 
-            <section id="introduction" className={styles.intro}>
-                <div className="content-width">
-                    <h2 className={styles.tagline}>{tagline}</h2>
+            <Section id="mission" title="Our Mission">
+                <div className="grid gap-10 md:grid-cols-2">
+                    <p className="text-lg">
+                        The World Affairs Council of Hilton Head engages, educates and inspires our community about world
+                        affairs. We bring diplomats, scholars, journalists and military leaders to the Lowcountry so that
+                        residents can hear directly from the people shaping — and reporting on — events abroad.
+                    </p>
+                    <p className="text-muted-foreground">
+                        Our programs are open to members, the general public and students. We take no political positions;
+                        instead we offer a range of perspectives and trust our audience to weigh them. Questions from the
+                        floor are a highlight of every program.
+                    </p>
                 </div>
-            </section>
+            </Section>
 
-            <section className={styles.block} aria-label="Who we are">
-                <div className={styles.blockText}>
-                    <div className={styles.blockTextInner}>
-                        <p className={styles.blockLead}>&ldquo;{mission}&rdquo;</p>
-                        {whoWeAre.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                        {origins.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                    </div>
-                </div>
-                <PhotoSlot photo={photos.origins} className={styles.blockPhoto} />
-            </section>
-
-            <section className={`${styles.block} ${styles.blockReverse}`} aria-labelledby="waca-title">
-                <div className={styles.blockText}>
-                    <div className={styles.blockTextInner}>
-                        <h2 id="waca-title" className={styles.blockTitle}>{waca.title}</h2>
-                        {waca.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                        <a className="text-link" href={waca.href} target="_blank" rel="noreferrer">
-                            Visit worldaffairscouncils.org <ArrowRight size={17} aria-hidden="true" />
-                        </a>
-                    </div>
-                </div>
-                <PhotoSlot photo={photos.network} className={styles.blockPhoto} />
-            </section>
-
-            <section className={styles.stats} aria-label="WACHH by the numbers">
-                <dl className={`content-width ${styles.statGrid}`}>
-                    {stats.map((stat) => (
-                        <div key={stat.label} className={styles.stat}>
-                            <dd>{stat.value}</dd>
-                            <dt>{stat.label}</dt>
+            <Section id="leadership" title="Leadership" muted>
+                <div className="grid gap-5 md:grid-cols-3">
+                    { groups.map((g) => (
+                        <div key={ g.title } className="rounded-xl border bg-card p-6">
+                            <h3 className="font-serif text-xl font-semibold text-primary">{ g.title }</h3>
+                            <p className="mt-2 text-sm text-muted-foreground">{ g.body }</p>
                         </div>
-                    ))}
-                </dl>
-            </section>
-
-            <section id="annual-reports" className={styles.centerBlock} aria-labelledby="reports-title">
-                <div className="content-width">
-                    <h2 id="reports-title" className={styles.centerTitle}>Annual Reports</h2>
-                    <p className={styles.centerText}>Each year we publish a report on our programs, membership, and finances.</p>
-                    <ul className={styles.reportGrid}>
-                        {reports.map((report) => (
-                            <li key={report.href}>
-                                <a className={styles.report} href={report.href} target="_blank" rel="noreferrer">
-                                    <FileText size={22} aria-hidden="true" />
-                                    <span className={styles.reportYear}>{report.year}</span>
-                                    <span className={styles.reportLabel}>{report.label} (PDF)</span>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
+                    )) }
                 </div>
-            </section>
+                <p className="mt-6 text-sm text-muted-foreground">
+                    To reach Council leadership, email <a href={ `mailto:${ contact.email }` } className="text-primary underline">{ contact.email }</a>.
+                </p>
+            </Section>
 
-            <section id="history" className={styles.history} aria-labelledby="history-title">
-                <div className="content-width">
-                    <h2 id="history-title" className={styles.centerTitle}>Our History</h2>
-                    <Timeline milestones={milestones} />
-                </div>
-            </section>
+            <Section id="annual-report" title="Annual Report">
+                <p className="max-w-2xl text-muted-foreground">
+                    Each year we publish a report on our programs, membership and finances. Members can request the
+                    current report from the Council office.
+                </p>
+            </Section>
+
+            <Section id="waca" title="World Affairs Councils of America" muted>
+                <p className="max-w-2xl text-muted-foreground">
+                    We are a proud member of the World Affairs Councils of America, a national network of councils that
+                    share a commitment to global education and civic engagement. Membership connects our community to
+                    speakers, resources and partner councils across the country.
+                </p>
+                <a href="https://www.worldaffairscouncils.org/" target="_blank" rel="noreferrer" className="mt-4 inline-block font-medium text-primary underline">
+                    Visit worldaffairscouncils.org
+                </a>
+            </Section>
         </>
     );
 }
