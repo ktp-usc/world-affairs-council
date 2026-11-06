@@ -8,6 +8,22 @@ export const EVENTS_QUERY = defineQuery(`
   }
 `);
 
+// listing page: every admin that has a slug, sorted by the order field
 export const TEAM_MEMBERS_QUERY = defineQuery(`
-  *[_type == "]
+  *[_type == "teamMember" && defined(slug.current)] | order(order asc) {
+    _id, name, role, photo,
+    "slug": slug.current
+  }
+`);
+
+// subpage: one admin matched by the slug from the url
+export const TEAM_MEMBER_QUERY = defineQuery(`
+  *[_type == "teamMember" && slug.current == $slug][0] {
+    name, role, photo, bio
+  }
+`);
+
+// used at build time to pre-render every admin page
+export const TEAM_MEMBER_SLUGS_QUERY = defineQuery(`
+  *[_type == "teamMember" && defined(slug.current)] { "slug": slug.current }
 `);

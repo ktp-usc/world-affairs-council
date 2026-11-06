@@ -1,10 +1,10 @@
-import { createImageUrlBuilder, type SanityImageSource } from '@sanity/image-url'
+import createImageUrlBuilder from '@sanity/image-url'
+import { client } from './client'
 
-import { dataset, projectId } from '../env'
+const builder = createImageUrlBuilder(client)
 
-// https://www.sanity.io/docs/image-url
-const builder = createImageUrlBuilder({ projectId, dataset })
+// reuse the builder's own input type so we don't depend on internal package paths
+export type SanityImage = Parameters<typeof builder.image>[0]
 
-export const urlFor = (source: SanityImageSource) => {
-  return builder.image(source)
-}
+// turns a sanity image object into a cdn url you can resize and crop
+export const urlFor = (source: SanityImage) => builder.image(source)

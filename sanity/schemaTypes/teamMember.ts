@@ -1,8 +1,9 @@
 // schemaTypes/administrator.ts
 import { defineField, defineType } from 'sanity'
+import { CATEGORIES } from '../lib/categories'
 
 export const teamMember = defineType({
-  name: 'Team Member',
+  name: 'teamMember',
   title: 'Team Member',
   type: 'document',
   fields: [
@@ -26,12 +27,7 @@ export const teamMember = defineType({
         title: 'Role', 
         type: 'string',
         options: {
-            list: [
-                { title: 'Executive', value: 'executive' },
-                { title: 'Director', value: 'director' },
-                { title: 'Administrator', value: 'administrator' },
-                { title: 'Program Committee Member', value: 'committee' }
-            ]
+            list: [...CATEGORIES]
         }
     }),
     defineField({
