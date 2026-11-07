@@ -1,103 +1,363 @@
 "use client";
 
-import { ChevronDown, Menu, X } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState, type FocusEvent, type MouseEvent, type PointerEvent } from "react";
+import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
+import { memberActions, nav, type NavItem, type NavLink } from "@/lib/site";
 import logo from "./ui/images/WACHH-Banner-Logo2022.png";
 
-type MenuItem = {
-    label: string;
-    href: string;
-};
+// Site header. Desktop (1024px and up): logo on the left, the sections centred, Log in / Join / Donate on the right.
+// Sections with pages open a small one-column dropdown centred under the link on hover or click:
+// its pages, a little space between related groups, then a teal "View all" link to the section's main page.
+// Below 1024px the menu drops down under the bar and each section expands in place.
+// Links come from `nav` in lib/site.ts, which the footer shares.
 
-type NavItem = {
-    label: string;
-    href?: string;
-    menu?: MenuItem[];
-};
+const pageWidth = "mx-auto w-[min(1120px,calc(100%-40px))] sm:w-[min(1120px,calc(100%-64px))]";
+const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal";
+// Colours ease gently on hover; the press scales down on the strong ease-out so it answers at once.
+const pressable = "[transition:background-color_150ms_var(--ease-color),color_150ms_var(--ease-color),scale_150ms_var(--ease-out-strong)] active:scale-[0.97]";
+// Only text and fill colours ease; the focus ring appears at once.
+const hoverColor = "transition-[color,background-color] duration-150 ease-color";
+// Join is a quiet stone fill; Donate is the one gold, solid action. Navy on gold is 4.6:1, and lighter on hover.
+const joinButton = `items-center bg-muted px-4 text-[15px] font-semibold whitespace-nowrap text-primary hover:bg-line ${pressable} ${focusRing}`;
+const donateButton = `inline-flex h-10 shrink-0 items-center bg-gold px-5 text-[15px] font-bold whitespace-nowrap text-primary hover:bg-header-gold ${pressable} ${focusRing}`;
 
-const navItems: NavItem[] = [
-    { label: "About", href: "/about" },
-    { label: "Events", href: "/get-involved/guests" },
-    {
-        label: "Programs",
-        href: "/programs",
-        menu: [
-            { label: "Programs Overview", href: "/programs" },
-            { label: "Distinguished Speaker Series", href: "/programs/distinguished-speaker-series" },
-            { label: "Global Speakers Program", href: "/programs/global-speakers-program" },
-            { label: "Great Decisions", href: "/programs/great-decisions" },
-            { label: "Book Club", href: "/programs/book-club" },
-            { label: "Past Book Club Selections", href: "/programs/past-book-club-selections" },
-            { label: "Student Programs", href: "/programs/student-programs" },
-            { label: "Academic WorldQuest", href: "/programs/academic-worldquest" },
-            { label: "Model UN", href: "/programs/model-un" },
-        ],
-    },
-    { label: "Get Involved",
-        menu: [
-            { label: "Get Involved Overview", href: "/get-involved" },
-            { label: "Become a member", href: "/get-involved/membership" },
-            { label: "Be a guest", href: "/get-involved/guests" },
-            { label: "Volunteer", href: "/get-involved/volunteer" },
-            { label: "Opportunities to give", href: "/get-involved/give" },
-            { label: "Sponsor a speaker", href: "/get-involved/sponsor" },
-        ]
-     },
-    { label: "Support Us", href: "/get-involved/give" },
-    { label: "News", href: "/news" },
-];
+// Panels fade and settle 4px into place. Visibility flips after the fade so a closing panel can't be clicked.
+const panelOpen = "visible translate-y-0 scale-100 opacity-100";
+// Opening takes 160ms; closing is quicker at 120ms, on the same curve.
+const panelClosed = "invisible -translate-y-1 scale-[0.97] opacity-0";
+const panelOpenTransition = "[transition:opacity_160ms_var(--ease-out-strong),translate_160ms_var(--ease-out-strong),scale_160ms_var(--ease-out-strong),visibility_0s]";
+const panelCloseTransition = "[transition:opacity_120ms_var(--ease-out-strong),translate_120ms_var(--ease-out-strong),scale_120ms_var(--ease-out-strong),visibility_0s_linear_120ms]";
+// The chevron and underline keep time with the panel, and skip motion whenever the panel does.
+// With reduced motion the chevron flips without turning.
+const chevronMotion = (isOpen: boolean, isInstant: boolean) =>
+    `transition-transform motion-reduce:transition-none ${isInstant ? "duration-0" : `ease-out-strong ${isOpen ? "duration-160" : "duration-120"}`}`;
+
+// The small-screen menu settles 8px into place in 200ms and leaves in 150ms.
+const mobileMenuOpen = "visible translate-y-0 opacity-100";
+const mobileMenuClosed = "invisible -translate-y-2 opacity-0";
+const mobileMenuOpenTransition = "[transition:opacity_200ms_var(--ease-out-strong),translate_200ms_var(--ease-out-strong),visibility_0s]";
+const mobileMenuCloseTransition = "[transition:opacity_150ms_var(--ease-out-strong),translate_150ms_var(--ease-out-strong),visibility_0s_linear_150ms]";
+// Sections open in 240ms and fold away in 180ms. With reduced motion they still fade, but the height snaps.
+const accordionMotion = (isOpen: boolean) =>
+    `transition-[grid-template-rows,opacity] ease-out-strong motion-reduce:transition-opacity ${isOpen ? "duration-240" : "duration-180"}`;
+
+const isExternal = (href: string) => href.startsWith("http");
+const pathOf = (href: string) => href.split("#")[0];
+
+function NavAnchor({ link, className, onClick, isCurrent }: { link: NavLink; className?: string; onClick?: () => void; isCurrent?: boolean }) {
+    if (isExternal(link.href)) return <a className={className} href={link.href} onClick={onClick}>{link.label}</a>;
+    return <Link className={className} href={link.href} onClick={onClick} aria-current={isCurrent ? "page" : undefined}>{link.label}</Link>;
+}
+
+// Splits a section's pages into runs of links that share a group, keeping their order.
+function groupLinks(links: NavLink[]) {
+    const linkGroups: { groupKey: string; links: NavLink[] }[] = [];
+    for (const link of links) {
+        const groupKey = link.group ?? "";
+        const lastGroup = linkGroups.at(-1);
+        if (lastGroup && lastGroup.groupKey === groupKey) lastGroup.links.push(link);
+        else linkGroups.push({ groupKey, links: [link] });
+    }
+    return linkGroups;
+}
+// Groups are told apart by space alone.
+const groupGap = (groupIndex: number) => (groupIndex > 0 ? "mt-2.5" : "");
 
 export default function Header() {
-    const [mobileOpen, setMobileOpen] = useState(false);
-    const [openMenu, setOpenMenu] = useState<string | null>(null);
+    const pathname = usePathname();
+    const [openMenuLabel, setOpenMenuLabel] = useState<string | null>(null);
+    // True when the panel should appear without a fade: switching between menus, or opening from the keyboard.
+    const [isInstant, setIsInstant] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    // True when the small-screen menu and its sections should change without motion (keyboard use).
+    const [isMobileInstant, setIsMobileInstant] = useState(false);
+    const [openAccordionLabel, setOpenAccordionLabel] = useState<string | null>(null);
+    const closeTimer = useRef<number | undefined>(undefined);
+    const openTimer = useRef<number | undefined>(undefined);
+    const wasOpenedByHover = useRef(false);
+    // Whether the last input was a key press, so closes caused by the keyboard skip the fade too.
+    const isUsingKeyboard = useRef(false);
+    const headerRef = useRef<HTMLElement>(null);
+    const mobileToggleRef = useRef<HTMLButtonElement>(null);
+    const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
+    // Close everything when the page changes (React's pattern for resetting state on a prop change).
+    const [previousPathname, setPreviousPathname] = useState(pathname);
+    if (pathname !== previousPathname) {
+        setPreviousPathname(pathname);
+        setOpenMenuLabel(null);
+        setIsMobileMenuOpen(false);
+        // An animated close collapses the sections once the menu has faded (see onTransitionEnd below).
+        if (isMobileInstant) setOpenAccordionLabel(null);
+    }
+
+    const openMenu = (menuLabel: string, skipFade: boolean) => {
+        window.clearTimeout(closeTimer.current);
+        window.clearTimeout(openTimer.current);
+        setIsInstant(skipFade || (openMenuLabel !== null && openMenuLabel !== menuLabel));
+        setOpenMenuLabel(menuLabel);
+    };
+    const closeMenu = (skipFade = false) => {
+        window.clearTimeout(closeTimer.current);
+        window.clearTimeout(openTimer.current);
+        setIsInstant(skipFade);
+        setOpenMenuLabel(null);
+    };
+    // Closing the small-screen menu leaves open sections as they are while it fades, so nothing
+    // collapses inside a moving panel; they fold away once it is hidden.
+    const closeMobileMenu = (skipMotion: boolean) => {
+        setIsMobileInstant(skipMotion);
+        setIsMobileMenuOpen(false);
+        if (skipMotion) setOpenAccordionLabel(null);
+    };
+    // A short grace period lets the pointer cross from the link into its panel.
+    const closeMenuSoon = () => {
+        window.clearTimeout(closeTimer.current);
+        window.clearTimeout(openTimer.current);
+        closeTimer.current = window.setTimeout(() => closeMenu(), 150);
+    };
+
+    const handleTriggerPointerEnter = (pointerEvent: PointerEvent, menuLabel: string) => {
+        if (pointerEvent.pointerType !== "mouse") return;
+        wasOpenedByHover.current = true;
+        // Once a menu is open, moving to another swaps right away. The first open waits 80ms
+        // so sweeping the pointer across the bar on the way to Donate doesn't flash every menu.
+        if (openMenuLabel !== null) return openMenu(menuLabel, false);
+        window.clearTimeout(openTimer.current);
+        openTimer.current = window.setTimeout(() => openMenu(menuLabel, false), 80);
+    };
+    // Tabbing past a menu's last link closes it.
+    const closeMenuWhenFocusLeaves = (focusEvent: FocusEvent<HTMLLIElement>) => {
+        if (!focusEvent.currentTarget.contains(focusEvent.relatedTarget as Node)) closeMenu(isUsingKeyboard.current);
+    };
+    const handleTriggerClick = (clickEvent: MouseEvent, menuLabel: string) => {
+        const isOpenedFromKeyboard = clickEvent.detail === 0;
+        // A click right after hovering keeps the menu open instead of closing it.
+        if (openMenuLabel === menuLabel && !wasOpenedByHover.current) return closeMenu(isOpenedFromKeyboard);
+        wasOpenedByHover.current = false;
+        openMenu(menuLabel, isOpenedFromKeyboard);
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (keyboardEvent: KeyboardEvent) => {
+            isUsingKeyboard.current = true;
+            if (keyboardEvent.key !== "Escape") return;
+            if (openMenuLabel) {
+                triggerRefs.current[openMenuLabel]?.focus();
+                closeMenu(true);
+            }
+            if (isMobileMenuOpen) {
+                closeMobileMenu(true);
+                mobileToggleRef.current?.focus();
+            }
+        };
+        const handlePointerDown = (pointerEvent: globalThis.PointerEvent) => {
+            isUsingKeyboard.current = false;
+            if (headerRef.current?.contains(pointerEvent.target as Node)) return;
+            closeMenu();
+            if (isMobileMenuOpen) closeMobileMenu(false);
+        };
+        window.addEventListener("keydown", handleKeyDown);
+        window.addEventListener("pointerdown", handlePointerDown);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+            window.removeEventListener("pointerdown", handlePointerDown);
+        };
+    }, [openMenuLabel, isMobileMenuOpen]);
+
+    const isCurrentLink = (href: string) => !isExternal(href) && pathname === pathOf(href);
+    const isCurrentSection = (navItem: NavItem) =>
+        pathname === pathOf(navItem.href) || pathname.startsWith(`${pathOf(navItem.href)}/`) || (navItem.children ?? []).some((child) => isCurrentLink(child.href));
+
+    // The underline grows from the left; with reduced motion it fades in place instead.
+    const topLinkClass = (isHighlighted: boolean) =>
+        `relative flex h-full cursor-pointer items-center gap-1 px-2.5 text-[15px] font-semibold whitespace-nowrap text-primary ${hoverColor} hover:text-teal ${focusRing} ` +
+        `after:absolute after:inset-x-2.5 after:bottom-0 after:h-[3px] after:origin-left after:bg-gold after:transition-[scale,opacity] motion-reduce:after:scale-x-100 ` +
+        (isInstant ? "after:transition-none " : `after:ease-out-strong ${isHighlighted ? "after:duration-160" : "after:duration-120"} `) +
+        (isHighlighted ? "after:scale-x-100" : "after:scale-x-0 motion-reduce:after:opacity-0");
+    const panelLinkClass = (isCurrent: boolean) =>
+        `-mx-3 block px-3 py-[7px] text-[15px] leading-snug font-medium whitespace-nowrap ${hoverColor} hover:bg-muted ${focusRing} ${isCurrent ? "text-teal" : "text-primary hover:text-teal"}`;
 
     return (
-        <header className="site-header">
-            {/*
-            <div className="renew-banner">
-                It&apos;s time to renew your membership for 2026–2027. <a href="#membership">Renew now <span aria-hidden="true">→</span></a>
-            </div>
-            <div className="utility-bar">
-                <div className="utility-inner">
-                    <a href="#events"><CalendarDays size={17} /> Event Calendar</a>
-                    <a href="#login"><LogIn size={17} /> Member Log In</a>
-                    <a href="#membership"><RefreshCw size={17} /> Renew Membership</a>
-                    <a className="donate-link" href="#support">Donate</a>
-                </div>
-            </div>
-            */}
-            <div className="main-nav">
-                <div className="nav-inner">
-                    <Link href="/" aria-label="World Affairs Council of Hilton Head home">
-                        <Image src={logo} alt="WACHH banner logo" className="w-80" />
-                    </Link>
-                    <nav className={mobileOpen ? "nav-links mobile-open" : "nav-links"} aria-label="Main navigation">
-                        {navItems.map((item) => (
-                            <div className="nav-item" key={item.label}>
-                                {item.menu ? (
-                                    <button className="nav-parent" type="button" onClick={() => setOpenMenu(openMenu === item.label ? null : item.label)} aria-expanded={openMenu === item.label}>
-                                        {item.label}<ChevronDown size={13} />
+        <header ref={headerRef} className="relative z-50 border-b border-line bg-white">
+            <div className={`${pageWidth} flex h-20 items-center gap-3 sm:gap-6 lg:grid lg:grid-cols-[1fr_auto_1fr]`}>
+                <Link href="/" aria-label="World Affairs Council of Hilton Head home" className={`shrink-0 justify-self-start ${focusRing}`}>
+                    <Image src={logo} alt="" priority className="h-auto w-[176px] min-[400px]:w-[210px] xl:w-[250px]" />
+                </Link>
+
+                <nav aria-label="Main" className="hidden h-full lg:block" onPointerLeave={(pointerEvent) => pointerEvent.pointerType === "mouse" && closeMenuSoon()}>
+                    <ul className="relative flex h-full items-center">
+                        {nav.map((navItem) => {
+                            const isMenuOpen = openMenuLabel === navItem.label;
+                            const isHighlighted = openMenuLabel ? isMenuOpen : isCurrentSection(navItem);
+                            if (!navItem.children) {
+                                return (
+                                    <li key={navItem.label} className="h-full" onPointerEnter={() => closeMenuSoon()}>
+                                        <Link href={navItem.href} className={topLinkClass(isHighlighted)}>{navItem.label}</Link>
+                                    </li>
+                                );
+                            }
+                            const panelId = `nav-panel-${navItem.label.toLowerCase().replace(/\s+/g, "-")}`;
+                            return (
+                                <li
+                                    key={navItem.label}
+                                    className="relative h-full"
+                                    onPointerEnter={(pointerEvent) => handleTriggerPointerEnter(pointerEvent, navItem.label)}
+                                    onBlur={closeMenuWhenFocusLeaves}
+                                >
+                                    <button
+                                        type="button"
+                                        ref={(buttonElement) => { triggerRefs.current[navItem.label] = buttonElement; }}
+                                        className={topLinkClass(isHighlighted)}
+                                        aria-expanded={isMenuOpen}
+                                        aria-controls={panelId}
+                                        onClick={(clickEvent) => handleTriggerClick(clickEvent, navItem.label)}
+                                    >
+                                        {navItem.label}
+                                        <ChevronDown size={17} strokeWidth={2.75} aria-hidden="true" className={`-mr-0.5 text-teal ${chevronMotion(isMenuOpen, isInstant)} ${isMenuOpen ? "rotate-180" : ""}`} />
                                     </button>
-                                ) : <Link href={item.href ?? "/"}>{item.label}</Link>}
-                                {item.menu && openMenu === item.label && (
-                                    <div className="program-menu">
-                                        {item.menu.map((entry) => (
-                                            <Link href={entry.href} key={entry.label} onClick={() => { setOpenMenu(null); setMobileOpen(false); }}>
-                                                {entry.label}
-                                            </Link>
+                                    {/* Centred under its link. The panel covers the bar's bottom line, so it reads as part of the bar. */}
+                                    <div
+                                        id={panelId}
+                                        inert={!isMenuOpen}
+                                        className={`absolute top-full left-1/2 w-max min-w-[220px] -translate-x-1/2 origin-top bg-white px-6 py-4 shadow-[0_18px_36px_-14px_rgba(27,42,65,0.28)] motion-reduce:translate-y-0 motion-reduce:scale-100 ${isMenuOpen ? panelOpen : panelClosed} ${isInstant ? "" : isMenuOpen ? panelOpenTransition : panelCloseTransition}`}
+                                    >
+                                        {groupLinks(navItem.children).map((linkGroup, groupIndex) => (
+                                            <ul key={linkGroup.links[0].href} className={groupGap(groupIndex)}>
+                                                {linkGroup.links.map((childLink) => (
+                                                    <li key={childLink.href}>
+                                                        <Link href={childLink.href} className={panelLinkClass(isCurrentLink(childLink.href))} aria-current={isCurrentLink(childLink.href) ? "page" : undefined} onClick={() => closeMenu()}>
+                                                            {childLink.label}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                            </ul>
                                         ))}
+                                        {navItem.overviewLabel && (
+                                            <Link
+                                                href={navItem.href}
+                                                onClick={() => closeMenu()}
+                                                className={`group/overview -mx-6 -mb-4 mt-3 flex items-center gap-1.5 border-t border-line px-6 py-3 text-[15px] font-semibold whitespace-nowrap text-teal ${hoverColor} hover:bg-muted ${focusRing}`}
+                                            >
+                                                {navItem.overviewLabel}
+                                                <ArrowRight size={15} aria-hidden="true" className="transition-transform duration-150 ease-out-strong group-hover/overview:translate-x-0.5 motion-reduce:transition-none" />
+                                            </Link>
+                                        )}
                                     </div>
-                                )}
-                            </div>
-                        ))}
-                        <Link className="member-button" href="/get-involved/membership">Become a Member</Link>
-                    </nav>
-                    <button className="mobile-toggle" aria-label={mobileOpen ? "Close menu" : "Open menu"} onClick={() => setMobileOpen(!mobileOpen)}>
-                        {mobileOpen ? <X /> : <Menu />}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </nav>
+
+                <div className="ml-auto flex shrink-0 items-center gap-2 justify-self-end" onPointerEnter={() => closeMenuSoon()}>
+                    <NavAnchor link={memberActions.login} className={`hidden h-10 items-center px-3 text-[15px] font-semibold whitespace-nowrap text-primary ${hoverColor} hover:text-teal lg:inline-flex ${focusRing}`} />
+                    <NavAnchor link={memberActions.join} className={`hidden h-10 lg:inline-flex ${joinButton}`} />
+                    <NavAnchor link={memberActions.donate} className={`${donateButton} max-lg:h-9 max-lg:px-3.5 max-lg:text-sm`} />
+                    <button
+                        type="button"
+                        ref={mobileToggleRef}
+                        className={`-mr-2 grid size-11 cursor-pointer place-items-center text-primary transition-[scale] duration-150 ease-out-strong active:scale-[0.97] lg:hidden ${focusRing}`}
+                        aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                        aria-expanded={isMobileMenuOpen}
+                        aria-controls="mobile-menu"
+                        onClick={(clickEvent) => {
+                            const isFromKeyboard = clickEvent.detail === 0;
+                            if (isMobileMenuOpen) return closeMobileMenu(isFromKeyboard);
+                            setIsMobileInstant(isFromKeyboard);
+                            setIsMobileMenuOpen(true);
+                        }}
+                    >
+                        {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
                     </button>
                 </div>
+            </div>
+
+            {/* Small screens: the menu drops down under the bar; each section expands in place. */}
+            <div
+                id="mobile-menu"
+                inert={!isMobileMenuOpen}
+                className={`absolute inset-x-0 top-full max-h-[calc(100svh-80px)] overflow-y-auto bg-white shadow-[0_18px_36px_-14px_rgba(27,42,65,0.28)] lg:hidden motion-reduce:translate-y-0 ${isMobileMenuOpen ? mobileMenuOpen : mobileMenuClosed} ${isMobileInstant ? "" : isMobileMenuOpen ? mobileMenuOpenTransition : mobileMenuCloseTransition}`}
+                onTransitionEnd={(transitionEvent) => {
+                    // Once the menu has faded out, fold its sections away so it reopens collapsed.
+                    if (transitionEvent.target === transitionEvent.currentTarget && transitionEvent.propertyName === "opacity" && !isMobileMenuOpen) setOpenAccordionLabel(null);
+                }}
+            >
+                <nav aria-label="Mobile" className={`${pageWidth} pt-1 pb-6`}>
+                    <ul>
+                        {nav.map((navItem) => {
+                            if (!navItem.children) {
+                                return (
+                                    <li key={navItem.label} className="border-b border-line">
+                                        <Link href={navItem.href} className={`flex min-h-14 items-center text-[17px] font-semibold text-primary ${focusRing}`}>{navItem.label}</Link>
+                                    </li>
+                                );
+                            }
+                            const isAccordionOpen = openAccordionLabel === navItem.label;
+                            const accordionId = `mobile-section-${navItem.label.toLowerCase().replace(/\s+/g, "-")}`;
+                            return (
+                                <li key={navItem.label} className="border-b border-line">
+                                    <button
+                                        type="button"
+                                        className={`flex min-h-14 w-full cursor-pointer items-center justify-between text-left text-[17px] font-semibold ${isAccordionOpen ? "text-teal" : "text-primary"} ${focusRing}`}
+                                        aria-expanded={isAccordionOpen}
+                                        aria-controls={accordionId}
+                                        onClick={(clickEvent) => {
+                                            setIsMobileInstant(clickEvent.detail === 0);
+                                            setOpenAccordionLabel(isAccordionOpen ? null : navItem.label);
+                                        }}
+                                    >
+                                        {navItem.label}
+                                        <ChevronDown
+                                            size={20}
+                                            aria-hidden="true"
+                                            className={`text-teal transition-transform motion-reduce:transition-none ${isMobileInstant ? "duration-0" : `ease-out-strong ${isAccordionOpen ? "duration-240" : "duration-180"}`} ${isAccordionOpen ? "rotate-180" : ""}`}
+                                        />
+                                    </button>
+                                    {/* Animating grid rows from 0fr to 1fr opens the section to its natural height. */}
+                                    <div
+                                        id={accordionId}
+                                        inert={!isAccordionOpen}
+                                        className={`grid ${isMobileInstant ? "" : accordionMotion(isAccordionOpen)} ${isAccordionOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                                    >
+                                        <div className="overflow-hidden">
+                                            <div className="pb-4 pl-4">
+                                                {groupLinks(navItem.children).map((linkGroup, groupIndex) => (
+                                                    <ul key={linkGroup.links[0].href} className={groupGap(groupIndex)}>
+                                                        {linkGroup.links.map((childLink) => (
+                                                            <li key={childLink.href}>
+                                                                <NavAnchor
+                                                                    link={childLink}
+                                                                    isCurrent={isCurrentLink(childLink.href)}
+                                                                    className={`flex min-h-11 items-center text-base font-medium ${isCurrentLink(childLink.href) ? "text-teal" : "text-primary"} focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-teal`}
+                                                                />
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                ))}
+                                                {navItem.overviewLabel && (
+                                                    <Link
+                                                        href={navItem.href}
+                                                        className="mt-2 flex min-h-11 items-center gap-1.5 text-base font-semibold text-teal focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-teal"
+                                                    >
+                                                        {navItem.overviewLabel} <ArrowRight size={16} aria-hidden="true" />
+                                                    </Link>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                    <div className="mt-6 grid grid-cols-2 gap-3">
+                        <NavAnchor link={memberActions.join} className={`inline-flex h-11 justify-center ${joinButton}`} />
+                        <NavAnchor link={memberActions.login} className={`inline-flex h-11 items-center justify-center text-[15px] font-semibold text-primary ${hoverColor} hover:text-teal ${focusRing}`} />
+                    </div>
+                </nav>
             </div>
         </header>
     );
