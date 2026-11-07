@@ -20,7 +20,7 @@ export default function PhotoCarousel({ slides, interval = 5000 }: { slides: Sli
 
     return (
         <div
-            className="relative overflow-hidden rounded-xl border bg-primary shadow-sm"
+            className="relative overflow-hidden border bg-primary shadow-sm"
             onMouseEnter={ () => setPaused(true) }
             onMouseLeave={ () => setPaused(false) }
             onFocus={ () => setPaused(true) }
@@ -45,10 +45,10 @@ export default function PhotoCarousel({ slides, interval = 5000 }: { slides: Sli
                 )) }
             </div>
 
-            <button onClick={ () => go(index - 1) } aria-label="Previous photo" className="absolute top-1/2 left-3 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-primary shadow hover:bg-white">
+            <button onClick={ () => go(index - 1) } aria-label="Previous photo" className="absolute top-1/2 left-3 inline-flex size-10 -translate-y-1/2 items-center justify-center bg-white/85 text-primary shadow hover:bg-white">
                 <ChevronLeft className="size-5" />
             </button>
-            <button onClick={ () => go(index + 1) } aria-label="Next photo" className="absolute top-1/2 right-3 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-primary shadow hover:bg-white">
+            <button onClick={ () => go(index + 1) } aria-label="Next photo" className="absolute top-1/2 right-3 inline-flex size-10 -translate-y-1/2 items-center justify-center bg-white/85 text-primary shadow hover:bg-white">
                 <ChevronRight className="size-5" />
             </button>
 
@@ -59,7 +59,7 @@ export default function PhotoCarousel({ slides, interval = 5000 }: { slides: Sli
                         onClick={ () => go(i) }
                         aria-label={ `Show photo ${ i + 1 }` }
                         aria-current={ i === index }
-                        className={ cn("h-2 rounded-full transition-all", i === index ? "w-6 bg-gold" : "w-2 bg-white/60 hover:bg-white") }
+                        className={ cn("h-2 transition-all", i === index ? "w-6 bg-gold" : "w-2 bg-white/60 hover:bg-white") }
                     />
                 )) }
             </div>

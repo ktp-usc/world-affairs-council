@@ -1,129 +1,59 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Building2, GraduationCap, Mail, Mic, Repeat } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHero, { Section } from "@/components/page-hero";
-import Testimonial from "@/components/testimonial";
 import { contact, giving } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Ways to Give" };
 
 const funds = [
-    {
-        icon: Building2,
-        title: "General Operating Fund",
-        body: "Covers venue and technical support for 14 distinguished speakers each year, meeting space for discussion groups, our marketing and development efforts, our website, and other programs important to our success.",
-    },
-    {
-        icon: GraduationCap,
-        title: "Student Program Support",
-        body: "Covers travel costs for students on our local winning High School team to participate in the National Academic WorldQuest competition and/or toward student attendance at Model UN Programs.",
-    },
+    { title: "General Operating Fund", body: "Supports speaker venues, technical services, discussion groups, communications, and the day-to-day work required to deliver Council programs." },
+    { title: "Student Program Support", body: "Supports Academic WorldQuest travel and student participation in Model United Nations programs." },
 ];
 
 const heritage = [
-    {
-        title: "Heritage Champions Fore Charity",
-        body: "Requires a minimum donation of $1,000 and the Heritage Classic Foundation adds 20% to the donation.",
-        window: "Open for donations from January 1 – December 1 of each year.",
-    },
-    {
-        title: "Birdies For Charity",
-        body: "Tied to the RBC Heritage golf tournament. Donors can pledge a fixed amount or an amount per tournament birdie. The Heritage Classic Foundation adds 20% to the donation. Aggregate donations and the Heritage Classic Foundation match are paid to WACHH after the tournament, typically in July.",
-        window: `Runs January 1 to the last day of the RBC Heritage (${ giving.birdiesEnd }).`,
-    },
+    { title: "Heritage Champions Fore Charity", body: "A minimum $1,000 donation receives an additional 20% from the Heritage Classic Foundation.", window: "Donations are accepted January 1 through December 1." },
+    { title: "Birdies For Charity", body: "Donors pledge a fixed amount or an amount per tournament birdie. The Heritage Classic Foundation adds 20% to the donation.", window: `Runs January 1 through ${ giving.birdiesEnd }; proceeds are generally paid in July.` },
 ];
 
 export default function GivePage() {
     return (
         <>
-            <PageHero eyebrow="Get Involved" title="Opportunities to Give">
-                As a nonprofit, we rely on donations to bring top speakers to the island and to fund student programs. Gifts of
-                any size make a difference.
+            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved", href: "/get-involved" }, { label: "Ways to give" }]} title="Ways to give">
+                Donations support the Council’s public programs, distinguished speakers, and educational opportunities for local students.
                 <Button asChild size="lg" variant="secondary" className="mt-8 flex w-fit"><a href={ giving.donateOnline }>Donate online</a></Button>
             </PageHero>
 
-            <Section id="donate" title="Individual and Recurring Donations">
-                <div className="grid gap-10 lg:grid-cols-[3fr_2fr]">
+            <Section id="donate" title="Individual and recurring donations">
+                <div className="grid gap-12 lg:grid-cols-[3fr_2fr]">
                     <div>
-                        <p className="mb-6 text-lg text-muted-foreground">How your contributions will be used:</p>
-                        <div className="space-y-5">
-                            { funds.map(({ icon: Icon, title, body }) => (
-                                <div key={ title } className="flex gap-5 rounded-xl border bg-card p-6">
-                                    <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-lg bg-secondary text-primary">
-                                        <Icon className="size-5" />
-                                    </span>
-                                    <div>
-                                        <h3 className="font-serif text-xl font-semibold text-primary">{ title }</h3>
-                                        <p className="mt-1.5 text-muted-foreground">{ body }</p>
-                                    </div>
-                                </div>
-                            )) }
-                        </div>
+                        <p className="mb-5 max-w-2xl text-lg text-muted-foreground">You may direct your gift to either of the following funds.</p>
+                        <dl className="divide-y divide-[#d9d7d1] border-y border-[#d9d7d1]">
+                            { funds.map((fund) => <div key={ fund.title } className="py-6"><dt className="font-serif text-xl font-semibold text-primary">{ fund.title }</dt><dd className="mt-2 leading-relaxed text-muted-foreground">{ fund.body }</dd></div>) }
+                        </dl>
                     </div>
-
-                    <div className="self-start rounded-xl bg-primary p-7 text-primary-foreground shadow-sm">
-                        <p className="text-sm font-semibold tracking-[0.15em] text-gold uppercase">Online Donation Form</p>
-                        <h3 className="mt-2 font-serif text-2xl font-semibold">Give today</h3>
-                        <p className="mt-2 text-white/80">
-                            Choose the General Operating Fund or Student Program Support, and give once or set up a recurring gift.
-                        </p>
-                        <ul className="mt-5 space-y-2 text-sm text-white/80">
-                            <li className="flex items-center gap-2"><Repeat className="size-4 text-gold" />One-time or recurring</li>
-                            <li className="flex items-center gap-2"><GraduationCap className="size-4 text-gold" />Direct your gift to a fund</li>
-                        </ul>
-                        <Button asChild size="lg" variant="secondary" className="mt-6 w-full"><a href={ giving.donateOnline }>Open the donation form</a></Button>
-                        <p className="mt-5 flex gap-2 border-t border-white/15 pt-5 text-sm text-white/70">
-                            <Mail className="mt-0.5 size-4 shrink-0" />
-                            <span>Prefer to give by check? Mail it to { contact.mail }.</span>
-                        </p>
-                    </div>
+                    <aside className="self-start border-t-4 border-gold bg-primary p-7 text-white">
+                        <h3 className="font-serif text-2xl font-semibold">Make a donation</h3>
+                        <p className="mt-3 text-white/80">The online form accepts one-time and recurring gifts and lets you select a fund.</p>
+                        <Button asChild size="lg" variant="secondary" className="mt-6 w-full"><a href={ giving.donateOnline }>Open donation form</a></Button>
+                        <p className="mt-6 border-t border-white/20 pt-5 text-sm text-white/75">Checks may be mailed to { contact.mail }.</p>
+                    </aside>
                 </div>
             </Section>
 
-            <Section id="heritage" title="Heritage Classic Foundation" muted>
-                <div className="grid gap-6 md:grid-cols-2">
-                    { heritage.map((h) => (
-                        <div key={ h.title } className="flex flex-col rounded-xl border bg-card p-7">
-                            <span className="mb-3 inline-block self-start rounded-full bg-gold/25 px-2.5 py-0.5 text-xs font-semibold text-primary">+20% match</span>
-                            <h3 className="font-serif text-2xl font-semibold text-primary">{ h.title }</h3>
-                            <p className="mt-2 flex-1 text-muted-foreground">{ h.body }</p>
-                            <p className="mt-5 border-t pt-4 text-sm font-medium">{ h.window }</p>
-                        </div>
-                    )) }
+            <Section id="heritage" title="Heritage Classic Foundation programs" muted>
+                <div className="divide-y divide-[#d9d7d1] border-y border-[#d9d7d1] bg-white">
+                    { heritage.map((item) => <article key={ item.title } className="grid gap-3 py-6 md:grid-cols-[1fr_2fr]"><h3 className="font-serif text-xl font-semibold text-primary">{ item.title }</h3><div><p>{ item.body }</p><p className="mt-2 text-sm text-muted-foreground">{ item.window }</p></div></article>) }
                 </div>
-                <Button asChild size="lg" className="mt-8">
-                    <a href={ giving.heritage } target="_blank" rel="noreferrer">Learn more <ArrowUpRight className="size-4" /></a>
-                </Button>
+                <a href={ giving.heritage } target="_blank" rel="noreferrer" className="mt-7 inline-flex items-center gap-2 font-semibold text-primary hover:text-gold">Heritage giving information <ArrowUpRight className="size-4" /></a>
             </Section>
 
-            <Section id="sponsorship" title="Speaker Sponsorship">
-                <div className="grid items-center gap-8 rounded-xl border bg-card p-7 md:grid-cols-[auto_1fr_auto] md:p-9">
-                    <span className="inline-flex size-14 items-center justify-center rounded-xl bg-primary text-gold">
-                        <Mic className="size-6" />
-                    </span>
-                    <div className="space-y-3 text-muted-foreground">
-                        <p>
-                            Sponsoring a World Affairs Council of Hilton Head speaker program directly impacts the Council’s
-                            programming, allowing our Distinguished Speakers Program to host 12 national and 2 international
-                            experts annually.
-                        </p>
-                        <p>
-                            Sponsors are invited to a lunch or dinner with the speaker. At the speaker event, they are acknowledged
-                            and given preferred seating.
-                        </p>
-                    </div>
-                    <Button asChild size="lg" className="md:self-center"><Link href="/get-involved/sponsor">Sponsor a Speaker</Link></Button>
+            <Section id="sponsorship" title="Speaker sponsorship">
+                <div className="grid gap-6 md:grid-cols-[2fr_auto] md:items-center">
+                    <p className="max-w-3xl text-lg leading-relaxed text-muted-foreground">Speaker sponsors help underwrite the Distinguished Speaker Series. Sponsors are acknowledged at the program, receive preferred seating, and are invited to a meal with the speaker.</p>
+                    <Button asChild size="lg"><Link href="/get-involved/sponsor">View sponsorship options</Link></Button>
                 </div>
-            </Section>
-
-            <Section muted>
-                <Testimonial
-                    photo="/images/john-strother.png"
-                    name="John Strother"
-                    role="WACHH Marketing Committee"
-                    quote="I love the World Affairs Council of Hilton Head speakers. Every speaker has incredible expertise in international affairs or government. The speakers and topics are engaging. Their Great Decisions program is a fun way to discuss current events and ideas. Their Book Club makes for great conversations about timely subjects. Several weeks ago, we were fortunate to have the former ambassador to Russia come and join us in discussing his book. Pretty nice to have such an intimate environment with such knowledgeable people."
-                />
             </Section>
         </>
     );

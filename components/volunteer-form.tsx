@@ -28,7 +28,7 @@ export default function VolunteerForm() {
     }
 
     return (
-        <form onSubmit={ onSubmit } className="rounded-xl border bg-card p-7 shadow-sm">
+        <form onSubmit={ onSubmit } className="border border-[#d9d7d1] bg-card p-7">
             <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                     <label htmlFor="vf-name" className={ label }>Name</label>
@@ -55,7 +55,7 @@ export default function VolunteerForm() {
                 <legend className={ label }>I’m interested in</legend>
                 <div className="grid gap-2 sm:grid-cols-2">
                     { volunteerRoles.map((r) => (
-                        <label key={ r.id } className="flex items-center gap-2.5 rounded-md border px-3 py-2.5 text-sm hover:bg-muted has-[:checked]:border-primary has-[:checked]:bg-secondary">
+                        <label key={ r.id } className="flex items-center gap-2.5 border px-3 py-2.5 text-sm hover:bg-muted has-[:checked]:border-primary has-[:checked]:bg-secondary">
                             <input type="checkbox" name="interests" value={ r.title } className="size-4 accent-primary" />
                             { r.title }
                         </label>

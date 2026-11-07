@@ -46,7 +46,7 @@ const navItems: NavItem[] = [
         ]
      },
     { label: "Support Us", href: "/get-involved/give" },
-    { label: "News", href: "/#news" },
+    { label: "News", href: "/news" },
 ];
 
 export default function Header() {

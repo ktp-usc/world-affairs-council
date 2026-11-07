@@ -16,13 +16,13 @@ export const metadata: Metadata = {
 export default function AboutPage() {
     return (
         <>
-            <Hero title="About Us" photo={photos.aboutHero} nextId="introduction" />
-
-            <section id="introduction" className={styles.intro}>
-                <div className="content-width">
-                    <h2 className={styles.tagline}>{tagline}</h2>
-                </div>
-            </section>
+            <Hero
+                title="About Us"
+                photo={photos.aboutHero}
+                nextId="introduction"
+                breadcrumbs={[{ label: "Home", href: "/" }, { label: "About Us" }]}
+                subtitle={tagline}
+            />
 
             <section className={styles.block} aria-label="Who we are">
                 <div className={styles.blockText}>

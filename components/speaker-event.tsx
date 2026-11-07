@@ -25,18 +25,18 @@ export function When({ event }: { event: Event }) {
 
 export default function SpeakerEvent({ event }: { event: Event }) {
     return (
-        <article className="grid gap-7 rounded-xl border bg-card p-6 shadow-sm md:grid-cols-[220px_1fr] md:p-7">
-            <SpeakerPhoto event={ event } className="mx-auto w-full max-w-[260px]" />
+        <article className="grid gap-7 border-t border-[#d9d7d1] py-7 first:border-t-0 md:grid-cols-[180px_1fr]">
+            <SpeakerPhoto event={ event } className="w-full max-w-[220px]" />
             <div className="flex min-w-0 flex-col gap-4">
                 <div>
-                    <span className="inline-block rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">{ event.kind }</span>
+                    <span className="text-xs font-semibold tracking-[0.12em] text-muted-foreground uppercase">{ event.kind }</span>
                     <h3 className="mt-2 font-serif text-2xl leading-snug font-semibold text-primary">
                         <Link href={ eventHref(event) } className="hover:underline">{ event.speaker }: { event.title }</Link>
                     </h3>
                 </div>
                 <When event={ event } />
                 <p className="line-clamp-4 text-muted-foreground">{ event.bio ?? event.blurb }</p>
-                <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 border-t pt-4">
+                <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 pt-2">
                     <Button asChild><Link href={ eventHref(event) }>Register</Link></Button>
                     <AddToCalendar event={ event } />
                 </div>
