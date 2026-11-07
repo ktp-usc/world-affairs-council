@@ -1,131 +1,54 @@
 import type { Metadata } from "next";
-import { Check, CreditCard, FileText, GraduationCap, KeyRound, Sprout, Users, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import PageHero, { Section } from "@/components/page-hero";
-import PhotoCarousel from "@/components/photo-carousel";
-import Testimonial from "@/components/testimonial";
-import { gallery, memberBenefits, membership } from "@/lib/site";
+import { contact, memberBenefits, membership } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Become a Member" };
 
 const reasons = [
-    {
-        icon: GraduationCap,
-        title: "An education.",
-        body: "Membership gives you unparalleled access to influential figures in the global arena. Our speakers will inform you of the most up to date information on today’s toughest international issues.",
-    },
-    {
-        icon: KeyRound,
-        title: "Access.",
-        body: "Membership offers access to other member only programs such as Great Decisions, Fall Forum, newsletters and WACA programs.",
-    },
-    {
-        icon: Users,
-        title: "A community.",
-        body: "Membership provides opportunities to network socially and professionally within a dynamic, internationally minded group that includes civic, academic, military and business leaders in our region.",
-    },
-    {
-        icon: Sprout,
-        title: "An opportunity to influence our future leaders.",
-        body: "Volunteer or financially support our two student outreach programs, Model UN and Academic WorldQuest. We are empowering our youth with the same global sensibilities to ensure a more secure world future for us all.",
-    },
+    { title: "Speaker programs", body: "Attend 14 Distinguished Speaker Series programs each season, including two international speakers." },
+    { title: "Member resources", body: "Access program livestreams, video archives, newsletters, and selected programs from other World Affairs Councils." },
+    { title: "Discussion and community", body: "Participate in Great Decisions and other discussion programs with people interested in international affairs." },
+    { title: "Student outreach", body: "Support Academic WorldQuest and Model United Nations through membership, volunteering, or additional gifts." },
 ];
-
-function Mark({ yes }: { yes: boolean }) {
-    return yes
-        ? <Check className="mx-auto size-5 text-primary" aria-label="Included" />
-        : <X className="mx-auto size-5 text-muted-foreground/60" aria-label="Not included" />;
-}
 
 export default function MembershipPage() {
     return (
         <>
-            <PageHero eyebrow="Get Involved" title="Become a Member">
-                <p>Join a community of neighbors who care about the world beyond our shores.</p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                    <Button asChild size="lg" variant="secondary"><a href={ membership.joinOnline }>Join now</a></Button>
-                    <Button asChild size="lg" variant="outline" className="border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white">
-                        <a href={ membership.renew }>Renew membership</a>
-                    </Button>
+            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved", href: "/get-involved" }, { label: "Become a Member" }]} title="Become a Member">
+                Membership supports the Council and provides access to speaker programs, member resources, and discussion groups.
+                <div className="mt-7 flex flex-wrap gap-3">
+                    <a className="inline-flex min-h-12 items-center bg-[var(--gold)] px-5 py-3 font-bold text-[var(--navy)]" href={membership.joinOnline}>Join online</a>
+                    <a className="inline-flex min-h-12 items-center border border-white px-5 py-3 font-bold text-white" href={membership.renew}>Renew membership</a>
                 </div>
             </PageHero>
 
-            <div className="border-b bg-secondary">
-                <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-5">
-                    <p className="text-secondary-foreground">
-                        <span className="font-serif font-semibold">World Affairs Members</span> — It’s time to renew your membership
-                        for { membership.renewalYear }.{ " " }
-                        <a href={ membership.renew } className="font-semibold underline underline-offset-4 hover:text-primary/80">Click here</a>{ " " }
-                        and log in to renew today!
-                    </p>
-                    <Button asChild><a href={ membership.renew }>Renew for { membership.renewalYear }</a></Button>
-                </div>
-            </div>
-
-            <Section title="Membership with the World Affairs Council Hilton Head is…">
-                <div className="grid gap-6 md:grid-cols-2">
-                    { reasons.map(({ icon: Icon, title, body }) => (
-                        <div key={ title } className="rounded-xl border bg-card p-7">
-                            <span className="mb-4 inline-flex size-11 items-center justify-center rounded-lg bg-secondary text-primary">
-                                <Icon className="size-5" />
-                            </span>
-                            <h3 className="font-serif text-xl font-semibold text-primary">{ title }</h3>
-                            <p className="mt-2 text-muted-foreground">{ body }</p>
-                        </div>
-                    )) }
+            <Section title="Membership information">
+                <p className="max-w-[780px] text-lg text-[#444]">Membership is intended for people who want regular access to WACHH programs and reliable information about international affairs. Current members can renew by logging into their account.</p>
+                <div className="mt-8 divide-y divide-[#d9d7d1] border-y border-[#d9d7d1]">
+                    {reasons.map((reason) => (
+                        <article className="grid gap-2 py-5 md:grid-cols-[220px_minmax(0,1fr)] md:gap-8" key={reason.title}>
+                            <h3 className="font-[family-name:var(--serif)] text-[23px] font-medium text-[var(--navy)]">{reason.title}</h3>
+                            <p className="m-0 text-[#505050]">{reason.body}</p>
+                        </article>
+                    ))}
                 </div>
             </Section>
 
-            <Section id="benefits" title="Member Benefits" muted>
-                <div className="overflow-x-auto rounded-xl border bg-card">
-                    <table className="w-full text-left">
-                        <thead className="bg-primary text-primary-foreground">
-                            <tr>
-                                <th scope="col" className="px-5 py-4 font-serif text-lg font-semibold">Benefits</th>
-                                <th scope="col" className="w-28 px-3 py-4 text-center text-sm font-semibold tracking-wider text-gold uppercase">Member</th>
-                                <th scope="col" className="w-28 px-3 py-4 text-center text-sm font-semibold tracking-wider uppercase">Non-member</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y">
-                            { memberBenefits.map(({ benefit, nonMember }) => (
-                                <tr key={ benefit } className="even:bg-muted/40">
-                                    <th scope="row" className="px-5 py-4 font-normal">{ benefit }</th>
-                                    <td className="px-3 py-4"><Mark yes /></td>
-                                    <td className="px-3 py-4"><Mark yes={ nonMember } /></td>
-                                </tr>
-                            )) }
-                        </tbody>
+            <Section id="benefits" title="Member benefits" muted>
+                <div className="overflow-x-auto border-y border-[#d9d7d1] bg-white">
+                    <table className="w-full min-w-[680px] border-collapse text-left">
+                        <thead className="bg-[var(--navy)] text-white"><tr><th className="px-5 py-4">Benefit</th><th className="w-32 px-4 py-4 text-center">Member</th><th className="w-36 px-4 py-4 text-center">Non-member</th></tr></thead>
+                        <tbody>{memberBenefits.map(({ benefit, nonMember }) => (
+                            <tr className="border-t border-[#d9d7d1]" key={benefit}><th className="px-5 py-4 font-normal">{benefit}</th><td className="px-4 py-4 text-center font-bold text-[var(--teal)]">Included</td><td className="px-4 py-4 text-center">{nonMember ? "Available" : "—"}</td></tr>
+                        ))}</tbody>
                     </table>
                 </div>
             </Section>
 
-            <Section>
-                <Testimonial
-                    photo="/images/jan-cooper.png"
-                    name="Jan Cooper"
-                    role="WACHH Member"
-                    quote="Hilton Head is a vibrant community with a very engaged population. The World Affairs Council of Hilton Head offers the opportunity for individuals to remain educated and up-to-date on world affairs and their impact on the US. It is a small investment of time and dollars that offers an extraordinary return. We are incredibly fortunate to have this jewel in our midst!"
-                />
-            </Section>
-
-            <Section id="gallery" title="Life at the Council" muted>
-                <PhotoCarousel slides={ gallery } />
-            </Section>
-
-            <Section id="join" title="There are two ways to join">
-                <div className="grid gap-6 md:grid-cols-2">
-                    <div className="flex flex-col rounded-xl border bg-primary p-7 text-primary-foreground">
-                        <CreditCard className="mb-4 size-6 text-gold" />
-                        <h3 className="font-serif text-2xl font-semibold">By credit card</h3>
-                        <p className="mt-2 mb-6 flex-1 opacity-80">Use the Online Membership Form.</p>
-                        <Button asChild variant="secondary" className="self-start"><a href={ membership.joinOnline }>Online Membership Form</a></Button>
-                    </div>
-                    <div className="flex flex-col rounded-xl border bg-card p-7">
-                        <FileText className="mb-4 size-6 text-primary" />
-                        <h3 className="font-serif text-2xl font-semibold text-primary">By check</h3>
-                        <p className="mt-2 mb-6 flex-1 text-muted-foreground">Print the Membership Form, fill it out and mail it in to the office.</p>
-                        <Button asChild className="self-start"><a href={ membership.printForm } target="_blank" rel="noreferrer">Membership Form (PDF)</a></Button>
-                    </div>
+            <Section id="join" title="How to join">
+                <div className="grid gap-8 md:grid-cols-2">
+                    <section className="border-t-2 border-[var(--navy)] pt-5"><h3 className="font-[family-name:var(--serif)] text-[24px] font-medium text-[var(--navy)]">Join online</h3><p className="mt-2 text-[#555]">Complete the online membership form and pay by credit card.</p><a className="mt-4 inline-flex min-h-11 items-center font-bold text-[var(--teal)] underline underline-offset-4" href={membership.joinOnline}>Online membership form</a></section>
+                    <section className="border-t-2 border-[var(--navy)] pt-5"><h3 className="font-[family-name:var(--serif)] text-[24px] font-medium text-[var(--navy)]">Join by mail</h3><p className="mt-2 text-[#555]">Contact the WACHH office to request a membership form and mailing instructions.</p><a className="mt-4 inline-flex min-h-11 items-center font-bold text-[var(--teal)] underline underline-offset-4" href={ `mailto:${ contact.email }` }>Request a membership form</a></section>
                 </div>
             </Section>
         </>

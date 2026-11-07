@@ -8,10 +8,18 @@ export const metadata: Metadata = {
         "Apply for membership in the World Affairs Council of Hilton Head.",
 };
 
+/** Renders the membership form within the site's shared breadcrumb layout. */
 export default function JoinPage() {
     return (
         <main>
-            <PageHero eyebrow="Membership" title="Join the Council">
+            <PageHero
+                breadcrumbs={[
+                    { label: "Home", href: "/" },
+                    { label: "Membership", href: "/get-involved/membership" },
+                    { label: "Join the Council" },
+                ]}
+                title="Join the Council"
+            >
                 <p>
                     Become part of a community that engages with the world.
                     Complete your membership application below.
