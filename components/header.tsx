@@ -170,7 +170,7 @@ export default function Header() {
 
     const isCurrentLink = (href: string) => !isExternal(href) && pathname === pathOf(href);
     const isCurrentSection = (navItem: NavItem) =>
-        pathname === pathOf(navItem.href) || pathname.startsWith(`${pathOf(navItem.href)}/`) || (navItem.children ?? []).some((child) => isCurrentLink(child.href));
+        !navItem.href.includes("#") && (pathname === pathOf(navItem.href) || pathname.startsWith(`${pathOf(navItem.href)}/`) || (navItem.children ?? []).some((child) => isCurrentLink(child.href)));
 
     // The underline grows from the left; with reduced motion it fades in place instead.
     const topLinkClass = (isHighlighted: boolean) =>
@@ -292,7 +292,7 @@ export default function Header() {
                             if (!navItem.children) {
                                 return (
                                     <li key={navItem.label} className="border-b border-line">
-                                        <Link href={navItem.href} className={`flex min-h-14 items-center text-[17px] font-semibold text-primary ${focusRing}`}>{navItem.label}</Link>
+                                        <Link href={navItem.href} onClick={() => closeMobileMenu(false)} className={`flex min-h-14 items-center text-[17px] font-semibold text-primary ${focusRing}`}>{navItem.label}</Link>
                                     </li>
                                 );
                             }
@@ -331,6 +331,7 @@ export default function Header() {
                                                             <li key={childLink.href}>
                                                                 <NavAnchor
                                                                     link={childLink}
+                                                                    onClick={() => closeMobileMenu(false)}
                                                                     isCurrent={isCurrentLink(childLink.href)}
                                                                     className={`flex min-h-11 items-center text-base font-medium ${isCurrentLink(childLink.href) ? "text-teal" : "text-primary"} focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-teal`}
                                                                 />
@@ -341,6 +342,7 @@ export default function Header() {
                                                 {navItem.overviewLabel && (
                                                     <Link
                                                         href={navItem.href}
+                                                        onClick={() => closeMobileMenu(false)}
                                                         className="mt-2 flex min-h-11 items-center gap-1.5 text-base font-semibold text-teal focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-teal"
                                                     >
                                                         {navItem.overviewLabel} <ArrowRight size={16} aria-hidden="true" />
