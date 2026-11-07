@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { membership, wildApricotBaseUrl } from "@/lib/site";
 
@@ -11,18 +11,32 @@ declare global {
     }
 }
 
+let helperLoaded = false;
+const helperLoadListeners = new Set<() => void>();
+
+/** Records actual script completion and notifies whichever form is currently mounted. */
+function handleHelperLoad() {
+    if (typeof window.tryToEnableWACookies !== "function") {
+        return;
+    }
+
+    helperLoaded = true;
+    helperLoadListeners.forEach((initialize) => initialize());
+}
+
 /** Embeds Wild Apricot signup while retaining direct application and renewal links. */
 export default function WildApricotSignup() {
     const iframeReady = useRef(false);
-    const helperReady = useRef(false);
+    const mounted = useRef(false);
     const initialized = useRef(false);
 
     /** Runs cookie setup once per mount, after both the iframe and helper are ready. */
-    function initializeWildApricotCookies() {
+    const initializeWildApricotCookies = useCallback(() => {
         if (
+            !mounted.current ||
             initialized.current ||
             !iframeReady.current ||
-            !helperReady.current ||
+            !helperLoaded ||
             typeof window.tryToEnableWACookies !== "function"
         ) {
             return;
@@ -30,17 +44,22 @@ export default function WildApricotSignup() {
 
         initialized.current = true;
         window.tryToEnableWACookies(wildApricotBaseUrl);
-    }
+    }, []);
+
+    useEffect(() => {
+        mounted.current = true;
+        helperLoadListeners.add(initializeWildApricotCookies);
+        initializeWildApricotCookies();
+
+        return () => {
+            mounted.current = false;
+            helperLoadListeners.delete(initializeWildApricotCookies);
+        };
+    }, [initializeWildApricotCookies]);
 
     /** Records iframe readiness regardless of which external resource loads first. */
     function handleIframeLoad() {
         iframeReady.current = true;
-        initializeWildApricotCookies();
-    }
-
-    /** Handles initial script loading and remounts after client-side navigation. */
-    function handleHelperReady() {
-        helperReady.current = true;
         initializeWildApricotCookies();
     }
 
@@ -99,7 +118,8 @@ export default function WildApricotSignup() {
                 id="wild-apricot-cookie-helper"
                 src={`${wildApricotBaseUrl}/Common/EnableCookies.js`}
                 strategy="afterInteractive"
-                onReady={handleHelperReady}
+                onLoad={handleHelperLoad}
+                onReady={initializeWildApricotCookies}
             />
         </div>
     );
