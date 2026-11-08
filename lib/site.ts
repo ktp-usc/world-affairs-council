@@ -162,16 +162,19 @@ export const events: Event[] = [
     },
 ];
 
+/** Turns a `YYYY-MM-DD` date into a local-time Date (avoids the UTC shift of `new Date("YYYY-MM-DD")`). */
 export function parseDate(iso: string) {
     const [y, m, d] = iso.split("-").map(Number);
     return new Date(y, m - 1, d);
 }
 
+/** Events happening today or later. */
 export function upcomingEvents(today = new Date()) {
     const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     return events.filter((e) => parseDate(e.date) >= start);
 }
 
+/** Whether an event is part of the Distinguished Speaker Series or Global Speakers Program. */
 export const isSpeakerSeries = (e: Event) => e.kind === "Speaker Series" || e.kind === "Global Speaker";
 
 export const guestPolicy = {
@@ -182,7 +185,7 @@ export const guestPolicy = {
     registerFallback: "https://wachh.org/events", // used when an event has no registerUrl
 };
 
-// Pre-registration closes the Wednesday before the event.
+/** The last day to pre-register for an event: the Wednesday before it. */
 export function preRegisterDeadline(e: Event) {
     const d = parseDate(e.date);
     d.setDate(d.getDate() - ((d.getDay() - 3 + 7) % 7 || 7));
@@ -238,10 +241,12 @@ export const posts: Post[] = [
     },
 ];
 
+/** News posts, newest first. */
 export function sortedPosts() {
     return [...posts].sort((a, b) => parseDate(b.date).getTime() - parseDate(a.date).getTime());
 }
 
+/** A post's date written out, for example "April 25, 2025". */
 export function formatPostDate(post: Post) {
     return parseDate(post.date).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" });
 }

@@ -30,8 +30,10 @@ const panelOpen = "visible translate-y-0 scale-100 opacity-100";
 const panelClosed = "invisible -translate-y-1 scale-[0.97] opacity-0";
 const panelOpenTransition = "[transition:opacity_160ms_var(--ease-out-strong),translate_160ms_var(--ease-out-strong),scale_160ms_var(--ease-out-strong),visibility_0s]";
 const panelCloseTransition = "[transition:opacity_120ms_var(--ease-out-strong),translate_120ms_var(--ease-out-strong),scale_120ms_var(--ease-out-strong),visibility_0s_linear_120ms]";
-// The chevron and underline keep time with the panel, and skip motion whenever the panel does.
-// With reduced motion the chevron flips without turning.
+/**
+ * Transition classes for a dropdown arrow. It keeps time with its panel and skips motion whenever the panel does;
+ * with reduced motion it flips without turning.
+ */
 const chevronMotion = (isOpen: boolean, isInstant: boolean) =>
     `transition-transform motion-reduce:transition-none ${isInstant ? "duration-0" : `ease-out-strong ${isOpen ? "duration-160" : "duration-120"}`}`;
 
@@ -40,19 +42,22 @@ const mobileMenuOpen = "visible translate-y-0 opacity-100";
 const mobileMenuClosed = "invisible -translate-y-2 opacity-0";
 const mobileMenuOpenTransition = "[transition:opacity_200ms_var(--ease-out-strong),translate_200ms_var(--ease-out-strong),visibility_0s]";
 const mobileMenuCloseTransition = "[transition:opacity_150ms_var(--ease-out-strong),translate_150ms_var(--ease-out-strong),visibility_0s_linear_150ms]";
-// Sections open in 240ms and fold away in 180ms. With reduced motion they still fade, but the height snaps.
+/** Transition classes for a small-screen section: opens in 240ms, folds away in 180ms; with reduced motion the height snaps but still fades. */
 const accordionMotion = (isOpen: boolean) =>
     `transition-[grid-template-rows,opacity] ease-out-strong motion-reduce:transition-opacity ${isOpen ? "duration-240" : "duration-180"}`;
 
+/** Whether a link leaves this site (for example the member login). */
 const isExternal = (href: string) => href.startsWith("http");
+/** The page part of a link, without any `#section` anchor. */
 const pathOf = (href: string) => href.split("#")[0];
 
+/** Renders a nav link: a plain `<a>` for other sites, a Next.js `Link` (marked as the current page when it is) for pages on this site. */
 function NavAnchor({ link, className, onClick, isCurrent }: { link: NavLink; className?: string; onClick?: () => void; isCurrent?: boolean }) {
     if (isExternal(link.href)) return <a className={className} href={link.href} onClick={onClick}>{link.label}</a>;
     return <Link className={className} href={link.href} onClick={onClick} aria-current={isCurrent ? "page" : undefined}>{link.label}</Link>;
 }
 
-// Splits a section's pages into runs of links that share a group, keeping their order.
+/** Splits a section's pages into runs of links that share a group, keeping their order. */
 function groupLinks(links: NavLink[]) {
     const linkGroups: { groupKey: string; links: NavLink[] }[] = [];
     for (const link of links) {
@@ -63,9 +68,10 @@ function groupLinks(links: NavLink[]) {
     }
     return linkGroups;
 }
-// Groups are told apart by space alone.
+/** Space above every group after the first; groups are told apart by space alone. */
 const groupGap = (groupIndex: number) => (groupIndex > 0 ? "mt-2.5" : "");
 
+/** The site header: logo, section dropdowns, and Log in / Join / Donate, collapsing to a drop-down accordion menu under 1024px. */
 export default function Header() {
     const pathname = usePathname();
     const [openMenuLabel, setOpenMenuLabel] = useState<string | null>(null);
@@ -94,32 +100,37 @@ export default function Header() {
         if (isMobileInstant) setOpenAccordionLabel(null);
     }
 
+    /** Opens a section's dropdown; switching from another open menu, or `skipFade`, shows it without the fade. */
     const openMenu = (menuLabel: string, skipFade: boolean) => {
         window.clearTimeout(closeTimer.current);
         window.clearTimeout(openTimer.current);
         setIsInstant(skipFade || (openMenuLabel !== null && openMenuLabel !== menuLabel));
         setOpenMenuLabel(menuLabel);
     };
+    /** Closes any open dropdown, cancelling pending opens and closes. */
     const closeMenu = (skipFade = false) => {
         window.clearTimeout(closeTimer.current);
         window.clearTimeout(openTimer.current);
         setIsInstant(skipFade);
         setOpenMenuLabel(null);
     };
-    // Closing the small-screen menu leaves open sections as they are while it fades, so nothing
-    // collapses inside a moving panel; they fold away once it is hidden.
+    /**
+     * Closes the small-screen menu. Open sections stay as they are while it fades, so nothing collapses inside
+     * a moving panel; they fold away once it is hidden (or at once when `skipMotion` is true).
+     */
     const closeMobileMenu = (skipMotion: boolean) => {
         setIsMobileInstant(skipMotion);
         setIsMobileMenuOpen(false);
         if (skipMotion) setOpenAccordionLabel(null);
     };
-    // A short grace period lets the pointer cross from the link into its panel.
+    /** Closes the dropdown after 150ms, so the pointer can cross from the link into its panel. */
     const closeMenuSoon = () => {
         window.clearTimeout(closeTimer.current);
         window.clearTimeout(openTimer.current);
         closeTimer.current = window.setTimeout(() => closeMenu(), 150);
     };
 
+    /** Opens a section's dropdown when a mouse pointer reaches its link (touch is handled by click). */
     const handleTriggerPointerEnter = (pointerEvent: PointerEvent, menuLabel: string) => {
         if (pointerEvent.pointerType !== "mouse") return;
         wasOpenedByHover.current = true;
@@ -129,10 +140,11 @@ export default function Header() {
         window.clearTimeout(openTimer.current);
         openTimer.current = window.setTimeout(() => openMenu(menuLabel, false), 80);
     };
-    // Tabbing past a menu's last link closes it.
+    /** Closes the dropdown when keyboard focus moves outside its section, such as tabbing past the last link. */
     const closeMenuWhenFocusLeaves = (focusEvent: FocusEvent<HTMLLIElement>) => {
         if (!focusEvent.currentTarget.contains(focusEvent.relatedTarget as Node)) closeMenu(isUsingKeyboard.current);
     };
+    /** Toggles a section's dropdown on click or Enter; a click right after hovering keeps it open. */
     const handleTriggerClick = (clickEvent: MouseEvent, menuLabel: string) => {
         const isOpenedFromKeyboard = clickEvent.detail === 0;
         // A click right after hovering keeps the menu open instead of closing it.
@@ -142,6 +154,7 @@ export default function Header() {
     };
 
     useEffect(() => {
+        /** Escape closes whichever menu is open and returns focus to the button that opened it. */
         const handleKeyDown = (keyboardEvent: KeyboardEvent) => {
             isUsingKeyboard.current = true;
             if (keyboardEvent.key !== "Escape") return;
@@ -154,6 +167,7 @@ export default function Header() {
                 mobileToggleRef.current?.focus();
             }
         };
+        /** A click or tap outside the header closes any open menu. */
         const handlePointerDown = (pointerEvent: globalThis.PointerEvent) => {
             isUsingKeyboard.current = false;
             if (headerRef.current?.contains(pointerEvent.target as Node)) return;
@@ -168,16 +182,19 @@ export default function Header() {
         };
     }, [openMenuLabel, isMobileMenuOpen]);
 
+    /** Whether a link points at the page being viewed. */
     const isCurrentLink = (href: string) => !isExternal(href) && pathname === pathOf(href);
+    /** Whether the page being viewed belongs to a top-level section; links to an anchor (Events) never count. */
     const isCurrentSection = (navItem: NavItem) =>
         !navItem.href.includes("#") && (pathname === pathOf(navItem.href) || pathname.startsWith(`${pathOf(navItem.href)}/`) || (navItem.children ?? []).some((child) => isCurrentLink(child.href)));
 
-    // The underline grows from the left; with reduced motion it fades in place instead.
+    /** Classes for a top-level link or button; its gold underline grows from the left, or fades in place with reduced motion. */
     const topLinkClass = (isHighlighted: boolean) =>
         `relative flex h-full cursor-pointer items-center gap-1 px-2.5 text-[15px] font-semibold whitespace-nowrap text-primary ${hoverColor} hover:text-teal ${focusRing} ` +
         `after:absolute after:inset-x-2.5 after:bottom-0 after:h-[3px] after:origin-left after:bg-gold after:transition-[scale,opacity] motion-reduce:after:scale-x-100 ` +
         (isInstant ? "after:transition-none " : `after:ease-out-strong ${isHighlighted ? "after:duration-160" : "after:duration-120"} `) +
         (isHighlighted ? "after:scale-x-100" : "after:scale-x-0 motion-reduce:after:opacity-0");
+    /** Classes for a link inside a desktop dropdown; the current page is shown in teal. */
     const panelLinkClass = (isCurrent: boolean) =>
         `-mx-3 block px-3 py-[7px] text-[15px] leading-snug font-medium whitespace-nowrap ${hoverColor} hover:bg-muted ${focusRing} ${isCurrent ? "text-teal" : "text-primary hover:text-teal"}`;
 

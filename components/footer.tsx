@@ -11,6 +11,7 @@ import { contact, nav, originalSitePages, social } from "@/lib/site";
 const contactLink = "font-bold text-white transition-[color] duration-150 ease-color hover:text-header-gold";
 const socialIcons: Record<string, LucideIcon> = { Facebook, LinkedIn: Linkedin, YouTube: Youtube, Instagram };
 
+/** The site footer: WACHH mark and motto, section links, contact details, social accounts, and the legal line. */
 export default function Footer() {
     return (
         <footer className="bg-primary text-white selection:bg-header-gold selection:text-primary [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-[3px] [&_a:focus-visible]:outline-header-gold">
