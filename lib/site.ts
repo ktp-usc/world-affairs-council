@@ -7,50 +7,59 @@ export const contact = {
 
 export const memberLogin = "https://wachh.org/Sys/Login";
 
-export type NavItem = { label: string; href: string; children?: { label: string; href: string }[] };
+export type NavLink = { label: string; href: string; group?: string };
+export type NavItem = { label: string; href: string; overviewLabel?: string; children?: NavLink[] };
 
+// Site navigation, shared by the header and footer. Every href is a real page.
+// Links that share a `group` sit together, with a little space before the next group; the group name is never shown.
+// `overviewLabel` adds a link to the section's main page at the bottom of its menu. The section buttons open
+// menus rather than navigate, so this is the only way to reach /programs and /get-involved from the header.
 export const nav: NavItem[] = [
-    { label: "Calendar", href: "/calendar" },
     {
         label: "About",
         href: "/about",
         children: [
-            { label: "Our Mission", href: "/about#mission" },
-            { label: "Leadership", href: "/about#leadership" },
-            { label: "Annual Report", href: "/about#annual-report" },
-            { label: "World Affairs Councils of America", href: "/about#waca" },
+            { label: "About Us", href: "/about" },
+            { label: "Our Team", href: "/about/team" },
+            { label: "Community", href: "/about/community" },
         ],
     },
     {
         label: "Programs",
         href: "/programs",
+        overviewLabel: "View all programs",
         children: [
-            { label: "Distinguished Speaker Series", href: "/programs#speakers" },
-            { label: "Global Speakers Program", href: "/programs#global" },
-            { label: "Book Club", href: "/programs#book-club" },
-            { label: "Great Decisions", href: "/programs#great-decisions" },
+            { label: "Distinguished Speaker Series", href: "/programs/distinguished-speaker-series", group: "speakers" },
+            { label: "Global Speakers Program", href: "/programs/global-speakers-program", group: "speakers" },
+            { label: "Great Decisions", href: "/programs/great-decisions", group: "discussion" },
+            { label: "Book Club", href: "/programs/book-club", group: "discussion" },
+            { label: "Student Programs", href: "/programs/student-programs", group: "students" },
+            { label: "Academic WorldQuest", href: "/programs/academic-worldquest", group: "students" },
+            { label: "Model UN", href: "/programs/model-un", group: "students" },
         ],
     },
-    {
-        label: "Students",
-        href: "/students",
-        children: [
-            { label: "Academic WorldQuest", href: "/students#worldquest" },
-            { label: "Model UN", href: "/students#model-un" },
-        ],
-    },
+    { label: "Events", href: "/get-involved/guests#events" },
     {
         label: "Get Involved",
         href: "/get-involved",
+        overviewLabel: "View all ways to help",
         children: [
-            { label: "Become a Member", href: "/get-involved/membership" },
-            { label: "Be a Guest", href: "/get-involved/guests" },
-            { label: "Volunteer", href: "/get-involved/volunteer" },
-            { label: "Ways to Give", href: "/get-involved/give" },
-            { label: "Sponsor a Speaker", href: "/get-involved/sponsor" },
+            { label: "Become a Member", href: "/get-involved/membership", group: "options" },
+            { label: "Be a Guest", href: "/get-involved/guests", group: "options" },
+            { label: "Volunteer", href: "/get-involved/volunteer", group: "options" },
+            { label: "Ways to Give", href: "/get-involved/give", group: "options" },
+            { label: "Sponsor a Speaker", href: "/get-involved/sponsor", group: "options" },
         ],
     },
+    { label: "News", href: "/news" },
 ];
+
+// The three actions on the right of the header.
+export const memberActions = {
+    login: { label: "Log in", href: memberLogin },
+    join: { label: "Join", href: "/get-involved/membership" },
+    donate: { label: "Donate", href: "/get-involved/give" },
+};
 
 export type Event = {
     slug: string;
