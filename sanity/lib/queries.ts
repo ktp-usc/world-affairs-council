@@ -11,7 +11,7 @@ export const EVENTS_QUERY = defineQuery(`
 // listing page: every admin that has a slug, sorted by the order field
 export const TEAM_MEMBERS_QUERY = defineQuery(`
   *[_type == "teamMember" && defined(slug.current)] | order(order asc, name asc) {
-    _id, name, role, photo,
+    _id, name, role, photo, category,
     "slug": slug.current
   }
 `);
