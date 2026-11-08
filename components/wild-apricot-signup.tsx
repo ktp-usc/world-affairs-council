@@ -24,7 +24,7 @@ function handleHelperLoad() {
     helperLoadListeners.forEach((initialize) => initialize());
 }
 
-/** Embeds Wild Apricot signup while retaining direct application and renewal links. */
+/** Embeds Wild Apricot signup while retaining the direct hosted-form fallback. */
 export default function WildApricotSignup() {
     const iframeReady = useRef(false);
     const mounted = useRef(false);
@@ -102,17 +102,6 @@ export default function WildApricotSignup() {
                     onLoad={handleIframeLoad}
                 />
             </div>
-
-            <p className="text-sm text-[#505050]">
-                Already a member?{" "}
-                <a
-                    href={membership.renew}
-                    className="font-semibold text-[var(--teal)] underline underline-offset-4"
-                >
-                    Log in to renew your membership
-                </a>
-                .
-            </p>
 
             <Script
                 id="wild-apricot-cookie-helper"

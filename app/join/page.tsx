@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageHero, { Section } from "@/components/page-hero";
 import WildApricotSignup from "@/components/wild-apricot-signup";
+import { membership } from "@/lib/site";
 
 export const metadata: Metadata = {
     title: "Membership Application",
@@ -21,8 +22,14 @@ export default function JoinPage() {
                 title="Join the Council"
             >
                 <p>
-                    Become part of a community that engages with the world.
-                    Complete your membership application below.
+                    Already a member?{" "}
+                    <a
+                        href={membership.renew}
+                        className="font-bold text-white underline underline-offset-4 hover:text-header-gold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                    >
+                        Log in to renew your membership
+                    </a>
+                    .
                 </p>
             </PageHero>
 
