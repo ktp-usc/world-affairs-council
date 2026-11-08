@@ -269,6 +269,13 @@ export const gallery: { src?: string; caption: string }[] = [
 
 export const volunteerContact = { email: "officemgr@wachh.org", phone: contact.phone };
 
+const volunteerFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdFUrDB2FeJd2yVCaRkLURFuRFiOIDVfUilT8EEyLbfJ3JEeA/viewform";
+
+export const volunteerForm = {
+    hosted: volunteerFormUrl,
+    embedded: `${volunteerFormUrl}?embedded=true`,
+};
+
 export const volunteerRoles = [
     {
         id: "speaker-events",
@@ -306,7 +313,9 @@ export const volunteerGallery: { src?: string; caption: string }[] = [
 ];
 
 export const giving = {
-    donateOnline: "https://wachh.org/online-donation-form",
+    donateOnline: "/get-involved/give#donation-form",
+    hostedDonate: `${wildApricotBaseUrl}/online-donation-form`,
+    widgetDonate: `${wildApricotBaseUrl}/widget/online-donation-form`,
     heritage: "https://www.heritageclassicfoundation.com/giving-opportunities/",
     birdiesEnd: "April 19, 2026", // last day of the RBC Heritage
 };
