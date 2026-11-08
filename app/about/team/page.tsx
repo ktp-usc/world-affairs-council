@@ -93,7 +93,7 @@ export default async function TeamPage() {
         return (
           <section key={cat.value} className="mb-12">
             <h2 className="mb-6 text-2xl font-bold">{cat.title}</h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6 sm:grid-cols-3 lg:grid-cols-5">
               {group.map((member) => (
                 <TeamMemberCard key={member._id} member={member} />
               ))}

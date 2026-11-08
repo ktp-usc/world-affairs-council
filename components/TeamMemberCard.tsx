@@ -91,7 +91,6 @@ export function TeamMemberCard({ member }: { member: TeamMemberCardData }) {
       href={`/about/team/${member.slug}`}
       className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--gold)"
     >
-      {/* the photo box from your css, relative + overflow-hidden added so the image fills it cleanly */}
       <div className="relative grid aspect-[3/4] place-items-center overflow-hidden border-b-[3px] border-solid border-b-(--gold) bg-(--off-white)">
         {member.photo ? (
           <Image
@@ -110,7 +109,7 @@ export function TeamMemberCard({ member }: { member: TeamMemberCardData }) {
 
       <div className="mt-3">
         <h3 className="font-bold text-neutral-900">{member.name}</h3>
-        {member.role && <p className="text-sm text-neutral-600">{member.role}</p>}
+        {member.role && <p className="text-sm text-neutral-600 font-bold">{member.role}</p>}
       </div>
     </Link>
   )
