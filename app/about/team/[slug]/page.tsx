@@ -140,28 +140,17 @@ export default async function TeamMemberPage({
 
   return (
     <>
-      <Hero
-        title="Our Team"
-        photo={photos.teamHero}
-        nextId="members"
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "About Us", href: "/about" },
-          { label: "Our Team", href: "/about/team" },
-          // the real name keeps apostrophes and capitals that the slug drops
-          { label: member.name.toUpperCase() },
-        ]}
-      />
-
-      {/* id matches the hero's nextId so its scroll-down button has a target */}
-      <main id="members" className="min-h-250">
-        <div className="mx-auto max-w-6xl px-4 py-8 lg:py-8">
+      <div className="w-full bg-[#1b2a41] min-h-[60px] flex flex-1 items-center px-8">
           <Link
             href="/about/team"
-            className="text-sm font-medium text-neutral-600 transition hover:text-neutral-900"
+            className="flex text-md font-medium text-white transition hover:text-gray-900"
           >
             ← Back to Our Team
           </Link>
+      </div>
+      {/* id matches the hero's nextId so its scroll-down button has a target */}
+      <main id="members" className="min-h-250">
+        <div className="mx-auto max-w-6xl px-4 py-8 lg:py-8">
 
           {/* stacked on mobile, photo column + text column on desktop */}
           <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-16">
@@ -189,15 +178,16 @@ export default async function TeamMemberPage({
             </aside>
 
             <article>
-              {categoryLabel && (
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
-                  {categoryLabel}
-                </p>
-              )}
               <h1 className="mt-2 text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl">
                 {member.name}
               </h1>
-              {member.role && <p className="mt-3 text-lg text-neutral-600">{member.role}</p>}
+              {(categoryLabel || member.role) && (
+                <p className="mt-3 text-lg text-neutral-600">
+                  {categoryLabel}
+                  {categoryLabel && member.role ? " - " : ""}
+                  {member.role}
+                </p>
+              )}
 
               {/* short gold bar, same visual language as the card border */}
               <div className="mt-6 h-[3px] w-16 bg-(--gold)" />
