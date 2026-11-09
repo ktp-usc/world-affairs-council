@@ -13,7 +13,11 @@ export default function GuestsPage() {
 
     return (
         <>
-            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved", href: "/get-involved" }, { label: "Be a guest" }]} title="Attend as a guest">
+            <PageHero
+                breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved", href: "/get-involved" }, { label: "Be a guest" }]}
+                title="Attend as a guest"
+                image={{ src: "/images/attend-as-guest.jpg", alt: "A WACHH speaker addressing an audience" }}
+            >
                 Non-members may register for individual Distinguished Speaker Series programs. WACHH members do not need to register or pay an additional event fee.
             </PageHero>
 

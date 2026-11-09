@@ -1,6 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Youtube, type LucideIcon } from "lucide-react";
-import { contact, memberLogin, nav, originalSitePages, social } from "@/lib/site";
+import { contact, memberLogin, originalSitePages, social } from "@/lib/site";
 
 // Site footer: the WACHH mark with its motto and the five top-level sections (from `nav` in lib/site.ts,
 // which the header shares), then the office contact details, then the legal line.
@@ -15,40 +16,51 @@ const socialIcons: Record<string, LucideIcon> = { Facebook, LinkedIn: Linkedin, 
 /** The site footer: WACHH mark and motto, section links, contact details, social accounts, and the legal line. */
 export default function Footer() {
     return (
-        <footer className="bg-primary text-white selection:bg-header-gold selection:text-primary [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-[3px] [&_a:focus-visible]:outline-header-gold">
-            <div className="content-width pt-14 pb-8 md:pt-20 md:pb-10">
-                <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-start md:gap-12">
+        <footer className="site-footer">
+            <div className="footer-inner">
+                <div className="footer-grid">
                     <div>
-                        <Link href="/" className="flex w-fit items-center gap-3 text-white" aria-label="WACHH home">
-                            <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" className="fill-none stroke-header-gold stroke-[1.5]">
-                                <circle cx="16" cy="16" r="14.5" />
-                                <circle cx="16" cy="16" r="9.5" />
-                                <circle cx="16" cy="16" r="5" />
-                            </svg>
-                            <span className="font-[family-name:var(--serif)] text-[30px] leading-none">WACHH</span>
-                        </Link>
-                        <p className="mt-3 text-[15px] text-header-gold">Engaging, educating, inspiring.</p>
+                        <a
+                            className="footer-brand"
+                            href="https://worldaffairscouncils.org/"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="Visit the World Affairs Councils of America website"
+                        >
+                            <Image
+                                className="footer-waca-logo"
+                                src="/images/world-affairs-councils-of-america.png"
+                                alt="World Affairs Councils of America"
+                                width={480}
+                                height={181}
+                            />
+                        </a>
+                        <p className="footer-tagline">Connecting our community<br />to the world.</p>
                     </div>
-                    <nav aria-label="Footer" className="md:-mt-1.5">
-                        <ul className="grid grid-cols-2 gap-x-8 gap-y-1 sm:flex sm:flex-wrap sm:gap-x-8 md:justify-end">
-                            {nav.map((navItem) => (
-                                <li key={navItem.label}>
-                                    <Link href={navItem.href} className="inline-flex min-h-11 items-center text-base font-semibold text-white transition-[color] duration-150 ease-color hover:text-header-gold">
-                                        {navItem.label}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
+                    <div>
+                        <h3>Quick Links</h3>
+                        <Link href="/about">About WACHH</Link>
+                        <Link href="/get-involved/membership">Membership</Link>
+                        <Link href="/get-involved/guests">Events</Link>
+                    </div>
+                    <div>
+                        <h3>Explore</h3>
+                        <Link href="/programs">Programs</Link>
+                        <Link href="/news">News &amp; Insights</Link>
+                        <Link href="/get-involved/give">Support Us</Link>
+                    </div>
                 </div>
 
-                <address className="mt-12 grid gap-x-12 gap-y-3 text-[15px] leading-relaxed text-white/75 not-italic md:mt-16 md:grid-cols-[auto_auto_1fr]">
-                    <p className="grid justify-items-start">
+                <address className="footer-contact">
+                    <div className="footer-contact-details">
                         <a href={`mailto:${contact.email}`} className={contactLink}>{contact.email}</a>
                         <a href={`tel:${contact.phone.replace(/-/g, "")}`} className={contactLink}>{contact.phone}</a>
-                    </p>
-                    <p className="text-pretty">{contact.office}<br />Mail: {contact.mail}</p>
-                    <ul className="-ml-3 flex items-center md:-mt-2.5 md:ml-0 md:-mr-3 md:justify-self-end" aria-label="WACHH on social media">
+                    </div>
+                    <div className="footer-address">
+                        <span>{contact.office}</span>
+                        <span>Mail: {contact.mail}</span>
+                    </div>
+                    <ul className="footer-socials" aria-label="WACHH on social media">
                         {social.map((socialAccount) => {
                             const SocialIcon = socialIcons[socialAccount.label];
                             return (
@@ -66,7 +78,7 @@ export default function Footer() {
                     </ul>
                 </address>
 
-                <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] leading-relaxed text-white/60">
+                <div className="footer-legal">
                     <p>© {new Date().getFullYear()} World Affairs Council of Hilton Head. A 501(c)(3) nonprofit.</p>
                     <ul className="flex flex-wrap gap-x-6">
                         {[{ label: "Member log in", href: memberLogin }, ...originalSitePages].map((originalPage) => (
