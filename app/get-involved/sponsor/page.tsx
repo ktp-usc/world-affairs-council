@@ -1,12 +1,17 @@
+import MemberStory from "@/components/member-story";
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import PageHero, { Section } from "@/components/page-hero";
 import SponsorForm from "@/components/sponsor-form";
-import { parseDate, sponsorship } from "@/lib/site";
+import Image from "next/image";
+import { sponsorship } from "@/lib/site";
+import { getSpeakerSponsorshipSchedule } from "@/lib/speaker-sponsorship";
+import SpeakerSponsorshipTable from "@/components/speaker-sponsorship-table";
 
 export const metadata: Metadata = { title: "Sponsor a Speaker" };
 
-export default function SponsorPage() {
+export default async function SponsorPage() {
+    const schedule = await getSpeakerSponsorshipSchedule();
     return (
         <>
             <PageHero
@@ -17,6 +22,13 @@ export default function SponsorPage() {
                 Speaker sponsorship helps fund the Distinguished Speaker Series. Sponsors are acknowledged at the program, receive preferred seating, and are invited to a meal with the speaker.
                 <Button asChild size="lg" variant="secondary" className="mt-8 flex w-fit"><a href="#become-a-sponsor">Become a Sponsor</a></Button>
             </PageHero>
+
+            <Section>
+                <figure>
+                    <Image src="/programs/main/programs-speaker-crowd.png" alt="Council audience gathered for a speaker presentation" width={1200} height={600} sizes="(max-width: 768px) 100vw, 1040px" className="max-h-96 w-full object-cover" />
+                    <figcaption className="mt-3 text-muted-foreground">Sponsorships help bring 12 national and two international experts to Hilton Head each year. Sponsors receive recognition from the podium, on the WACHH website, and in the Annual Report.</figcaption>
+                </figure>
+            </Section>
 
             <Section id="levels" title="Sponsorship levels">
                 <div className="divide-y divide-[#d9d7d1] border-y border-[#d9d7d1]">
@@ -40,7 +52,7 @@ export default function SponsorPage() {
                         If you’d like to sponsor more than one speaker presentation, write in the total amount of your payment and
                         make a note in the Sponsorship Comment field.
                     </p>
-                    <p>For your convenience a list of { sponsorship.season } events is provided below.</p>
+                    <p>For your convenience, the <a href="#presentations" className="font-semibold text-primary underline underline-offset-4">{schedule.season} speaker presentation schedule</a> is provided below.</p>
                 </div>
             </Section>
 
@@ -48,30 +60,9 @@ export default function SponsorPage() {
                 <SponsorForm />
             </Section>
 
-            <Section id="presentations" title={ `${ sponsorship.season } Speaker Presentations available for Sponsorship` }>
-                <div className="overflow-x-auto border border-[#d9d7d1] bg-card">
-                    <table className="w-full text-left">
-                        <thead className="bg-primary text-primary-foreground">
-                            <tr>
-                                <th scope="col" className="px-5 py-4 text-sm font-semibold tracking-wider text-gold uppercase">Date</th>
-                                <th scope="col" className="px-5 py-4 text-sm font-semibold tracking-wider uppercase">Presenter</th>
-                                <th scope="col" className="px-5 py-4 text-sm font-semibold tracking-wider uppercase">Topic</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y">
-                            { sponsorship.presentations.map((p) => (
-                                <tr key={ p.date } className="even:bg-muted/40">
-                                    <td className="px-5 py-4 whitespace-nowrap tabular-nums">
-                                        { parseDate(p.date).toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "numeric" }) }
-                                    </td>
-                                    <th scope="row" className="px-5 py-4 font-serif font-semibold whitespace-nowrap text-primary">{ p.presenter }</th>
-                                    <td className="px-5 py-4">{ p.topic }</td>
-                                </tr>
-                            )) }
-                        </tbody>
-                    </table>
-                </div>
-            </Section>
+            <Section muted><MemberStory photo="/images/richard-hammes.png" name="Richard Hammes" role="WACHH Member"><p>I cannot think of another organization that provides the wide array of speakers on such a broad range of topics as the World Affairs Council of Hilton Head. They bring to our community true experts in their fields that would be impossible to find anywhere else, especially for the cost of this membership. The nuggets of knowledge gained from these experts is why I try to never miss a presentation. Once you come to your first session you will be hooked.</p></MemberStory></Section>
+
+            <SpeakerSponsorshipTable schedule={schedule} />
         </>
     );
 }
