@@ -5,40 +5,44 @@ export const contact = {
     email: "execdirector@wachh.org",
 };
 
-export const memberLogin = "https://wachh.org/Sys/Login";
+export const wildApricotBaseUrl = "https://wachh.wildapricot.org";
 
-export type NavItem = { label: string; href: string; children?: { label: string; href: string }[] };
+export const newsletter = {
+    widgetSignup: `${wildApricotBaseUrl}/widget/Newsletter-Signup#idGeneralFormContainer`,
+};
 
+export const memberLogin = `${wildApricotBaseUrl}/Sys/Login`;
+
+export type NavLink = { label: string; href: string };
+export type NavItem = { label: string; href: string; children?: NavLink[] };
+
+// Site navigation, shared by the header and footer. Every href is a real page.
+// A section's own page (/programs, /get-involved) is linked from the footer's section headings.
 export const nav: NavItem[] = [
-    { label: "Calendar", href: "/calendar" },
+    { label: "Home", href: "/" },
     {
         label: "About",
         href: "/about",
         children: [
-            { label: "Our Mission", href: "/about#mission" },
-            { label: "Leadership", href: "/about#leadership" },
-            { label: "Annual Report", href: "/about#annual-report" },
-            { label: "World Affairs Councils of America", href: "/about#waca" },
+            { label: "About Us", href: "/about" },
+            { label: "Our Team", href: "/about/team" },
+            { label: "Community", href: "/about/community" },
         ],
     },
     {
         label: "Programs",
         href: "/programs",
         children: [
-            { label: "Distinguished Speaker Series", href: "/programs#speakers" },
-            { label: "Global Speakers Program", href: "/programs#global" },
-            { label: "Book Club", href: "/programs#book-club" },
-            { label: "Great Decisions", href: "/programs#great-decisions" },
+            { label: "Distinguished Speaker Series", href: "/programs/distinguished-speaker-series" },
+            { label: "Global Speakers Program", href: "/programs/global-speakers-program" },
+            { label: "Great Decisions", href: "/programs/great-decisions" },
+            { label: "Book Club", href: "/programs/book-club" },
+            { label: "Student Programs", href: "/programs/student-programs" },
+            { label: "Academic WorldQuest", href: "/programs/academic-worldquest" },
+            { label: "Model UN", href: "/programs/model-un" },
         ],
     },
-    {
-        label: "Students",
-        href: "/students",
-        children: [
-            { label: "Academic WorldQuest", href: "/students#worldquest" },
-            { label: "Model UN", href: "/students#model-un" },
-        ],
-    },
+    { label: "Events", href: "/get-involved/guests#events" },
     {
         label: "Get Involved",
         href: "/get-involved",
@@ -50,7 +54,14 @@ export const nav: NavItem[] = [
             { label: "Sponsor a Speaker", href: "/get-involved/sponsor" },
         ],
     },
+    { label: "News", href: "/news" },
 ];
+
+// The two actions on the right of the header.
+export const memberActions = {
+    becomeMember: { label: "Become a Member", href: "/get-involved/membership" },
+    donate: { label: "Donate", href: "/get-involved/give" },
+};
 
 export type Event = {
     slug: string;
@@ -153,16 +164,19 @@ export const events: Event[] = [
     },
 ];
 
+/** Turns a `YYYY-MM-DD` date into a local-time Date (avoids the UTC shift of `new Date("YYYY-MM-DD")`). */
 export function parseDate(iso: string) {
     const [y, m, d] = iso.split("-").map(Number);
     return new Date(y, m - 1, d);
 }
 
+/** Events happening today or later. */
 export function upcomingEvents(today = new Date()) {
     const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     return events.filter((e) => parseDate(e.date) >= start);
 }
 
+/** Whether an event is part of the Distinguished Speaker Series or Global Speakers Program. */
 export const isSpeakerSeries = (e: Event) => e.kind === "Speaker Series" || e.kind === "Global Speaker";
 
 export const guestPolicy = {
@@ -173,28 +187,36 @@ export const guestPolicy = {
     registerFallback: "https://wachh.org/events", // used when an event has no registerUrl
 };
 
-// Pre-registration closes the Wednesday before the event.
+/** The last day to pre-register for an event: the Wednesday before it. */
 export function preRegisterDeadline(e: Event) {
     const d = parseDate(e.date);
     d.setDate(d.getDate() - ((d.getDay() - 3 + 7) % 7 || 7));
     return d;
 }
 
+// Original sponsor marks from the Council's current homepage at wachh.org.
 export const sponsors = [
-    "Sea Pines Real Estate",
-    "Ruckno",
-    "Seabrook",
-    "Community Foundation of the Lowcountry",
-    "The Westin",
-    "Tidepoint",
-    "Jolley Law Group",
+    { name: "Sea Pines Real Estate", logo: "/sponsors/sea-pines-real-estate.jpg" },
+    { name: "Brighton Ruckno & Associates", logo: "/sponsors/ruckno.png" },
+    { name: "Seabrook", logo: "/sponsors/seabrook.png" },
+    { name: "Community Foundation of the Lowcountry", logo: "/sponsors/community-foundation.jpg" },
+    { name: "The Westin Hilton Head Island Resort & Spa", logo: "/sponsors/westin.png" },
+    { name: "TidePointe", logo: "/sponsors/tidepoint.png" },
+    { name: "Jolley Law Group", logo: "/sponsors/jolley-law-group.jpg" },
 ];
 
+// The Council's social accounts, as linked from the original wachh.org footer.
 export const social = [
-    { label: "Facebook", href: "https://www.facebook.com/" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/" },
-    { label: "YouTube", href: "https://www.youtube.com/" },
-    { label: "Instagram", href: "https://www.instagram.com/" },
+    { label: "Facebook", href: "https://www.facebook.com/WorldAffairsHHI" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/company/world-affairs-council-of-hilton-head/" },
+    { label: "YouTube", href: "https://www.youtube.com/@worldaffairscouncilofhilto497" },
+    { label: "Instagram", href: "https://www.instagram.com/worldaffairshhi/" },
+];
+
+// Pages that only exist on the original wachh.org site so far; the footer links to them there.
+export const originalSitePages = [
+    { label: "Privacy Notice", href: "https://wachh.org/Privacy-Notice" },
+    { label: "Resources and Links", href: "https://wachh.org/Resources-and-Links" },
 ];
 
 export type Post = {
@@ -222,19 +244,28 @@ export const posts: Post[] = [
     },
 ];
 
+/** News posts, newest first. */
 export function sortedPosts() {
     return [...posts].sort((a, b) => parseDate(b.date).getTime() - parseDate(a.date).getTime());
 }
 
+/** A post's date written out, for example "April 25, 2025". */
 export function formatPostDate(post: Post) {
     return parseDate(post.date).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" });
 }
 
 export const membership = {
     renewalYear: "2026-2027",
-    joinOnline: "https://wachh.org/join",
+
+    // Opens the signup page in our new website.
+    joinOnline: "/join",
+
+    // These stay on Wild Apricot when wachh.org moves to our new website.
+    hostedJoin: `${wildApricotBaseUrl}/join`,
+    widgetJoin: `${wildApricotBaseUrl}/widget/join`,
     renew: memberLogin,
-    printForm: "/membership-form.pdf", // drop the PDF into public/
+
+    printForm: "/membership-form.pdf",
 };
 
 export const memberBenefits: { benefit: string; nonMember: boolean }[] = [
@@ -259,6 +290,13 @@ export const gallery: { src?: string; caption: string }[] = [
 ];
 
 export const volunteerContact = { email: "officemgr@wachh.org", phone: contact.phone };
+
+const volunteerFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdFUrDB2FeJd2yVCaRkLURFuRFiOIDVfUilT8EEyLbfJ3JEeA/viewform";
+
+export const volunteerForm = {
+    hosted: volunteerFormUrl,
+    embedded: `${volunteerFormUrl}?embedded=true`,
+};
 
 export const volunteerRoles = [
     {
@@ -297,7 +335,9 @@ export const volunteerGallery: { src?: string; caption: string }[] = [
 ];
 
 export const giving = {
-    donateOnline: "https://wachh.org/online-donation-form",
+    donateOnline: "/get-involved/give#donation-form",
+    hostedDonate: `${wildApricotBaseUrl}/online-donation-form`,
+    widgetDonate: `${wildApricotBaseUrl}/widget/online-donation-form`,
     heritage: "https://www.heritageclassicfoundation.com/giving-opportunities/",
     birdiesEnd: "April 19, 2026", // last day of the RBC Heritage
 };

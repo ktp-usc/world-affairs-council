@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import PageHero from "@/components/page-hero";
 import { programCards } from "@/components/programs/programs-data";
 
 export const metadata: Metadata = {
@@ -11,15 +12,15 @@ export const metadata: Metadata = {
 export default function ProgramsPage() {
     return (
         <main className="min-h-screen bg-white font-[var(--sans)] text-[18px] leading-[1.65] text-[var(--charcoal)]">
-            <section className="bg-[var(--navy)] py-12 text-white md:py-16">
-                <div className="mx-auto w-[min(1040px,calc(100%-48px))]">
-                    <nav className="mb-6 flex flex-wrap gap-2 text-sm text-slate-300" aria-label="Breadcrumb"><Link className="underline underline-offset-4 hover:text-white" href="/">Home</Link><span aria-hidden="true">/</span><span aria-current="page">Programs</span></nav>
-                    <h1 className="font-[family-name:var(--serif)] text-[42px] leading-[1.1] font-medium text-white md:text-[58px]">Programs</h1>
-                    <p className="mt-5 max-w-[700px] text-lg leading-relaxed text-slate-200">WACHH offers speaker programs, discussion groups, a book club, and student programs focused on international affairs.</p>
-                </div>
-            </section>
+            <PageHero
+                breadcrumbs={[{ label: "Home", href: "/" }, { label: "Programs" }]}
+                title="Programs"
+                image={{ src: "/images/programs-overview.png", alt: "A World Affairs Council program in progress" }}
+            >
+                WACHH offers speaker programs, discussion groups, a book club, and student programs focused on international affairs.
+            </PageHero>
 
-            <section className="mx-auto w-[min(860px,calc(100%-48px))] py-14 md:py-18">
+            <section className="mx-auto w-[min(1040px,calc(100%-48px))] py-14 md:py-18">
                 <h2 className="font-[family-name:var(--serif)] text-[32px] font-medium text-[var(--navy)] md:text-[38px]">About WACHH programs</h2>
                 <div className="mt-5 space-y-4 text-[#444]">
                     <p>WACHH is a nonprofit, nonpartisan organization that engages, educates, and inspires the community regarding world affairs. Each program uses a different approach to help members and guests understand important global issues.</p>
@@ -28,7 +29,7 @@ export default function ProgramsPage() {
             </section>
 
             <section className="border-t border-[#d9d7d1] bg-[var(--off-white)] py-14 md:py-18" aria-labelledby="program-list-title">
-                <div className="mx-auto w-[min(1120px,calc(100%-48px))]">
+                <div className="mx-auto w-[min(1040px,calc(100%-48px))]">
                     <h2 id="program-list-title" className="font-[family-name:var(--serif)] text-[32px] font-medium text-[var(--navy)] md:text-[38px]">Program directory</h2>
                     <div className="mt-8 divide-y divide-[#d9d7d1] border-y border-[#d9d7d1] bg-white">
                         {programCards.map((program) => (

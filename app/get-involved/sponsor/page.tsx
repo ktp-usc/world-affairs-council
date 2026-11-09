@@ -9,7 +9,11 @@ export const metadata: Metadata = { title: "Sponsor a Speaker" };
 export default function SponsorPage() {
     return (
         <>
-            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved", href: "/get-involved" }, { label: "Sponsor a speaker" }]} title="Sponsor a speaker">
+            <PageHero
+                breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved", href: "/get-involved" }, { label: "Sponsor a speaker" }]}
+                title="Sponsor a speaker"
+                image={{ src: "/images/sponsor-a-speaker.jpg", alt: "A WACHH speaker addressing the audience" }}
+            >
                 Speaker sponsorship helps fund the Distinguished Speaker Series. Sponsors are acknowledged at the program, receive preferred seating, and are invited to a meal with the speaker.
                 <Button asChild size="lg" variant="secondary" className="mt-8 flex w-fit"><a href="#become-a-sponsor">Become a Sponsor</a></Button>
             </PageHero>
