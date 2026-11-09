@@ -76,8 +76,17 @@ export const bookClubMeeting = defineType({
       name: 'registerUrl',
       title: 'Register link',
       type: 'url',
-      description: "The meeting's Wild Apricot event page, for example https://wachh.org/event-6753988",
-      validation: (rule) => rule.uri({ scheme: ['http', 'https'] }),
+      description:
+        'Paste the link to the registration form so visitors land on it in one click: open the event on wachh.org, click Register, and copy that address, for example https://wachh.org/event-6753988/Registration. Leave it empty until registration opens.',
+      validation: (rule) => [
+        rule.uri({ scheme: ['http', 'https'] }),
+        // warn when the link is the event page instead of its registration form
+        rule
+          .custom((registerUrl?: string) =>
+            registerUrl && /wachh\.org\/event-\d+\/?$/i.test(registerUrl) ? 'This is the event page. Add /Registration to the end so visitors go straight to the form.' : true,
+          )
+          .warning(),
+      ],
     }),
     // rich text so editors can use paragraphs, italics, and links
     defineField({ name: 'abstract', title: 'Abstract', type: 'array', of: [{ type: 'block' }] }),

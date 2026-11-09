@@ -1,7 +1,7 @@
 import type { PortableTextBlock } from "next-sanity";
 import type { SanityImage } from "@/sanity/lib/image";
 
-// Shapes of the Book Club meetings the Sanity queries return (see sanity/lib/queries.ts).
+// the meeting fields returned by the queries in sanity/lib/queries.ts
 export type BookClubMeetingSummary = {
     _id: string;
     slug: string;
@@ -10,22 +10,27 @@ export type BookClubMeetingSummary = {
     coverImage?: SanityImage;
     startsAt: string;
     endsAt?: string;
+    location?: string;
     spacesLeft?: number;
+    registerUrl?: string;
 };
 
 export type BookClubMeeting = Omit<BookClubMeetingSummary, "_id" | "slug"> & {
-    location?: string;
-    registerUrl?: string;
     abstract?: PortableTextBlock[];
     aboutTheAuthor?: PortableTextBlock[];
 };
 
-// Meetings happen on Hilton Head, so times are always shown in Eastern time, whatever the server's clock says.
+// meetings are on Hilton Head, so always show Eastern time
 const meetingTimeZone = "America/New_York";
 
 /** The meeting's date written out, for example "Thursday, November 12, 2026". */
 export function formatMeetingDate(startsAt: string) {
     return new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: meetingTimeZone }).format(new Date(startsAt));
+}
+
+/** The meeting's date without the weekday, for example "December 10, 2026". */
+export function formatMeetingShortDate(startsAt: string) {
+    return new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: meetingTimeZone }).format(new Date(startsAt));
 }
 
 /** The meeting's time range, for example "4:30–6:00 PM", or just the start time when there is no end time. */
@@ -39,7 +44,6 @@ export function formatMeetingTime(startsAt: string, endsAt?: string) {
     const start = timeParts(startsAt);
     if (!endsAt) return `${start.clock} ${start.dayPeriod}`;
     const end = timeParts(endsAt);
-    // "4:30–6:00 PM" when both are in the afternoon; "11:30 AM–1:00 PM" when they are not
     return start.dayPeriod === end.dayPeriod ? `${start.clock}–${end.clock} ${end.dayPeriod}` : `${start.clock} ${start.dayPeriod}–${end.clock} ${end.dayPeriod}`;
 }
 
@@ -48,4 +52,16 @@ export function formatSpacesLeft(spacesLeft?: number) {
     if (spacesLeft === undefined || spacesLeft === null) return undefined;
     if (spacesLeft <= 0) return "Full";
     return `${spacesLeft} ${spacesLeft === 1 ? "space" : "spaces"} left`;
+}
+
+/** Splits a title like "The Jackal: The Rise and Fall of Carlos" into the title and the subtitle after the colon. */
+export function splitBookTitle(title: string) {
+    const colonIndex = title.indexOf(": ");
+    if (colonIndex === -1) return { mainTitle: title, subtitle: undefined };
+    return { mainTitle: title.slice(0, colonIndex), subtitle: title.slice(colonIndex + 2) };
+}
+
+/** Whether the meeting is over, using its end time when there is one. */
+export function hasMeetingEnded(meeting: Pick<BookClubMeetingSummary, "startsAt" | "endsAt">) {
+    return new Date(meeting.endsAt ?? meeting.startsAt) < new Date();
 }

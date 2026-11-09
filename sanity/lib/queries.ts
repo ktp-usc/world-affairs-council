@@ -31,7 +31,7 @@ export const TEAM_MEMBER_SLUGS_QUERY = defineQuery(`
 // book club page: meetings that haven't ended yet, soonest first
 export const UPCOMING_BOOK_CLUB_MEETINGS_QUERY = defineQuery(`
   *[_type == "bookClubMeeting" && defined(slug.current) && coalesce(endsAt, startsAt) >= now()] | order(startsAt asc) {
-    _id, title, author, coverImage, startsAt, endsAt, spacesLeft,
+    _id, title, author, coverImage, startsAt, endsAt, location, spacesLeft, registerUrl,
     "slug": slug.current
   }
 `);
