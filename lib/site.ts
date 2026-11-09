@@ -5,7 +5,9 @@ export const contact = {
     email: "execdirector@wachh.org",
 };
 
-export const memberLogin = "https://wachh.org/Sys/Login";
+export const wildApricotBaseUrl = "https://wachh.wildapricot.org";
+
+export const memberLogin = `${wildApricotBaseUrl}/Sys/Login`;
 
 export type NavLink = { label: string; href: string };
 export type NavItem = { label: string; href: string; children?: NavLink[] };
@@ -249,9 +251,16 @@ export function formatPostDate(post: Post) {
 
 export const membership = {
     renewalYear: "2026-2027",
-    joinOnline: "https://wachh.org/join",
+
+    // Opens the signup page in our new website.
+    joinOnline: "/join",
+
+    // These stay on Wild Apricot when wachh.org moves to our new website.
+    hostedJoin: `${wildApricotBaseUrl}/join`,
+    widgetJoin: `${wildApricotBaseUrl}/widget/join`,
     renew: memberLogin,
-    printForm: "/membership-form.pdf", // drop the PDF into public/
+
+    printForm: "/membership-form.pdf",
 };
 
 export const memberBenefits: { benefit: string; nonMember: boolean }[] = [
@@ -276,6 +285,13 @@ export const gallery: { src?: string; caption: string }[] = [
 ];
 
 export const volunteerContact = { email: "officemgr@wachh.org", phone: contact.phone };
+
+const volunteerFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdFUrDB2FeJd2yVCaRkLURFuRFiOIDVfUilT8EEyLbfJ3JEeA/viewform";
+
+export const volunteerForm = {
+    hosted: volunteerFormUrl,
+    embedded: `${volunteerFormUrl}?embedded=true`,
+};
 
 export const volunteerRoles = [
     {
@@ -314,7 +330,9 @@ export const volunteerGallery: { src?: string; caption: string }[] = [
 ];
 
 export const giving = {
-    donateOnline: "https://wachh.org/online-donation-form",
+    donateOnline: "/get-involved/give#donation-form",
+    hostedDonate: `${wildApricotBaseUrl}/online-donation-form`,
+    widgetDonate: `${wildApricotBaseUrl}/widget/online-donation-form`,
     heritage: "https://www.heritageclassicfoundation.com/giving-opportunities/",
     birdiesEnd: "April 19, 2026", // last day of the RBC Heritage
 };

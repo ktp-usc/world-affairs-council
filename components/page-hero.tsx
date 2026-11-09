@@ -3,6 +3,7 @@ import Link from "next/link";
 
 export type Breadcrumb = { label: string; href?: string };
 
+/** Renders the shared navy page banner with linked ancestor breadcrumbs. */
 export default function PageHero({ title, breadcrumbs, children }: { title: string; breadcrumbs: Breadcrumb[]; children?: React.ReactNode }) {
     return (
         <section className="bg-[var(--navy)] text-white">
@@ -26,6 +27,7 @@ export default function PageHero({ title, breadcrumbs, children }: { title: stri
     );
 }
 
+/** Keeps page sections aligned with the banner and optionally adds a muted background. */
 export function Section({ id, title, children, muted = false }: { id?: string; title?: string; children: React.ReactNode; muted?: boolean }) {
     return (
         <section id={id} className={muted ? "border-y border-[#d9d7d1] bg-[var(--off-white)]" : "bg-white"}>
