@@ -7,6 +7,10 @@ export const contact = {
 
 export const wildApricotBaseUrl = "https://wachh.wildapricot.org";
 
+export const newsletter = {
+    widgetSignup: `${wildApricotBaseUrl}/widget/Newsletter-Signup#idGeneralFormContainer`,
+};
+
 export const memberLogin = `${wildApricotBaseUrl}/Sys/Login`;
 
 export type NavLink = { label: string; href: string };
@@ -190,14 +194,15 @@ export function preRegisterDeadline(e: Event) {
     return d;
 }
 
+// Original sponsor marks from the Council's current homepage at wachh.org.
 export const sponsors = [
-    "Sea Pines Real Estate",
-    "Ruckno",
-    "Seabrook",
-    "Community Foundation of the Lowcountry",
-    "The Westin",
-    "Tidepoint",
-    "Jolley Law Group",
+    { name: "Sea Pines Real Estate", logo: "/sponsors/sea-pines-real-estate.jpg" },
+    { name: "Brighton Ruckno & Associates", logo: "/sponsors/ruckno.png" },
+    { name: "Seabrook", logo: "/sponsors/seabrook.png" },
+    { name: "Community Foundation of the Lowcountry", logo: "/sponsors/community-foundation.jpg" },
+    { name: "The Westin Hilton Head Island Resort & Spa", logo: "/sponsors/westin.png" },
+    { name: "TidePointe", logo: "/sponsors/tidepoint.png" },
+    { name: "Jolley Law Group", logo: "/sponsors/jolley-law-group.jpg" },
 ];
 
 // The Council's social accounts, as linked from the original wachh.org footer.
