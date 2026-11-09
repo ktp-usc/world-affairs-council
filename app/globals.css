@@ -99,9 +99,8 @@ body { margin: 0; background: var(--off-white); color: var(--charcoal); font-fam
 .site-footer { background: var(--navy); color: white; padding: 55px 0 20px; }
 .footer-grid { width: min(1120px, calc(100% - 64px)); margin: auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
 .footer-brand { color: white; }
-.footer-mark { border-color: #e7c37e; }
-.footer-mark:before, .footer-mark span { border-color: #e7c37e; }
-.footer-tagline { color: #d7dde4; line-height: 1.6; margin-top: 24px; }
+.footer-waca-logo { width: min(130px, 100%); height: auto; }
+.footer-tagline { color: #d7dde4; line-height: 1.6; padding-top: 24px; }
 .site-footer h3 { font: 22px var(--serif); margin: 0 0 17px; }
 .site-footer div > a:not(.footer-brand), .site-footer div > p { display: block; color: #d7dde4; font-size: 14px; line-height: 1.8; margin: 0; }
 .site-footer div > a:not(.footer-brand):hover { color: #e7c37e; }

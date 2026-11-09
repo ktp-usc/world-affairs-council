@@ -25,7 +25,11 @@ export default function ProgramPage({ program }: { program: ProgramPageData }) {
     return (
         <div className="min-h-screen bg-white font-[var(--sans)] text-[17px] leading-[1.6] text-[var(--charcoal)] md:text-[18px]">
             <main>
-                <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: program.title }]} title={program.title}>
+                <PageHero
+                    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: program.title }]}
+                    title={program.title}
+                    image={{ src: program.heroImage, alt: program.heroAlt, position: program.heroPosition }}
+                >
                     {program.deck}
                 </PageHero>
 

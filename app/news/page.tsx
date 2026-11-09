@@ -9,7 +9,18 @@ export default function NewsPage() {
     const posts = sortedPosts();
     return (
         <>
-            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "News" }]} title="News and updates">
+            <PageHero
+                breadcrumbs={[{ label: "Home", href: "/" }, { label: "News" }]}
+                title="News and updates"
+                size="tall"
+                contentWidth="narrow"
+                image={{
+                    src: "/images/news-banner.jpg",
+                    alt: "WACHH news and Council updates",
+                    verticalPosition: "75%",
+                    parallax: true,
+                }}
+            >
                 Council announcements, leadership updates, and information for members and the community.
             </PageHero>
             <Section title="Latest updates">

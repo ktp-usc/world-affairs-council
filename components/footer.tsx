@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
@@ -5,10 +6,21 @@ export default function Footer() {
         <footer className="site-footer">
             <div className="footer-grid">
                 <div>
-                    <Link className="footer-brand" href="/" aria-label="WACHH home">
-                        <span className="footer-mark" aria-hidden="true"><span /></span>
-                        <strong>WACHH</strong>
-                    </Link>
+                    <a
+                        className="footer-brand"
+                        href="https://worldaffairscouncils.org/"
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="Visit the World Affairs Councils of America website"
+                    >
+                        <Image
+                            className="footer-waca-logo"
+                            src="/images/world-affairs-councils-of-america.png"
+                            alt="World Affairs Councils of America"
+                            width={480}
+                            height={181}
+                        />
+                    </a>
                     <p className="footer-tagline">Connecting our community<br />to the world.</p>
                 </div>
                 <div>
