@@ -23,12 +23,18 @@ export const teamMember = defineType({
       validation: (r) => r.required(),
     }),
     defineField({ 
-        name: 'role', 
-        title: 'Role', 
+        name: 'category', 
+        title: 'Category', 
         type: 'string',
         options: {
             list: [...CATEGORIES]
-        }
+        },
+        validation: (r) => r.required()
+    }),
+    defineField({
+      name: 'role',
+      title: 'Role',
+      type: 'string'
     }),
     defineField({
       name: 'photo',

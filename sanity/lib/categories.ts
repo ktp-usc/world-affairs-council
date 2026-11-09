@@ -1,8 +1,8 @@
 export const CATEGORIES = [
-  { title: "Executive", value: "executive" },
-  { title: "Director", value: "director" },
-  { title: "Administrator", value: "administrator" },
-  { title: "Program Committee Member", value: "committee" },
+  { title: "Executive Committee", value: "executive" },
+  { title: "Directors", value: "director" },
+  { title: "Administration", value: "administration" },
+  { title: "Program Committee", value: "committee" },
 ] as const;
 
 // lookup map so the card can turn "office" into "Office Staff"
