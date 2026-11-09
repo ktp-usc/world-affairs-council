@@ -1,27 +1,28 @@
 /*
 import type { Metadata } from "next";
 import Hero from "../_components/hero";
-import PersonCard from "../_components/person-card";
-import { contact, directors, officers, photos, programCommittee, staff, teamTitle } from "../_data/about-content";
-import styles from "../about.module.css";
+import { photos } from "../_data/about-content";
 
 export const metadata: Metadata = {
     title: "Our Team | World Affairs Council of Hilton Head",
     description: "The volunteer board, staff, and Program Committee behind the World Affairs Council of Hilton Head.",
 };
 
-// Team page: hero, one centered title, then a card grid per category.
-const teamGroups = [
-    { id: "board", title: "Executive Committee", people: officers },
-    { id: "directors", title: "Directors", people: directors },
-    { id: "administration", title: "Administration", people: staff },
-    { id: "program-committee", title: "Program Committee", people: programCommittee.members },
-];
+export default async function TeamPage() {
+  // one request to sanity for every member
+  const members: TeamMemberCardData[] = await client.fetch(
+    TEAM_MEMBERS_QUERY,
+    {},
+    { next: { revalidate: 60 } },
+  )
 
-export default function TeamPage() {
-    return (
-        <>
-            <Hero title="Our Team" photo={photos.teamHero} nextId="members" breadcrumbs={[{ label: "Home", href: "/" }, { label: "About Us", href: "/about" }, { label: "Our Team" }]} />
+  // single pass: build { programCommittee: [...], leadership: [...], ... }
+  const groups: Record<string, TeamMemberCardData[]> = {}
+  for (const member of members) {
+    // anyone missing a category lands in "other" instead of vanishing
+    const key = member.category ?? 'other'
+    ;(groups[key] ??= []).push(member)
+  }
 
             <section id="members" className={styles.members} aria-labelledby="members-title">
                 <div className="content-width">
