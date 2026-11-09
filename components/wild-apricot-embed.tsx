@@ -24,7 +24,7 @@ function handleHelperLoad() {
 }
 
 /** Shares Wild Apricot's cookie setup between membership and donation forms. */
-export default function WildApricotEmbed({ src, title }: { src: string; title: string }) {
+export default function WildApricotEmbed({ src, title, iframeClassName = "h-[1100px] w-full border-0" }: { src: string; title: string; iframeClassName?: string }) {
     const iframeReady = useRef(false);
     const mounted = useRef(false);
     const initialized = useRef(false);
@@ -71,7 +71,7 @@ export default function WildApricotEmbed({ src, title }: { src: string; title: s
                 <iframe
                     title={title}
                     src={src}
-                    className="h-[1100px] w-full border-0"
+                    className={iframeClassName}
                     onLoad={handleIframeLoad}
                 />
             </div>
