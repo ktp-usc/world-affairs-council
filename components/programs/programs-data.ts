@@ -37,6 +37,7 @@ export type ProgramPageData = {
     overview: string;
     heroImage: string;
     heroAlt: string;
+    heroPosition?: "left" | "center" | "right";
     facts: ProgramFact[];
     sections: ProgramSection[];
     events?: ProgramEvent[];
@@ -61,31 +62,31 @@ export const programCards = [
         title: "Distinguished Speaker Series",
         text: "Leading voices from diplomacy, journalism, academia, business, and public service.",
         href: "/programs/distinguished-speaker-series",
-        image: "/programs/main/programs-speaker-crowd.png",
+        image: "/images/distinguished-speaker-hq.png",
     },
     {
         title: "Global Speakers Program",
         text: "International perspectives that help the Lowcountry see the world beyond an American point of view.",
         href: "/programs/global-speakers-program",
-        image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=82",
+        image: "/images/global-speakers.png",
     },
     {
         title: "Great Decisions",
         text: "Small-group discussion of the most consequential foreign-policy questions facing the United States.",
         href: "/programs/great-decisions",
-        image: "https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=1200&q=82",
+        image: "/images/great-decisions-hq.png",
     },
     {
         title: "Book Club",
         text: "Read broadly, think deeply, and discuss world affairs and domestic politics with the community.",
         href: "/programs/book-club",
-        image: "https://images.unsplash.com/photo-1604297992396-5df2499ba816?auto=format&fit=crop&w=1200&q=82",
+        image: "/images/book-club.webp",
     },
     {
         title: "Student Programs",
         text: "Academic WorldQuest and Model UN prepare Beaufort County students to become informed global citizens.",
         href: "/programs/student-programs",
-        image: "/programs/student-programs/students-banner.jpg",
+        image: "/images/student-program.webp",
     },
 ];
 

@@ -51,7 +51,7 @@ export default async function GuestEventPage({ params }: Props) {
 
             <Section id="register" title="Register as a guest" muted>
                 <div className="divide-y divide-[#d9d7d1] border-y border-[#d9d7d1] bg-white">
-                    <div className="grid gap-5 py-7 md:grid-cols-[1fr_auto] md:items-center">
+                    <div className="grid gap-5 px-6 py-7 md:grid-cols-[1fr_auto] md:items-center md:px-8">
                         <div>
                             <p className="text-sm font-semibold tracking-[0.12em] text-muted-foreground uppercase">Standard guest registration</p>
                             <h3 className="mt-1 font-serif text-2xl font-semibold text-primary">
@@ -66,7 +66,7 @@ export default async function GuestEventPage({ params }: Props) {
                         <Button asChild size="lg"><a href={ registerUrl }>Register — ${ guestPolicy.preRegisterFee }</a></Button>
                     </div>
 
-                    <div className="grid gap-5 py-7 md:grid-cols-[1fr_auto] md:items-center">
+                    <div className="grid gap-5 px-6 py-7 md:grid-cols-[1fr_auto] md:items-center md:px-8">
                         <div>
                             <p className="text-sm font-semibold tracking-[0.12em] text-muted-foreground uppercase">Guest pass registration</p>
                             <h3 className="mt-1 font-serif text-2xl font-semibold text-primary">Guest Pre-registration with a Guest Pass</h3>
