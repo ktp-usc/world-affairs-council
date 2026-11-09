@@ -8,7 +8,7 @@ export const expandedProgramPages: Record<string, ProgramPageData> = {
         deck: "WACHH’s principal program, held from October through May at First Presbyterian Church.",
         overviewTitle: "The world, brought closer",
         overview: "The Distinguished Speaker Series, our principal program, brings speakers from around the globe known for their international experience in government, business, military affairs, and academia.",
-        heroImage: "/programs/main/programs-speaker-crowd.png",
+        heroImage: "/images/distinguished-speaker-hq.png",
         heroAlt: "A distinguished speaker addressing the World Affairs Council audience",
         facts: [
             { label: "Season", value: "October through May", icon: "calendar" },
@@ -54,8 +54,8 @@ export const expandedProgramPages: Record<string, ProgramPageData> = {
         deck: "Two international speakers each year offer perspectives from outside the United States.",
         overviewTitle: "A truly global point of view",
         overview: "Twice a year, once in the fall and once in the spring, WACHH brings an overseas speaker to the Distinguished Speaker Series. These speakers help our community see the world from more than an American perspective.",
-        heroImage: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1800&q=85",
-        heroAlt: "An international conference audience",
+        heroImage: "/images/global-speakers.png",
+        heroAlt: "A Global Speakers Program presentation",
         facts: [
             { label: "Established", value: "2016", icon: "calendar" },
             { label: "Speakers", value: "Two international guests each year", icon: "globe" },
@@ -110,8 +110,8 @@ export const expandedProgramPages: Record<string, ProgramPageData> = {
         deck: "Monthly discussions of books about world affairs and domestic politics.",
         overviewTitle: "A monthly conversation about our changing world",
         overview: "The Book Club is the Council's newest program. It gives members and the public a way to learn more broadly and deeply about world affairs and domestic politics, to talk it through with one another, and to make new friends along the way.",
-        heroImage: "https://images.unsplash.com/photo-1604297992396-5df2499ba816?auto=format&fit=crop&w=1800&q=85",
-        heroAlt: "Books arranged for a group discussion",
+        heroImage: "/images/book-club.webp",
+        heroAlt: "WACHH Book Club participants",
         facts: [
             { label: "When", value: "Second Thursday of the month, 4:30–6:00 PM", icon: "calendar" },
             { label: "Where", value: "The Island Rec Center Board Room, 20 Wilborn Rd., Hilton Head Island, next to the high school", icon: "location" },
@@ -129,8 +129,9 @@ export const expandedProgramPages: Record<string, ProgramPageData> = {
         deck: "A guided discussion program focused on major foreign policy issues facing the United States.",
         overviewTitle: "America's largest grassroots world-affairs discussion program",
         overview: "Created by the Foreign Policy Association in 1954, Great Decisions combines an annual briefing book with small-group conversations about the most critical global issues facing America today.",
-        heroImage: "https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=1800&q=85",
-        heroAlt: "A map and travel journal representing global discussion",
+        heroImage: "/images/great-decisions-hq.png",
+        heroAlt: "A Great Decisions Program discussion",
+        heroPosition: "right",
         facts: [
             { label: "2027 season", value: "February and March", icon: "calendar" },
             { label: "Format", value: "Eight weekly discussions", icon: "book" },
@@ -163,8 +164,8 @@ export const expandedProgramPages: Record<string, ProgramPageData> = {
         deck: "Book Club selections from September 2021 through the present.",
         overviewTitle: "A growing library of global ideas",
         overview: "Explore the complete WACHH Book Club reading archive, spanning diplomacy, political economy, technology, conflict, leadership, democracy, and social change.",
-        heroImage: "https://images.unsplash.com/photo-1604297992396-5df2499ba816?auto=format&fit=crop&w=1800&q=85",
-        heroAlt: "Books arranged on shelves",
+        heroImage: "/images/past-book-club.jpg",
+        heroAlt: "Past WACHH Book Club selections",
         facts: [
             { label: "Archive", value: "September 2021–October 2026", icon: "calendar" },
             { label: "Selections", value: "More than 60 books", icon: "book" },
@@ -245,7 +246,7 @@ export const expandedProgramPages: Record<string, ProgramPageData> = {
         deck: "Academic WorldQuest and Model United Nations for students in Beaufort County.",
         overviewTitle: "An investment in our country's future",
         overview: "The Council is devoted to educating students in our community on issues of global importance. In an ever-changing world, the development of a globally informed citizenry is more important than ever.",
-        heroImage: "/programs/student-programs/students-banner.jpg",
+        heroImage: "/images/student-program.webp",
         heroAlt: "Beaufort County students participating in a WACHH program",
         facts: [
             { label: "Programs", value: "Academic WorldQuest & Model UN", icon: "award" },
@@ -268,14 +269,14 @@ export const expandedProgramPages: Record<string, ProgramPageData> = {
         deck: "A team competition covering international affairs, geography, history, and culture.",
         overviewTitle: "Global learning becomes a team sport",
         overview: "Academic WorldQuest is the World Affairs Councils of America's flagship education program, engaging more than 3,000 high-school students across the country each year in a lively test of global issues and foreign policy.",
-        heroImage: "/programs/academic-worldquest/banner.jpg",
+        heroImage: "/images/academic-worldquest.jpg",
         heroAlt: "Students participating in Academic WorldQuest",
         facts: [
             { label: "National reach", value: "3,000 students in 26 states", icon: "globe" },
             { label: "Local partner", value: "Six Beaufort County high schools", icon: "users" },
             { label: "National final", value: "Washington, D.C. each spring", icon: "award" },
         ],
-        logoImage: "/programs/academic-worldquest/logo.jpg",
+        logoImage: "/images/academic-worldquest-logo.png",
         sections: [
             { eyebrow: "Competition", title: "Competition format", paragraphs: ["Founded in 2003, Academic WorldQuest is a team competition modeled after the classic College Bowl. Students test their knowledge of international affairs, geography, history, and culture in competitions hosted by more than 40 local World Affairs Councils.", "Winning teams represent their high school, city, and local council at the national competition in Washington, D.C., alongside more than 225 of the country's most promising high-school students, teachers, parents, and chaperones."] },
             { eyebrow: "Local program", title: "Beaufort County participation", paragraphs: ["WACHH works with the Beaufort County School District to bring Academic WorldQuest to all six county high schools. Students prepare outside their regular curriculum for the county final in February. The winning team travels to Washington in April with expenses paid by WACHH.", "The experience gives students the opportunity to compete nationally and visit institutions such as the White House, U.S. Capitol, Supreme Court, and Organization of American States. Bluffton High School represented the Council at the April 28, 2025 national competition."] },
@@ -301,7 +302,7 @@ export const expandedProgramPages: Record<string, ProgramPageData> = {
         deck: "Students represent countries and practice research, public speaking, negotiation, and diplomacy.",
         overviewTitle: "Step into the role of a world diplomat",
         overview: "Model United Nations is an academic global-learning experience in which high-school students represent nations, negotiate international challenges, and discover what it means to be a world citizen.",
-        heroImage: "/programs/model-un/banner.jpg",
+        heroImage: "/images/model-un.jpg",
         heroAlt: "Students participating in Model United Nations",
         facts: [
             { label: "Participants", value: "Beaufort County high schools", icon: "users" },

@@ -16,7 +16,11 @@ const ways = [
 export default function GetInvolvedPage() {
     return (
         <>
-            <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved" }]} title="Ways to participate">
+            <PageHero
+                breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved" }]}
+                title="Ways to participate"
+                image={{ src: "/images/get-involved.png", alt: "WACHH members participating in a community discussion" }}
+            >
                 Membership, guest attendance, volunteering, donations, and speaker sponsorships each support the Council&apos;s work.
             </PageHero>
 

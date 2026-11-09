@@ -31,6 +31,7 @@ export default function PastBookClubSelectionsPage() {
                 <PageHero
                     breadcrumbs={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: "Book Club", href: "/programs/book-club" }, { label: pastSelections.title }]}
                     title={pastSelections.title}
+                    image={{ src: pastSelections.heroImage, alt: pastSelections.heroAlt, position: pastSelections.heroPosition }}
                 >
                     {pastSelections.deck}
                 </PageHero>

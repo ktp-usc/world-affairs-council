@@ -78,7 +78,11 @@ export default async function BookClubPage() {
     return (
         <div className="min-h-svh bg-white font-[var(--sans)] text-[17px] leading-[1.65] text-[var(--charcoal)] md:text-[18px]">
             <main>
-                <PageHero breadcrumbs={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: bookClub.title }]} title={bookClub.title}>
+                <PageHero
+                    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: bookClub.title }]}
+                    title={bookClub.title}
+                    image={{ src: bookClub.heroImage, alt: bookClub.heroAlt, position: bookClub.heroPosition }}
+                >
                     {bookClub.deck}
                 </PageHero>
 
