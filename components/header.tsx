@@ -63,7 +63,7 @@ export default function Header() {
             <div className="utility-bar">
                 <div className="utility-inner">
                     <a href="#events"><CalendarDays size={17} /> Event Calendar</a>
-                    <a href="#login"><LogIn size={17} /> Member Log In</a>
+                    <a href="/members"><LogIn size={17} /> Member Log In</a>
                     <a href="#membership"><RefreshCw size={17} /> Renew Membership</a>
                     <a className="donate-link" href="#support">Donate</a>
                 </div>

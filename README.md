@@ -15,8 +15,6 @@ NEXT_PUBLIC_SANITY_DATASET="production"
 NEXT_PUBLIC_SANITY_PROJECT_ID="gbfmisf9"
 ```
 
-To preview the members-only page (`/members`) locally before Wild Apricot sign-in is built, also add `MEMBERS_PREVIEW="true"`. It has no effect in production.
-
 Without the Sanity variables, the app throws `Missing environment variable: NEXT_PUBLIC_SANITY_DATASET` on startup.
 
 Then run the development server:
