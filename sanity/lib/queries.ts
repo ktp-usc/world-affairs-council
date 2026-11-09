@@ -19,7 +19,7 @@ export const TEAM_MEMBERS_QUERY = defineQuery(`
 // subpage: one admin matched by the slug from the url
 export const TEAM_MEMBER_QUERY = defineQuery(`
   *[_type == "teamMember" && slug.current == $slug][0] {
-    name, role, photo, bio
+    name, role, category, photo, bio
   }
 `);
 
