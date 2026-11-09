@@ -4,25 +4,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type FocusEvent, type MouseEvent, type PointerEvent } from "react";
-import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { memberActions, nav, type NavItem, type NavLink } from "@/lib/site";
 import logo from "./ui/images/WACHH-Banner-Logo2022.png";
 
-// Site header. Desktop (1024px and up): logo on the left, the sections centred, Log in / Join / Donate on the right.
-// Sections with pages open a small one-column dropdown centred under the link on hover or click:
-// its pages, a little space between related groups, then a teal "View all" link to the section's main page.
+// Site header. Desktop (1024px and up): logo on the left; the sections, Become a Member, and Donate together on the right.
+// Sections with pages open a small one-column dropdown of evenly spaced links, centred under the link, on hover or click.
 // Below 1024px the menu drops down under the bar and each section expands in place.
 // Links come from `nav` in lib/site.ts, which the footer shares.
 
-const pageWidth = "mx-auto w-[min(1120px,calc(100%-40px))] sm:w-[min(1120px,calc(100%-64px))]";
+// Same bar width as the rest of the site's header: 1280px, with 32px gutters (20px on phones).
+const pageWidth = "mx-auto w-[min(1280px,calc(100%-40px))] sm:w-[min(1280px,calc(100%-64px))]";
 const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal";
 // Colours ease gently on hover; the press scales down on the strong ease-out so it answers at once.
 const pressable = "[transition:background-color_150ms_var(--ease-color),color_150ms_var(--ease-color),scale_150ms_var(--ease-out-strong)] active:scale-[0.97]";
 // Only text and fill colours ease; the focus ring appears at once.
 const hoverColor = "transition-[color,background-color] duration-150 ease-color";
-// Join is a quiet stone fill; Donate is the one gold, solid action. Navy on gold is 4.6:1, and lighter on hover.
-const joinButton = `items-center bg-muted px-4 text-[15px] font-semibold whitespace-nowrap text-primary hover:bg-line ${pressable} ${focusRing}`;
-const donateButton = `inline-flex h-10 shrink-0 items-center bg-gold px-5 text-[15px] font-bold whitespace-nowrap text-primary hover:bg-header-gold ${pressable} ${focusRing}`;
+// Become a Member is the one gold, solid action (navy on gold is 4.6:1, lighter on hover); Donate is a quiet stone fill.
+const primaryButton = `shrink-0 items-center bg-gold px-3.5 text-[15px] xl:px-5 font-bold whitespace-nowrap text-primary hover:bg-header-gold ${pressable} ${focusRing}`;
+const secondaryButton = `shrink-0 items-center bg-muted px-3 text-[15px] xl:px-4 font-semibold whitespace-nowrap text-primary hover:bg-line ${pressable} ${focusRing}`;
 
 // Panels fade and settle 4px into place. Visibility flips after the fade so a closing panel can't be clicked.
 const panelOpen = "visible translate-y-0 scale-100 opacity-100";
@@ -30,12 +30,6 @@ const panelOpen = "visible translate-y-0 scale-100 opacity-100";
 const panelClosed = "invisible -translate-y-1 scale-[0.97] opacity-0";
 const panelOpenTransition = "[transition:opacity_160ms_var(--ease-out-strong),translate_160ms_var(--ease-out-strong),scale_160ms_var(--ease-out-strong),visibility_0s]";
 const panelCloseTransition = "[transition:opacity_120ms_var(--ease-out-strong),translate_120ms_var(--ease-out-strong),scale_120ms_var(--ease-out-strong),visibility_0s_linear_120ms]";
-/**
- * Transition classes for a dropdown arrow. It keeps time with its panel and skips motion whenever the panel does;
- * with reduced motion it flips without turning.
- */
-const chevronMotion = (isOpen: boolean, isInstant: boolean) =>
-    `transition-transform motion-reduce:transition-none ${isInstant ? "duration-0" : `ease-out-strong ${isOpen ? "duration-160" : "duration-120"}`}`;
 
 // The small-screen menu settles 8px into place in 200ms and leaves in 150ms.
 const mobileMenuOpen = "visible translate-y-0 opacity-100";
@@ -46,7 +40,7 @@ const mobileMenuCloseTransition = "[transition:opacity_150ms_var(--ease-out-stro
 const accordionMotion = (isOpen: boolean) =>
     `transition-[grid-template-rows,opacity] ease-out-strong motion-reduce:transition-opacity ${isOpen ? "duration-240" : "duration-180"}`;
 
-/** Whether a link leaves this site (for example the member login). */
+/** Whether a link leaves this site. */
 const isExternal = (href: string) => href.startsWith("http");
 /** The page part of a link, without any `#section` anchor. */
 const pathOf = (href: string) => href.split("#")[0];
@@ -57,21 +51,7 @@ function NavAnchor({ link, className, onClick, isCurrent }: { link: NavLink; cla
     return <Link className={className} href={link.href} onClick={onClick} aria-current={isCurrent ? "page" : undefined}>{link.label}</Link>;
 }
 
-/** Splits a section's pages into runs of links that share a group, keeping their order. */
-function groupLinks(links: NavLink[]) {
-    const linkGroups: { groupKey: string; links: NavLink[] }[] = [];
-    for (const link of links) {
-        const groupKey = link.group ?? "";
-        const lastGroup = linkGroups.at(-1);
-        if (lastGroup && lastGroup.groupKey === groupKey) lastGroup.links.push(link);
-        else linkGroups.push({ groupKey, links: [link] });
-    }
-    return linkGroups;
-}
-/** Space above every group after the first; groups are told apart by space alone. */
-const groupGap = (groupIndex: number) => (groupIndex > 0 ? "mt-2.5" : "");
-
-/** The site header: logo, section dropdowns, and Log in / Join / Donate, collapsing to a drop-down accordion menu under 1024px. */
+/** The site header: logo, section dropdowns, Become a Member, and Donate, collapsing to a drop-down accordion menu under 1024px. */
 export default function Header() {
     const pathname = usePathname();
     const [openMenuLabel, setOpenMenuLabel] = useState<string | null>(null);
@@ -190,8 +170,8 @@ export default function Header() {
 
     /** Classes for a top-level link or button; its gold underline grows from the left, or fades in place with reduced motion. */
     const topLinkClass = (isHighlighted: boolean) =>
-        `relative flex h-full cursor-pointer items-center gap-1 px-2.5 text-[15px] font-semibold whitespace-nowrap text-primary ${hoverColor} hover:text-teal ${focusRing} ` +
-        `after:absolute after:inset-x-2.5 after:bottom-0 after:h-[3px] after:origin-left after:bg-gold after:transition-[scale,opacity] motion-reduce:after:scale-x-100 ` +
+        `relative flex h-full cursor-pointer items-center gap-1 text-[15px] font-semibold whitespace-nowrap text-primary ${hoverColor} hover:text-teal ${focusRing} ` +
+        `after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:origin-left after:bg-gold after:transition-[scale,opacity] motion-reduce:after:scale-x-100 ` +
         (isInstant ? "after:transition-none " : `after:ease-out-strong ${isHighlighted ? "after:duration-160" : "after:duration-120"} `) +
         (isHighlighted ? "after:scale-x-100" : "after:scale-x-0 motion-reduce:after:opacity-0");
     /** Classes for a link inside a desktop dropdown; the current page is shown in teal. */
@@ -200,16 +180,18 @@ export default function Header() {
 
     return (
         <header ref={headerRef} className="relative z-50 border-b border-line bg-white">
-            <div className={`${pageWidth} flex h-20 items-center gap-3 sm:gap-6 lg:grid lg:grid-cols-[1fr_auto_1fr]`}>
-                <Link href="/" aria-label="World Affairs Council of Hilton Head home" className={`shrink-0 justify-self-start ${focusRing}`}>
-                    <Image src={logo} alt="" priority className="h-auto w-[176px] min-[400px]:w-[210px] xl:w-[250px]" />
+            {/* Logo at the left edge; the sections and the two buttons sit together on the right, evenly spaced. */}
+            <div className={`${pageWidth} flex h-[82px] items-center justify-between gap-6 lg:h-[104px]`}>
+                <Link href="/" aria-label="World Affairs Council of Hilton Head home" className={`shrink-0 ${focusRing}`}>
+                    <Image src={logo} alt="" priority className="h-auto w-[176px] min-[400px]:w-[240px] lg:w-[176px] xl:w-80" />
                 </Link>
 
+                <div className="flex h-full items-center gap-5 xl:gap-7">
                 <nav aria-label="Main" className="hidden h-full lg:block" onPointerLeave={(pointerEvent) => pointerEvent.pointerType === "mouse" && closeMenuSoon()}>
-                    <ul className="relative flex h-full items-center">
+                    <ul className="flex h-full items-center gap-5 xl:gap-7">
                         {nav.map((navItem) => {
                             const isMenuOpen = openMenuLabel === navItem.label;
-                            const isHighlighted = openMenuLabel ? isMenuOpen : isCurrentSection(navItem);
+                            const isHighlighted = openMenuLabel ? false : isCurrentSection(navItem);
                             if (!navItem.children) {
                                 return (
                                     <li key={navItem.label} className="h-full" onPointerEnter={() => closeMenuSoon()}>
@@ -234,35 +216,23 @@ export default function Header() {
                                         onClick={(clickEvent) => handleTriggerClick(clickEvent, navItem.label)}
                                     >
                                         {navItem.label}
-                                        <ChevronDown size={17} strokeWidth={2.75} aria-hidden="true" className={`-mr-0.5 text-teal ${chevronMotion(isMenuOpen, isInstant)} ${isMenuOpen ? "rotate-180" : ""}`} />
+                                        <ChevronDown size={17} strokeWidth={2.75} aria-hidden="true" className="-mr-0.5 text-teal" />
                                     </button>
-                                    {/* Centred under its link. The panel covers the bar's bottom line, so it reads as part of the bar. */}
+                                    {/* Centred under its link, with a gold edge across its whole top. It covers the bar's bottom line, so it reads as part of the bar. */}
                                     <div
                                         id={panelId}
                                         inert={!isMenuOpen}
-                                        className={`absolute top-full left-1/2 w-max min-w-[220px] -translate-x-1/2 origin-top bg-white px-6 py-4 shadow-[0_18px_36px_-14px_rgba(27,42,65,0.28)] motion-reduce:translate-y-0 motion-reduce:scale-100 ${isMenuOpen ? panelOpen : panelClosed} ${isInstant ? "" : isMenuOpen ? panelOpenTransition : panelCloseTransition}`}
+                                        className={`absolute top-full left-1/2 w-max min-w-[220px] -translate-x-1/2 origin-top border-t-[3px] border-gold bg-white px-6 py-4 shadow-[0_18px_36px_-14px_rgba(27,42,65,0.28)] motion-reduce:translate-y-0 motion-reduce:scale-100 ${isMenuOpen ? panelOpen : panelClosed} ${isInstant ? "" : isMenuOpen ? panelOpenTransition : panelCloseTransition}`}
                                     >
-                                        {groupLinks(navItem.children).map((linkGroup, groupIndex) => (
-                                            <ul key={linkGroup.links[0].href} className={groupGap(groupIndex)}>
-                                                {linkGroup.links.map((childLink) => (
-                                                    <li key={childLink.href}>
-                                                        <Link href={childLink.href} className={panelLinkClass(isCurrentLink(childLink.href))} aria-current={isCurrentLink(childLink.href) ? "page" : undefined} onClick={() => closeMenu()}>
-                                                            {childLink.label}
-                                                        </Link>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        ))}
-                                        {navItem.overviewLabel && (
-                                            <Link
-                                                href={navItem.href}
-                                                onClick={() => closeMenu()}
-                                                className={`group/overview -mx-6 -mb-4 mt-3 flex items-center gap-1.5 border-t border-line px-6 py-3 text-[15px] font-semibold whitespace-nowrap text-teal ${hoverColor} hover:bg-muted ${focusRing}`}
-                                            >
-                                                {navItem.overviewLabel}
-                                                <ArrowRight size={15} aria-hidden="true" className="transition-transform duration-150 ease-out-strong group-hover/overview:translate-x-0.5 motion-reduce:transition-none" />
-                                            </Link>
-                                        )}
+                                        <ul>
+                                            {navItem.children.map((childLink) => (
+                                                <li key={childLink.href}>
+                                                    <Link href={childLink.href} className={panelLinkClass(isCurrentLink(childLink.href))} aria-current={isCurrentLink(childLink.href) ? "page" : undefined} onClick={() => closeMenu()}>
+                                                        {childLink.label}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
                                 </li>
                             );
@@ -270,10 +240,9 @@ export default function Header() {
                     </ul>
                 </nav>
 
-                <div className="ml-auto flex shrink-0 items-center gap-2 justify-self-end" onPointerEnter={() => closeMenuSoon()}>
-                    <NavAnchor link={memberActions.login} className={`hidden h-10 items-center px-3 text-[15px] font-semibold whitespace-nowrap text-primary ${hoverColor} hover:text-teal lg:inline-flex ${focusRing}`} />
-                    <NavAnchor link={memberActions.join} className={`hidden h-10 lg:inline-flex ${joinButton}`} />
-                    <NavAnchor link={memberActions.donate} className={`${donateButton} max-lg:h-9 max-lg:px-3.5 max-lg:text-sm`} />
+                <div className="flex shrink-0 items-center gap-3" onPointerEnter={() => closeMenuSoon()}>
+                    <NavAnchor link={memberActions.donate} className={`hidden h-10 lg:inline-flex ${secondaryButton}`} />
+                    <NavAnchor link={memberActions.becomeMember} className={`hidden h-10 sm:inline-flex max-lg:h-9 max-lg:px-3.5 max-lg:text-sm ${primaryButton}`} />
                     <button
                         type="button"
                         ref={mobileToggleRef}
@@ -291,13 +260,14 @@ export default function Header() {
                         {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
                     </button>
                 </div>
+                </div>
             </div>
 
             {/* Small screens: the menu drops down under the bar; each section expands in place. */}
             <div
                 id="mobile-menu"
                 inert={!isMobileMenuOpen}
-                className={`absolute inset-x-0 top-full max-h-[calc(100svh-80px)] overflow-y-auto bg-white shadow-[0_18px_36px_-14px_rgba(27,42,65,0.28)] lg:hidden motion-reduce:translate-y-0 ${isMobileMenuOpen ? mobileMenuOpen : mobileMenuClosed} ${isMobileInstant ? "" : isMobileMenuOpen ? mobileMenuOpenTransition : mobileMenuCloseTransition}`}
+                className={`absolute inset-x-0 top-full border-t-[3px] border-gold max-h-[calc(100svh-82px)] overflow-y-auto bg-white shadow-[0_18px_36px_-14px_rgba(27,42,65,0.28)] lg:hidden motion-reduce:translate-y-0 ${isMobileMenuOpen ? mobileMenuOpen : mobileMenuClosed} ${isMobileInstant ? "" : isMobileMenuOpen ? mobileMenuOpenTransition : mobileMenuCloseTransition}`}
                 onTransitionEnd={(transitionEvent) => {
                     // Once the menu has faded out, fold its sections away so it reopens collapsed.
                     if (transitionEvent.target === transitionEvent.currentTarget && transitionEvent.propertyName === "opacity" && !isMobileMenuOpen) setOpenAccordionLabel(null);
@@ -328,11 +298,7 @@ export default function Header() {
                                         }}
                                     >
                                         {navItem.label}
-                                        <ChevronDown
-                                            size={20}
-                                            aria-hidden="true"
-                                            className={`text-teal transition-transform motion-reduce:transition-none ${isMobileInstant ? "duration-0" : `ease-out-strong ${isAccordionOpen ? "duration-240" : "duration-180"}`} ${isAccordionOpen ? "rotate-180" : ""}`}
-                                        />
+                                        <ChevronDown size={20} aria-hidden="true" className="text-teal" />
                                     </button>
                                     {/* Animating grid rows from 0fr to 1fr opens the section to its natural height. */}
                                     <div
@@ -342,29 +308,18 @@ export default function Header() {
                                     >
                                         <div className="overflow-hidden">
                                             <div className="pb-4 pl-4">
-                                                {groupLinks(navItem.children).map((linkGroup, groupIndex) => (
-                                                    <ul key={linkGroup.links[0].href} className={groupGap(groupIndex)}>
-                                                        {linkGroup.links.map((childLink) => (
-                                                            <li key={childLink.href}>
-                                                                <NavAnchor
-                                                                    link={childLink}
-                                                                    onClick={() => closeMobileMenu(false)}
-                                                                    isCurrent={isCurrentLink(childLink.href)}
-                                                                    className={`flex min-h-11 items-center text-base font-medium ${isCurrentLink(childLink.href) ? "text-teal" : "text-primary"} focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-teal`}
-                                                                />
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                ))}
-                                                {navItem.overviewLabel && (
-                                                    <Link
-                                                        href={navItem.href}
-                                                        onClick={() => closeMobileMenu(false)}
-                                                        className="mt-2 flex min-h-11 items-center gap-1.5 text-base font-semibold text-teal focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-teal"
-                                                    >
-                                                        {navItem.overviewLabel} <ArrowRight size={16} aria-hidden="true" />
-                                                    </Link>
-                                                )}
+                                                <ul>
+                                                    {navItem.children.map((childLink) => (
+                                                        <li key={childLink.href}>
+                                                            <NavAnchor
+                                                                link={childLink}
+                                                                onClick={() => closeMobileMenu(false)}
+                                                                isCurrent={isCurrentLink(childLink.href)}
+                                                                className={`flex min-h-11 items-center text-base font-medium ${isCurrentLink(childLink.href) ? "text-teal" : "text-primary"} focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-teal`}
+                                                            />
+                                                        </li>
+                                                    ))}
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -373,8 +328,8 @@ export default function Header() {
                         })}
                     </ul>
                     <div className="mt-6 grid grid-cols-2 gap-3">
-                        <NavAnchor link={memberActions.join} className={`inline-flex h-11 justify-center ${joinButton}`} />
-                        <NavAnchor link={memberActions.login} className={`inline-flex h-11 items-center justify-center text-[15px] font-semibold text-primary ${hoverColor} hover:text-teal ${focusRing}`} />
+                        <NavAnchor link={memberActions.becomeMember} onClick={() => closeMobileMenu(false)} className={`flex h-11 justify-center ${primaryButton}`} />
+                        <NavAnchor link={memberActions.donate} onClick={() => closeMobileMenu(false)} className={`flex h-11 justify-center ${secondaryButton}`} />
                     </div>
                 </nav>
             </div>

@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Youtube, type LucideIcon } from "lucide-react";
-import { contact, nav, originalSitePages, social } from "@/lib/site";
+import { contact, memberLogin, nav, originalSitePages, social } from "@/lib/site";
 
 // Site footer: the WACHH mark with its motto and the five top-level sections (from `nav` in lib/site.ts,
 // which the header shares), then the office contact details, then the legal line.
 // Secondary text is white at reduced opacity, so every colour on the navy field comes from the tokens.
-// Section pages, Log in, Join, and Donate live in the header, so they are not repeated here.
+// Section pages, Become a Member, and Donate live in the header, so they are not repeated here.
+// Member log in is only here, in the legal line, beside the pages still on the original site.
 // The social accounts sit beside the contact details; the legal line links to pages still on the original site.
 
 const contactLink = "font-bold text-white transition-[color] duration-150 ease-color hover:text-header-gold";
@@ -68,7 +69,7 @@ export default function Footer() {
                 <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] leading-relaxed text-white/60">
                     <p>© {new Date().getFullYear()} World Affairs Council of Hilton Head. A 501(c)(3) nonprofit.</p>
                     <ul className="flex flex-wrap gap-x-6">
-                        {originalSitePages.map((originalPage) => (
+                        {[{ label: "Member log in", href: memberLogin }, ...originalSitePages].map((originalPage) => (
                             <li key={originalPage.href}>
                                 <a href={originalPage.href} className="underline-offset-3 transition-[color] duration-150 ease-color hover:text-white hover:underline">{originalPage.label}</a>
                             </li>
