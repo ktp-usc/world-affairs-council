@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Youtube, type LucideIcon } from "lucide-react";
-import { contact, memberLogin, nav, originalSitePages, social } from "@/lib/site";
+import { contact, memberLogin, originalSitePages, social } from "@/lib/site";
 
 // Site footer: the WACHH mark with its motto and the five top-level sections (from `nav` in lib/site.ts,
 // which the header shares), then the office contact details, then the legal line.
@@ -17,45 +17,50 @@ const socialIcons: Record<string, LucideIcon> = { Facebook, LinkedIn: Linkedin, 
 export default function Footer() {
     return (
         <footer className="site-footer">
-            <div className="footer-grid">
-                <div>
-                    <a
-                        className="footer-brand"
-                        href="https://worldaffairscouncils.org/"
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label="Visit the World Affairs Councils of America website"
-                    >
-                        <Image
-                            className="footer-waca-logo"
-                            src="/images/world-affairs-councils-of-america.png"
-                            alt="World Affairs Councils of America"
-                            width={480}
-                            height={181}
-                        />
-                    </a>
-                    <p className="footer-tagline">Connecting our community<br />to the world.</p>
-                </div>
-                <div>
-                    <h3>Quick Links</h3>
-                    <Link href="/about">About WACHH</Link>
-                    <Link href="/get-involved/membership">Membership</Link>
-                    <Link href="/get-involved/guests">Events</Link>
-                </div>
-                <div>
-                    <h3>Explore</h3>
-                    <Link href="/programs">Programs</Link>
-                    <Link href="/news">News &amp; Insights</Link>
-                    <Link href="/get-involved/give">Support Us</Link>
+            <div className="footer-inner">
+                <div className="footer-grid">
+                    <div>
+                        <a
+                            className="footer-brand"
+                            href="https://worldaffairscouncils.org/"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="Visit the World Affairs Councils of America website"
+                        >
+                            <Image
+                                className="footer-waca-logo"
+                                src="/images/world-affairs-councils-of-america.png"
+                                alt="World Affairs Councils of America"
+                                width={480}
+                                height={181}
+                            />
+                        </a>
+                        <p className="footer-tagline">Connecting our community<br />to the world.</p>
+                    </div>
+                    <div>
+                        <h3>Quick Links</h3>
+                        <Link href="/about">About WACHH</Link>
+                        <Link href="/get-involved/membership">Membership</Link>
+                        <Link href="/get-involved/guests">Events</Link>
+                    </div>
+                    <div>
+                        <h3>Explore</h3>
+                        <Link href="/programs">Programs</Link>
+                        <Link href="/news">News &amp; Insights</Link>
+                        <Link href="/get-involved/give">Support Us</Link>
+                    </div>
                 </div>
 
-                <address className="mt-12 grid gap-x-12 gap-y-3 text-[15px] leading-relaxed text-white/75 not-italic md:mt-16 md:grid-cols-[auto_auto_1fr]">
-                    <p className="grid justify-items-start">
+                <address className="footer-contact">
+                    <div className="footer-contact-details">
                         <a href={`mailto:${contact.email}`} className={contactLink}>{contact.email}</a>
                         <a href={`tel:${contact.phone.replace(/-/g, "")}`} className={contactLink}>{contact.phone}</a>
-                    </p>
-                    <p className="text-pretty">{contact.office}<br />Mail: {contact.mail}</p>
-                    <ul className="-ml-3 flex items-center md:-mt-2.5 md:ml-0 md:-mr-3 md:justify-self-end" aria-label="WACHH on social media">
+                    </div>
+                    <div className="footer-address">
+                        <span>{contact.office}</span>
+                        <span>Mail: {contact.mail}</span>
+                    </div>
+                    <ul className="footer-socials" aria-label="WACHH on social media">
                         {social.map((socialAccount) => {
                             const SocialIcon = socialIcons[socialAccount.label];
                             return (
@@ -73,7 +78,7 @@ export default function Footer() {
                     </ul>
                 </address>
 
-                <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] leading-relaxed text-white/60">
+                <div className="footer-legal">
                     <p>© {new Date().getFullYear()} World Affairs Council of Hilton Head. A 501(c)(3) nonprofit.</p>
                     <ul className="flex flex-wrap gap-x-6">
                         {[{ label: "Member log in", href: memberLogin }, ...originalSitePages].map((originalPage) => (
