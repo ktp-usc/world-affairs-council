@@ -6,6 +6,7 @@ import {
   CalendarDays,
   CheckCircle2,
 } from "lucide-react";
+import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import ImageGallery from "@/components/ImageGallery";
 import NewsFormBox from "@/components/NewsFormBox";
@@ -132,6 +133,12 @@ export default function Home() {
             </button>
           </div>
         </section>
+        {/* TEMP(dev): faint shortcut to the members-only page while it's in progress. Remove before launch. */}
+        <div className="content-width flex justify-end py-2">
+          <Link href="/members" className="text-xs text-[var(--navy)] opacity-10 hover:opacity-100 focus:opacity-100">
+            Members only
+          </Link>
+        </div>
       </main>
     </div>
   );

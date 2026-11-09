@@ -43,6 +43,7 @@ const navItems: NavItem[] = [
             { label: "Volunteer", href: "/get-involved/volunteer" },
             { label: "Opportunities to give", href: "/get-involved/give" },
             { label: "Sponsor a speaker", href: "/get-involved/sponsor" },
+            { label: "Members only", href: "/members" },
         ]
      },
     { label: "Support Us", href: "/get-involved/give" },
