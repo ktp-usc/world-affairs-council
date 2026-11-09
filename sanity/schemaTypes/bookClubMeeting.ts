@@ -20,7 +20,7 @@ export const bookClubMeeting = defineType({
     }),
     defineField({
       name: 'slug',
-      title: 'Slug',
+      title: 'URL',
       type: 'slug',
       description: 'The end of the page address. Click "Generate" to make it from the book title.',
       // the "generate" button turns "The Jackal" into "the-jackal"

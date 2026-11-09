@@ -15,7 +15,7 @@ export const teamMember = defineType({
     }),
     defineField({
       name: 'slug',
-      title: 'Slug',
+      title: 'URL',
       type: 'slug',
       // the "generate" button turns "Jane Doe" into "jane-doe"
       options: { source: 'name', maxLength: 96 },
