@@ -69,6 +69,7 @@ export default function PageHero({
     );
 }
 
+/** Keeps page sections aligned with the banner and optionally adds a muted background. */
 export function Section({ id, title, children, muted = false }: { id?: string; title?: string; children: React.ReactNode; muted?: boolean }) {
     return (
         <section id={id} className={muted ? "border-y border-[#d9d7d1] bg-[var(--off-white)]" : "bg-white"}>

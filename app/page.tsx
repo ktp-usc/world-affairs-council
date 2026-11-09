@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import ImageGallery from "@/components/ImageGallery";
+import Link from "next/link";
 import NewsFormBox from "@/components/NewsFormBox";
 import council_image from "../components/ui/images/council.jpg";
 
@@ -29,6 +30,7 @@ const programs = [
   },
 ];
 
+/** Presents Council programs and links visitors to membership information. */
 export default function Home() {
   const [submitted, setSubmitted] = useState(false);
 
@@ -81,9 +83,9 @@ export default function Home() {
               <a className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e] transition-all duration-200 hover:text-[#b8893b]" href="#bookclub">
                 Book Club <ArrowRight size={25} />
               </a>
-              <a className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e] transition-all duration-200 hover:text-[#b8893b]" href="#member">
+              <Link className="font-bold text-2xl flex flex-row items-center gap-4 text-[#2f6f7e] transition-all duration-200 hover:text-[#b8893b]" href="/get-involved/membership">
                 Membership <ArrowRight size={25} />
-              </a>
+              </Link>
             </div>
           </div>
           <ImageGallery />
