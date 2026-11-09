@@ -118,11 +118,6 @@ export const expandedProgramPages: Record<string, ProgramPageData> = {
             { label: "Cost", value: "Free; advance registration required", icon: "users" },
         ],
         sections: [{ eyebrow: "Details", title: "Meetings and registration", paragraphs: ["Registration for each discussion opens one month in advance and is limited to 30 participants. Meetings are held at The Island Rec Center Board Room, 20 Wilborn Road, Hilton Head Island, next to the high school."] }],
-        featuredBooks: [
-            { date: "November 12, 2026", title: "The Jackal", author: "Joby Warrick", image: "/programs/book-club/the-jackal.png", description: "This book traces the spectacular rise and dramatic fall of Carlos the Jackal, one of history's most infamous terrorist masterminds. Pulitzer Prize-winning author Joby Warrick draws on declassified archives, secret police files, eyewitness accounts, and a rare interview to examine the legacy of a pioneer of borderless terrorist attacks." },
-            { date: "December 10, 2026", title: "The Coming Storm", author: "Odd Arne Westad", image: "/programs/book-club/the-coming-storm.png", description: "A renowned Yale historian examines the looming threat of the next Great Power war and the urgent interventions needed to avoid it. Westad looks to the late nineteenth and early twentieth centuries, a period marked by clashing powers, nationalism, tariffs, migration, and disillusionment with globalization. He uses that history to identify unsettling parallels with our own time." },
-            { date: "January 14, 2027", title: "The Nord Stream Conspiracy", author: "Bojan Pancevski", image: "/programs/book-club/nord-stream-conspiracy.png", description: "A riveting exposé of the explosions that destroyed the Nord Stream pipelines, told through unprecedented access and deep investigative reporting. Pancevski follows the investigators and alleged operatives behind a mission that shifted global geopolitics, disrupted European economies, and strained relations within NATO." },
-        ],
         callout: { eyebrow: "Past selections", title: "Keep exploring the Book Club library", text: "Browse the books that have shaped WACHH conversations, then reserve your place when registration opens for the next discussion." },
     },
 

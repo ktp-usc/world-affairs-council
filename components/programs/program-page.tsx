@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import PageHero from "@/components/page-hero";
 import ProgramGallery from "./program-gallery";
+import BookClubMeetings from "@/components/book-club/book-club-meetings";
 import type { ProgramFact, ProgramPageData } from "./programs-data";
 
 const bookCoverColors = ["bg-[var(--navy)]", "bg-[#4e6b72]", "bg-[#764837]", "bg-[#4d546b]"];
@@ -96,6 +97,9 @@ export default function ProgramPage({ program }: { program: ProgramPageData }) {
                             </div>
                         </section>
                     )}
+
+                    {/* Book Club meetings are edited in Sanity (Studio → Book Club Meeting) */}
+                    {program.slug === "book-club" && <BookClubMeetings />}
 
                     {program.featuredBooks && (
                         <section className="mt-14 border-t border-[#d9d7d1] pt-10 md:mt-18">
