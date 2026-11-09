@@ -1,63 +1,3 @@
-/*
-import { notFound } from "next/navigation";
-import { PortableText } from "next-sanity";
-import { client } from "@/sanity/lib/client";
-import {
-  TEAM_MEMBER_QUERY,
-  TEAM_MEMBER_SLUGS_QUERY,
-} from "@/sanity/lib/queries";
-import Hero from '../../_components/hero'
-import { photos } from "../../_data/about-content";
-
-// pre-renders a page for every admin that exists at build time
-// admins added later still work since next renders unknown slugs on demand
-export async function generateStaticParams() {
-  const slugs = await client.fetch(TEAM_MEMBER_SLUGS_QUERY);
-  return slugs.map((s: { slug: string }) => ({ slug: s.slug }));
-}
-
-export default async function AdminPage({
-  // params is where the slug comes from
-  // react sees the url /sanity-test/jane-doe, and matches it with /sanity-test/[slug], so slug becomes jane-doe
-  params,
-}: {
-  // params is a promise in next 15+, so it has to be awaited
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const formattedSlug = slug.split("-").join(" ").toUpperCase();
-  const admin = await client.fetch(
-    TEAM_MEMBER_QUERY,
-    { slug },
-    { next: { revalidate: 60 } },
-  );
-
-  // a typo'd or deleted slug gets a real 404 instead of a crash
-  if (!admin) notFound();
-
-  return (
-    <>
-      <Hero
-        title="Our Team"
-        photo={photos.teamHero}
-        nextId="members"
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "About Us", href: "/about" },
-          { label: "Our Team", href: "/about/team" },
-          { label: formattedSlug }
-        ]}
-      />
-      <main className="min-h-250">
-        <h1>{admin.name}</h1>
-        <p>{admin.role}</p>
-        {admin.bio && <PortableText value={admin.bio} />}
-      </main>
-    </>
-  );
-}
-*/
-
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -66,8 +6,7 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { TEAM_MEMBER_QUERY, TEAM_MEMBER_SLUGS_QUERY } from "@/sanity/lib/queries";
 import { CATEGORY_LABELS } from "@/sanity/lib/categories";
-import Hero from "../../_components/hero";
-import { photos } from "../../_data/about-content";
+import ScrollToTop from "@/components/ScrollToTop";
 
 // how each kind of sanity rich text block gets rendered
 // spacing between blocks comes from space-y on the wrapper, so none of these need margins
@@ -140,6 +79,7 @@ export default async function TeamMemberPage({
 
   return (
     <>
+      <ScrollToTop />
       <div className="w-full bg-[#1b2a41] min-h-[60px] flex flex-1 items-center px-8">
           <Link
             href="/about/team"
@@ -153,7 +93,7 @@ export default async function TeamMemberPage({
         <div className="mx-auto max-w-6xl px-4 py-8 lg:py-8">
 
           {/* stacked on mobile, photo column + text column on desktop */}
-          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-16">
+          <div className="mt-10 grid gap-10 grid-cols-[minmax(0,0.5fr)_minmax(0,2fr)] lg:gap-16">
             {/* sticky keeps the photo in view while a long bio scrolls past */}
             <aside className="lg:sticky lg:top-24 lg:self-start">
               <div className="relative grid aspect-[3/4] place-items-center overflow-hidden border-b-[3px] border-solid border-b-(--gold) bg-(--off-white)">
