@@ -2,7 +2,22 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+First, create a `.env.local` file in the project root with the Sanity config. The easiest way is to copy the template:
+
+```bash
+cp .env.example .env.local
+```
+
+It should contain:
+
+```
+NEXT_PUBLIC_SANITY_DATASET="production"
+NEXT_PUBLIC_SANITY_PROJECT_ID="gbfmisf9"
+```
+
+Without the Sanity variables, the app throws `Missing environment variable: NEXT_PUBLIC_SANITY_DATASET` on startup.
+
+Then run the development server:
 
 ```bash
 npm run dev

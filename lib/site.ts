@@ -52,6 +52,7 @@ export const nav: NavItem[] = [
             { label: "Volunteer", href: "/get-involved/volunteer" },
             { label: "Ways to Give", href: "/get-involved/give" },
             { label: "Sponsor a Speaker", href: "/get-involved/sponsor" },
+            { label: "Members Only", href: "/members" },
         ],
     },
     { label: "News", href: "/news" },
