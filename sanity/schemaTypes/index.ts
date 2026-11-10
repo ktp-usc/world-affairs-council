@@ -1,5 +1,5 @@
 import { type SchemaTypeDefinition } from 'sanity'
-import { eventType } from "./eventType"
+import { eventType } from './eventType'
 import { teamMember } from './teamMember'
 import { bookClubMeeting } from './bookClubMeeting'
 
