@@ -214,10 +214,10 @@ export const social = [
     { label: "Instagram", href: "https://www.instagram.com/worldaffairshhi/" },
 ];
 
-// Pages that only exist on the original wachh.org site so far; the footer links to them there.
-export const originalSitePages = [
-    { label: "Privacy Notice", href: "https://wachh.org/Privacy-Notice" },
-    { label: "Resources and Links", href: "https://wachh.org/Resources-and-Links" },
+// Pages linked from the footer's legal line.
+export const legalLinks = [
+    { label: "Privacy Notice", href: "/privacy" },
+    { label: "Resources and Links", href: "/resources" },
 ];
 
 export type Post = {
