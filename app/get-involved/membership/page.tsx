@@ -1,4 +1,3 @@
-import Image from "next/image";
 import MemberStory from "@/components/member-story";
 import type { Metadata } from "next";
 import PageHero, { Section } from "@/components/page-hero";
@@ -32,24 +31,9 @@ export default function MembershipPage() {
                 <p className="max-w-[780px] text-lg text-[#444]">Membership offers education, access, and community: learn from influential figures in world affairs and connect with civic, academic, military, and business leaders across our region. Current members can renew their 2026–2027 membership by logging into their account.</p>
                 <div className="mt-8 divide-y divide-[#d9d7d1] border-y border-[#d9d7d1]">
                     {reasons.map((reason) => (
-                        <article
-                            className={reason.title === "Student outreach"
-                                ? "grid items-start gap-4 py-5 sm:grid-cols-[minmax(0,1fr)_220px] sm:gap-6 lg:grid-cols-[220px_minmax(0,1fr)_300px] lg:gap-8"
-                                : "grid items-start gap-2 py-5 md:grid-cols-[220px_minmax(0,1fr)] md:gap-8"}
-                            key={reason.title}
-                        >
-                            <h3 className={`font-[family-name:var(--serif)] text-[23px] font-medium text-[var(--navy)] ${reason.title === "Student outreach" ? "sm:col-span-2 lg:col-span-1" : ""}`}>{reason.title}</h3>
+                        <article className="grid items-start gap-2 py-5 md:grid-cols-[220px_minmax(0,1fr)] md:gap-8" key={reason.title}>
+                            <h3 className="font-[family-name:var(--serif)] text-[23px] font-medium text-[var(--navy)]">{reason.title}</h3>
                             <p className="m-0 leading-relaxed text-[#505050]">{reason.body}</p>
-                            {reason.title === "Student outreach" && (
-                                <Image
-                                    src="/programs/academic-worldquest/gallery/l1007477.jpg"
-                                    alt="Students working together at Academic WorldQuest"
-                                    width={800}
-                                    height={640}
-                                    sizes="(min-width: 1024px) 300px, (min-width: 640px) 220px, 100vw"
-                                    className="h-auto w-full sm:col-start-2 sm:row-start-2 lg:col-start-3 lg:row-start-1"
-                                />
-                            )}
                         </article>
                     ))}
                 </div>
