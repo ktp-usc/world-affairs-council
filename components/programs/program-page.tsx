@@ -16,6 +16,7 @@ function Fact({ fact }: { fact: ProgramFact }) {
     );
 }
 
+/** Render program details and optional schedules with per-speaker registration links. */
 export default function ProgramPage({ program }: { program: ProgramPageData }) {
     const booksByYear = program.books?.reduce<Record<string, typeof program.books>>((years, book) => {
         const year = book.date.match(/\d{4}$/)?.[0] ?? "Archive";

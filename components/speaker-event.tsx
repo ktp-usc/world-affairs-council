@@ -23,6 +23,7 @@ export function When({ event }: { event: Event }) {
     );
 }
 
+/** Render a speaker summary with a registration anchor and calendar actions. */
 export default function SpeakerEvent({ event }: { event: Event }) {
     return (
         <article className="grid gap-7 border-t border-[#d9d7d1] py-7 first:border-t-0 md:grid-cols-[180px_1fr]">

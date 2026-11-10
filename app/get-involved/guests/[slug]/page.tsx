@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const membersNote = "WACHH Members do NOT need to register or pay for themselves. They are admitted with their name tags.";
 
+/** Render a speaker's details with an embedded registration or the standard guest options. */
 export default async function GuestEventPage({ params }: Props) {
     const event = find((await params).slug);
     if (!event) notFound();

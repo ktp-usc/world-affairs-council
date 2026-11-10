@@ -1,6 +1,7 @@
 import { client } from "@/sanity/lib/client";
 import { events, wildApricotBaseUrl } from "@/lib/site";
 
+/** Normalize a WACHH event URL into event and widget links, or reject an invalid URL. */
 export function registrationUrls(value: string | null | undefined) {
     const match = value?.match(/^https:\/\/(?:wachh\.org|wachh\.wildapricot\.org)\/event-(\d+)\/?$/);
     if (!match) return null;
