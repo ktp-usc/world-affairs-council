@@ -53,6 +53,7 @@ export const nav: NavItem[] = [
             { label: "Opportunities to Give", href: "/get-involved/give" },
             { label: "Online Donation Form", href: "/get-involved/give#donation-form" },
             { label: "Sponsor a Speaker", href: "/get-involved/sponsor" },
+            { label: "Members Only", href: "/members" },
         ],
     },
     { label: "News", href: "/news" },

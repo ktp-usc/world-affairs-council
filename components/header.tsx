@@ -242,7 +242,7 @@ export default function Header() {
 
                 <div className="flex shrink-0 items-center gap-3" onPointerEnter={() => closeMenuSoon()}>
                     <NavAnchor link={memberActions.donate} className={`hidden h-10 lg:inline-flex ${secondaryButton}`} />
-                    <NavAnchor link={memberActions.becomeMember} className={`hidden h-10 sm:inline-flex max-lg:h-9 max-lg:px-3.5 max-lg:text-sm ${primaryButton}`} />
+                    <NavAnchor link={memberActions.becomeMember} className={`hidden h-10 lg:inline-flex ${primaryButton}`} />
                     <button
                         type="button"
                         ref={mobileToggleRef}
