@@ -27,3 +27,23 @@ export const TEAM_MEMBER_QUERY = defineQuery(`
 export const TEAM_MEMBER_SLUGS_QUERY = defineQuery(`
   *[_type == "teamMember" && defined(slug.current)] { "slug": slug.current }
 `);
+
+// book club page: meetings that haven't ended yet, soonest first
+export const UPCOMING_BOOK_CLUB_MEETINGS_QUERY = defineQuery(`
+  *[_type == "bookClubMeeting" && defined(slug.current) && coalesce(endsAt, startsAt) >= now()] | order(startsAt asc) {
+    _id, title, author, coverImage, startsAt, endsAt, location, spacesLeft, registerUrl,
+    "slug": slug.current
+  }
+`);
+
+// meeting page: one meeting matched by the slug from the url
+export const BOOK_CLUB_MEETING_QUERY = defineQuery(`
+  *[_type == "bookClubMeeting" && slug.current == $slug][0] {
+    title, author, coverImage, startsAt, endsAt, location, spacesLeft, registerUrl, abstract, aboutTheAuthor
+  }
+`);
+
+// used at build time to pre-render every meeting page
+export const BOOK_CLUB_MEETING_SLUGS_QUERY = defineQuery(`
+  *[_type == "bookClubMeeting" && defined(slug.current)] { "slug": slug.current }
+`);
