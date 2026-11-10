@@ -16,7 +16,7 @@ export default function Hero({ title, photo, breadcrumbs, subtitle }: Props) {
                 <nav className={styles.heroBreadcrumbs} aria-label="Breadcrumb">
                     {breadcrumbs.map((breadcrumb, index) => (
                         <span key={breadcrumb.label}>
-                            {index > 0 && <span aria-hidden="true">/</span>}
+                            {index > 0 && <span aria-hidden="true">/ </span>}
                             {breadcrumb.href ? (
                                 <Link className={styles.heroBreadcrumbLink} href={breadcrumb.href}>{breadcrumb.label}</Link>
                             ) : (
