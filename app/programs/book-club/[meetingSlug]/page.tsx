@@ -8,6 +8,8 @@ import { BookCover, MeetingShelf, RegisterButton, fetchUpcomingMeetings, focusRi
 import { formatMeetingDate, formatMeetingTime, formatSpacesLeft, hasMeetingEnded, splitBookTitle, type BookClubMeeting } from "@/components/book-club/meeting-details";
 import { client } from "@/sanity/lib/client";
 import { BOOK_CLUB_MEETING_QUERY, BOOK_CLUB_MEETING_SLUGS_QUERY } from "@/sanity/lib/queries";
+import WildApricotEmbed from "@/components/wild-apricot-embed";
+import { bookClubRegistrationWidget } from "@/lib/book-club-registration";
 
 type PageProps = { params: Promise<{ meetingSlug: string }> };
 
@@ -72,6 +74,7 @@ export default async function BookClubMeetingPage({ params }: PageProps) {
     const spacesLeft = formatSpacesLeft(meeting.spacesLeft);
     const isFull = meeting.spacesLeft === 0;
     const hasEnded = hasMeetingEnded(meeting);
+    const registrationWidget = !isFull && !hasEnded ? bookClubRegistrationWidget(meeting.registerUrl) : null;
     const otherMeetings = upcomingMeetings.filter((upcomingMeeting) => upcomingMeeting.slug !== meetingSlug);
 
     return (
@@ -119,7 +122,7 @@ export default async function BookClubMeetingPage({ params }: PageProps) {
                                 <p className="m-0 font-bold text-[var(--navy)]">This discussion has taken place.</p>
                             ) : (
                                 <>
-                                    {!isFull && <RegisterButton meeting={meeting} className="w-full" />}
+                                    {!isFull && <RegisterButton meeting={{ ...meeting, registerUrl: registrationWidget ? "#register" : meeting.registerUrl }} className="w-full" />}
                                     {!isFull && !meeting.registerUrl && <p className="m-0 font-bold text-[var(--navy)]">Registration opens one month before</p>}
                                     <p className="mt-3 mb-0 text-[15px] leading-[1.5] text-[#5b6168]">Free for members and the public. Limited to 30 participants.</p>
                                 </>
@@ -132,6 +135,16 @@ export default async function BookClubMeetingPage({ params }: PageProps) {
                         <RichTextSection id="about-the-author" title="About the Author" body={meeting.aboutTheAuthor} />
                     </div>
                 </div>
+
+                {registrationWidget && (
+                    <section id="register" className={`${contentWidth} scroll-mt-28 pb-16 md:pb-24`} aria-labelledby="registration-title">
+                        <h2 id="registration-title" className="mb-5 font-[family-name:var(--serif)] text-[30px] font-normal text-[var(--navy)] md:text-[36px]">Register for this discussion</h2>
+                        <p className="mb-6">
+                            <a href={meeting.registerUrl} target="_blank" rel="noopener noreferrer" className={`font-bold text-[var(--teal)] underline underline-offset-4 ${textLinkHover} ${focusRing}`}>Open registration in a new tab</a>
+                        </p>
+                        <WildApricotEmbed key={registrationWidget} src={registrationWidget} title={`Registration for ${meeting.title}`} />
+                    </section>
+                )}
 
                 {otherMeetings.length > 0 && (
                     <section className="border-t border-[var(--line)] bg-[var(--off-white)]" aria-labelledby="more-upcoming-discussions">
