@@ -24,13 +24,20 @@ export const teamMember = defineType({
       validation: (r) => r.required(),
     }),
     defineField({ 
-        name: 'role', 
-        title: 'Role', 
+        name: 'category', 
+        title: 'Category', 
         type: 'string',
         description: "The section that this person will appear under in the 'our team' page",
         options: {
             list: [...CATEGORIES]
-        }
+        },
+        validation: (r) => r.required()
+    }),
+    defineField({
+      name: 'role',
+      title: 'Role',
+      type: 'string',
+      description: "More specific title, if any"
     }),
     defineField({
       name: 'photo',
