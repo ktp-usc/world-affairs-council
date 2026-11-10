@@ -44,8 +44,9 @@ export default async function GuestEventPage({ params }: Props) {
                     <div className="space-y-6">
                         <When event={ event } />
                         <AddToCalendar event={ event } />
+                        <Button asChild size="lg"><Link href="#register">Register</Link></Button>
                         <div className="border-t pt-6">
-                            <h2 className="mb-3 font-serif text-2xl font-semibold text-primary">Biography</h2>
+                            <h2 className="mb-3 font-serif text-2xl font-semibold text-primary">{event.bio ? "Biography" : "About the program"}</h2>
                             <p className="text-lg leading-relaxed">{ event.bio ?? event.blurb }</p>
                         </div>
                     </div>

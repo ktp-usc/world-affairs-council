@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import PageHero from "@/components/page-hero";
+import { Button } from "@/components/ui/button";
 import ProgramGallery from "./program-gallery";
 import type { ProgramFact, ProgramPageData } from "./programs-data";
 
@@ -76,12 +77,13 @@ export default function ProgramPage({ program }: { program: ProgramPageData }) {
                             <h2 className="mb-6 font-[family-name:var(--serif)] text-[30px] font-medium text-[var(--navy)] md:text-[34px]">2026–2027 speaker schedule</h2>
                             <div className="overflow-x-auto border-y border-[#d9d7d1]">
                                 <table className="w-full min-w-[680px] border-collapse text-left">
-                                    <thead className="bg-[var(--off-white)] text-sm text-[var(--navy)]"><tr><th className="w-28 px-4 py-3">Date</th><th className="w-52 px-4 py-3">Presenter</th><th className="px-4 py-3">Topic</th></tr></thead>
+                                    <thead className="bg-[var(--off-white)] text-sm text-[var(--navy)]"><tr><th className="w-28 px-4 py-3">Date</th><th className="w-52 px-4 py-3">Presenter</th><th className="px-4 py-3">Topic</th>{program.events.some(event => event.href) && <th className="px-4 py-3">Registration</th>}</tr></thead>
                                     <tbody>{program.events.map((event) => (
                                         <tr className="border-t border-[#d9d7d1] align-top" key={event.name}>
                                             <td className="px-4 py-4 font-bold text-[var(--teal)]">{event.date}</td>
-                                            <td className="px-4 py-4 font-bold text-[var(--navy)]">{event.href ? <Link href={event.href} className="underline underline-offset-4">{event.name} — Register</Link> : event.name}</td>
+                                            <td className="px-4 py-4 font-bold text-[var(--navy)]">{event.name}</td>
                                             <td className="px-4 py-4 text-[#444]">{event.detail}{event.note ? <span className="mt-1 block text-sm text-[#666]">{event.note}</span> : null}</td>
+                                            {program.events?.some(event => event.href) && <td className="px-4 py-4">{event.href && <Button asChild><Link href={event.href} aria-label={`Register for ${event.name}`}>Register</Link></Button>}</td>}
                                         </tr>
                                     ))}</tbody>
                                 </table>

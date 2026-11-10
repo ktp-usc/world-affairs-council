@@ -37,7 +37,7 @@ export default function SpeakerEvent({ event }: { event: Event }) {
                 <When event={ event } />
                 <p className="line-clamp-4 text-muted-foreground">{ event.bio ?? event.blurb }</p>
                 <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 pt-2">
-                    <Button asChild><Link href={ eventHref(event) }>Register</Link></Button>
+                    <Button asChild><Link href={`${eventHref(event)}#register`} aria-label={`Register for ${event.speaker}`}>Register</Link></Button>
                     <AddToCalendar event={ event } />
                 </div>
             </div>
