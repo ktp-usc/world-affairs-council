@@ -17,6 +17,7 @@ export const teamMember = defineType({
       name: 'slug',
       title: 'URL',
       type: 'slug',
+      description: "wachh.org/about/team/...",
       // the "generate" button turns "Jane Doe" into "jane-doe"
       options: { source: 'name', maxLength: 96 },
       // without a slug the page has no url, so make it required
@@ -26,6 +27,7 @@ export const teamMember = defineType({
         name: 'role', 
         title: 'Role', 
         type: 'string',
+        description: "The section that this person will appear under in the 'our team' page",
         options: {
             list: [...CATEGORIES]
         }
