@@ -14,6 +14,7 @@ export type ProgramSection = {
 };
 
 export type ProgramEvent = {
+    href?: string;
     date: string;
     name: string;
     detail: string;

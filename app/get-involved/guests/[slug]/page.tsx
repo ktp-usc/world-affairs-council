@@ -1,3 +1,5 @@
+import WildApricotEmbed from "@/components/wild-apricot-embed";
+import { getSpeakerRegistration } from "@/lib/speaker-registration";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -29,6 +31,7 @@ export default async function GuestEventPage({ params }: Props) {
     if (!event) notFound();
 
     const deadline = preRegisterDeadline(event).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" });
+    const registration = await getSpeakerRegistration(event.slug);
     const registerUrl = event.registerUrl ?? guestPolicy.registerFallback;
 
     return (
@@ -50,6 +53,13 @@ export default async function GuestEventPage({ params }: Props) {
             </Section>
 
             <Section id="register" title="Register as a guest" muted>
+                {registration ? (
+                    <div className="space-y-5">
+                        <p>{membersNote}</p>
+                        <a href={registration.event} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center font-semibold text-primary underline">Open registration in a new tab</a>
+                        <WildApricotEmbed src={registration.widget} title={`${event.speaker} guest registration`} />
+                    </div>
+                ) : (
                 <div className="divide-y divide-[#d9d7d1] border-y border-[#d9d7d1] bg-white">
                     <div className="grid gap-5 px-6 py-7 md:grid-cols-[1fr_auto] md:items-center md:px-8">
                         <div>
@@ -82,6 +92,7 @@ export default async function GuestEventPage({ params }: Props) {
                         <Button asChild size="lg" variant="outline"><a href={ registerUrl }>Use Guest Pass</a></Button>
                     </div>
                 </div>
+                )}
                 <p className="mt-8 text-sm text-muted-foreground">
                     Please arrive at { guestPolicy.arrival.toLowerCase() } to check in at the Welcome Table and enjoy a cup of coffee.
                 </p>

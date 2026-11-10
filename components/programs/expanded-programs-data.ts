@@ -28,7 +28,7 @@ export const expandedProgramPages: Record<string, ProgramPageData> = {
             { date: "OCT 02", name: "Linda Thomas-Greenfield", detail: "Lessons in International Leadership: A Conversation with Ambassador Linda Thomas-Greenfield" },
             { date: "OCT 16", name: "Michael Ratney", detail: "A New Saudi Arabia in a Volatile Region" },
             { date: "OCT 30", name: "Peter Ammon", detail: "A European Perspective on the War in Ukraine and the Future of NATO" },
-            { date: "NOV 13", name: "Joby Warrick", detail: "Twilight of the Jackal: The World's First Super-Terrorist to Syria 2026" },
+            { date: "NOV 13", href: "/get-involved/guests/warrick#register", name: "Joby Warrick", detail: "Twilight of the Jackal: The World's First Super-Terrorist to Syria 2026" },
             { date: "DEC 04", name: "John McKay", detail: "The Future of U.S.–Canada Relations", note: "Global Speakers Program" },
             { date: "JAN 08", name: "Lobsang Sangay", detail: "Tibet: A Failure of China's World Order" },
             { date: "JAN 22", name: "Mihaela Papa", detail: "BRICS: Its Evolution, Impact on Global Finance, and Relationship with the U.S." },

@@ -80,7 +80,7 @@ export default function ProgramPage({ program }: { program: ProgramPageData }) {
                                     <tbody>{program.events.map((event) => (
                                         <tr className="border-t border-[#d9d7d1] align-top" key={event.name}>
                                             <td className="px-4 py-4 font-bold text-[var(--teal)]">{event.date}</td>
-                                            <td className="px-4 py-4 font-bold text-[var(--navy)]">{event.name}</td>
+                                            <td className="px-4 py-4 font-bold text-[var(--navy)]">{event.href ? <Link href={event.href} className="underline underline-offset-4">{event.name} — Register</Link> : event.name}</td>
                                             <td className="px-4 py-4 text-[#444]">{event.detail}{event.note ? <span className="mt-1 block text-sm text-[#666]">{event.note}</span> : null}</td>
                                         </tr>
                                     ))}</tbody>
