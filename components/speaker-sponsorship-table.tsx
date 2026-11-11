@@ -3,6 +3,11 @@ import { Section } from "@/components/page-hero";
 import { parseDate } from "@/lib/site";
 import type { SpeakerSponsorshipSchedule } from "@/lib/speaker-sponsorship";
 
+/**
+ * Render a season's presentations, presenter links, and Global Speaker footnotes.
+ * Show an announcement for an empty schedule and include the previous-season
+ * calendar only when both its label and URL are provided.
+ */
 export default function SpeakerSponsorshipTable({ schedule }: { schedule: SpeakerSponsorshipSchedule }) {
     const presentations = schedule.presentations ?? [];
 
