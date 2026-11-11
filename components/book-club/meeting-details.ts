@@ -15,6 +15,9 @@ export type BookClubMeetingSummary = {
     registerUrl?: string;
 };
 
+// a meeting that has already happened, as listed in the Book Club archive
+export type PastBookClubMeeting = Pick<BookClubMeetingSummary, "_id" | "slug" | "title" | "author" | "startsAt">;
+
 export type BookClubMeeting = Omit<BookClubMeetingSummary, "_id" | "slug"> & {
     abstract?: PortableTextBlock[];
     aboutTheAuthor?: PortableTextBlock[];
@@ -31,6 +34,13 @@ export function formatMeetingDate(startsAt: string) {
 /** The meeting's date without the weekday, for example "December 10, 2026". */
 export function formatMeetingShortDate(startsAt: string) {
     return new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: meetingTimeZone }).format(new Date(startsAt));
+}
+
+/** The meeting's date in the archive's short form: { monthDay: "Oct 8", year: "2026" }. */
+export function formatArchiveDate(startsAt: string) {
+    const parts = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: meetingTimeZone }).formatToParts(new Date(startsAt));
+    const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((datePart) => datePart.type === type)?.value ?? "";
+    return { monthDay: `${part("month")} ${part("day")}`, year: part("year") };
 }
 
 /** The meeting's time range, for example "4:30–6:00 PM", or just the start time when there is no end time. */
