@@ -1,7 +1,3 @@
-.tabBar { position: relative; z-index: 10; border-bottom: 1px solid var(--line); background: white; }
-.tabInner { display: flex; width: min(1040px, calc(100% - 40px)); margin: 0 auto; gap: 32px; overflow-x: auto; }
-.tab { flex: none; padding: 17px 0 14px; border-bottom: 3px solid transparent; color: #5b6168; font-size: 14px; font-weight: 700; }
-.tab:hover, .tabActive { border-color: var(--gold); color: var(--navy); }
 
 .hero { position: relative; display: flex; align-items: end; overflow: hidden; background: var(--navy); color: white; }
 .heroImg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
