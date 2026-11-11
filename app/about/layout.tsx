@@ -1,9 +1,7 @@
-import AboutTabs from "./_components/about-tabs";
-
+/** Wraps every About page in the shared page shell. */
 export default function AboutLayout({ children }: { children: React.ReactNode }) {
     return (
         <div className="site-shell">
-            <AboutTabs />
             <main className="bg-white">{children}</main>
         </div>
     );
