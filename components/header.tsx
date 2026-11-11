@@ -8,7 +8,7 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { memberActions, nav, type NavItem, type NavLink } from "@/lib/site";
 import logo from "./ui/images/WACHH-Banner-Logo2022.png";
 
-// Site header. Desktop (1024px and up): logo on the left; the sections, Become a Member, and Donate together on the right.
+// Site header. Desktop (1024px and up): logo on the left, Donate and Become a Member on the right, and the tabs evenly spaced between them.
 // Sections with pages open a small one-column dropdown of evenly spaced links, centred under the link, on hover or click.
 // Below 1024px (or if the tabs still don't fit at the tightest step) the menu drops down under the bar and each section expands in place.
 // The bar stays at the top: it slides away while scrolling down and comes back as soon as you scroll up.
@@ -261,9 +261,8 @@ export default function Header({ navItems = nav }: { navItems?: NavItem[] }) {
             {/* Invisible copies of the bar at each density step, measured to pick the roomiest one that fits. */}
             <div aria-hidden="true" inert className="pointer-events-none invisible absolute top-0 left-0 hidden h-0 w-0 overflow-hidden lg:block">
                 {densitySteps.map((step, stepIndex) => (
-                    <div key={stepIndex} ref={(row) => { measureRowRefs.current[stepIndex] = row; }} className="flex w-max items-center gap-6">
-                        <div className={`shrink-0 ${logoBaseWidth} ${step.logoWidth}`} />
-                        <div className={`flex items-center ${step.gap}`}>
+                    <div key={stepIndex} ref={(row) => { measureRowRefs.current[stepIndex] = row; }} className={`flex w-max items-center ${step.gap}`}>
+                        <div className={`${logoBaseWidth} ${step.logoWidth}`} />
                             <ul className={`flex items-center ${step.gap}`}>
                                 {navItems.map((navItem) => (
                                     <li key={menuIdOf(navItem)} className={`${topLinkBase} ${step.linkText}`}>
@@ -272,24 +271,23 @@ export default function Header({ navItems = nav }: { navItems?: NavItem[] }) {
                                     </li>
                                 ))}
                             </ul>
-                            <div className="flex shrink-0 items-center gap-3">
+                            <div className="flex items-center gap-3">
                                 <span className={`inline-flex h-10 ${secondaryButton}`}>{memberActions.donate.label}</span>
                                 <span className={`inline-flex h-10 ${primaryButton}`}>{memberActions.becomeMember.label}</span>
                             </div>
-                        </div>
                     </div>
                 ))}
             </div>
 
-            {/* Logo at the left edge; the sections and the two buttons sit together on the right, evenly spaced. */}
-            <div ref={barRef} className={`${pageWidth} flex h-[82px] items-center justify-between gap-6 lg:h-[104px]`}>
+            {/* Logo on the left, buttons on the right, tabs between them. Every gap in the bar (logo to first tab, between tabs,
+                last tab to the buttons) is the same size, and it grows or shrinks with the number of tabs. */}
+            <div ref={barRef} className={`${pageWidth} flex h-[82px] items-center justify-between lg:h-[104px] ${density.gap}`}>
                 <Link href="/" aria-label="World Affairs Council of Hilton Head home" className={`shrink-0 ${focusRing}`}>
                     <Image src={logo} alt="" priority className={`${logoBaseWidth} ${density.logoWidth}`} />
                 </Link>
 
-                <div className={`flex h-full items-center ${density.gap}`}>
-                <nav aria-label="Main" className={`hidden h-full ${isCrowded ? "" : "lg:block"}`} onPointerLeave={(pointerEvent) => pointerEvent.pointerType === "mouse" && closeMenuSoon()}>
-                    <ul className={`flex h-full items-center ${density.gap}`}>
+                <nav aria-label="Main" className={`hidden h-full flex-1 ${isCrowded ? "" : "lg:block"}`} onPointerLeave={(pointerEvent) => pointerEvent.pointerType === "mouse" && closeMenuSoon()}>
+                    <ul className={`flex h-full items-center justify-evenly ${density.gap}`}>
                         {navItems.map((navItem, navIndex) => {
                             const menuId = menuIdOf(navItem);
                             const isMenuOpen = openMenuLabel === menuId;
@@ -359,7 +357,6 @@ export default function Header({ navItems = nav }: { navItems?: NavItem[] }) {
                     >
                         {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
                     </button>
-                </div>
                 </div>
             </div>
 
