@@ -5,6 +5,7 @@ import HomeCarousel, { type HomeSlide } from "@/components/home-carousel";
 import ImageGallery from "@/components/ImageGallery";
 import NewsletterSignup from "@/components/newsletter-signup";
 import { events, parseDate, sponsors, wildApricotBaseUrl } from "@/lib/site";
+import { getSpeakerEvents } from "@/lib/sanity-speakers";
 import { reports, waca } from "@/app/about/_data/about-content";
 import council from "@/components/ui/images/council.jpg";
 import audience from "@/components/ui/images/bk_wac_mem.jpg";
@@ -76,9 +77,11 @@ const programLinks = [
     { title: "Student programs", href: "/programs/student-programs" },
 ];
 
-export default function Home() {
+export default async function Home() {
     const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" });
-    const upcoming = events.filter((event) => event.date >= today).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 3);
+    const speakerEvents = await getSpeakerEvents();
+    const nonSpeakerEvents = events.filter((event) => event.kind === "Book Club" || event.kind === "Student");
+    const upcoming = [...nonSpeakerEvents, ...speakerEvents].filter((event) => event.date >= today).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 3);
 
     return (
         <main className="home-page">

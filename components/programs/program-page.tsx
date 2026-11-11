@@ -35,12 +35,12 @@ export default function ProgramPage({ program }: { program: ProgramPageData }) {
 
                 <div className="mx-auto w-[min(1040px,calc(100%-48px))] py-12 md:py-18">
                     <section className="max-w-[820px]">
-                        <h2 className="font-[family-name:var(--serif)] text-[30px] font-medium text-[var(--navy)] md:text-[36px]">About the program</h2>
+                        <h2 className="font-[family-name:var(--serif)] text-[30px] font-medium text-[var(--navy)] md:text-[36px]">{program.overviewHeading ?? "About the program"}</h2>
                         <p className="mt-4 text-lg text-[#444] md:text-xl">{program.overview}</p>
                     </section>
 
                     <section className="my-10 max-w-[820px] border-t border-[#d9d7d1] pt-8 md:my-14">
-                        <h2 className="font-[family-name:var(--serif)] text-[26px] font-medium text-[var(--navy)] md:text-[30px]">Program details</h2>
+                        <h2 className="font-[family-name:var(--serif)] text-[26px] font-medium text-[var(--navy)] md:text-[30px]">{program.detailsHeading ?? "Program details"}</h2>
                         <dl className="mt-4 border-y border-[#d9d7d1]">{program.facts.map((fact) => <Fact fact={fact} key={fact.label} />)}</dl>
                     </section>
 
@@ -73,7 +73,7 @@ export default function ProgramPage({ program }: { program: ProgramPageData }) {
 
                     {program.events && (
                         <section className="mt-14 border-t border-[#d9d7d1] pt-10 md:mt-18">
-                            <h2 className="mb-6 font-[family-name:var(--serif)] text-[30px] font-medium text-[var(--navy)] md:text-[34px]">2026–2027 speaker schedule</h2>
+                            <h2 className="mb-6 font-[family-name:var(--serif)] text-[30px] font-medium text-[var(--navy)] md:text-[34px]">{program.eventsHeading ?? "2026–2027 speaker schedule"}</h2>
                             <div className="overflow-x-auto border-y border-[#d9d7d1]">
                                 <table className="w-full min-w-[680px] border-collapse text-left">
                                     <thead className="bg-[var(--off-white)] text-sm text-[var(--navy)]"><tr><th className="w-28 px-4 py-3">Date</th><th className="w-52 px-4 py-3">Presenter</th><th className="px-4 py-3">Topic</th></tr></thead>
@@ -117,7 +117,7 @@ export default function ProgramPage({ program }: { program: ProgramPageData }) {
 
                     {program.speakerArchive && (
                         <section className="mt-14 border-t border-[#d9d7d1] pt-10 md:mt-18">
-                            <h2 className="mb-7 font-[family-name:var(--serif)] text-[30px] font-medium text-[var(--navy)] md:text-[34px]">Past global speakers</h2>
+                            <h2 className="mb-7 font-[family-name:var(--serif)] text-[30px] font-medium text-[var(--navy)] md:text-[34px]">{program.archiveHeading ?? "Past global speakers"}</h2>
                             <div className="flex flex-col gap-10">
                                 {program.speakerArchive.map((season) => (
                                     <section key={season.season}>
@@ -192,7 +192,7 @@ export default function ProgramPage({ program }: { program: ProgramPageData }) {
 
                     {program.sponsors && (
                         <section className="mt-14 border-t border-[#d9d7d1] pt-10 md:mt-18">
-                            <h2 className="mb-6 font-[family-name:var(--serif)] text-[30px] font-medium text-[var(--navy)] md:text-[34px]">2026–2027 sponsors</h2>
+                            <h2 className="mb-6 font-[family-name:var(--serif)] text-[30px] font-medium text-[var(--navy)] md:text-[34px]">{program.sponsorsHeading ?? "2026–2027 sponsors"}</h2>
                             <div className="grid gap-8 md:grid-cols-[2fr_1fr]">{program.sponsors.map((group) => <section key={group.level}><h3 className="border-b border-[#d9d7d1] pb-2 font-[family-name:var(--serif)] text-[23px] font-medium text-[var(--navy)]">{group.level}</h3><ul className="mt-3 columns-1 list-none p-0 first:md:columns-2">{group.names.map((name) => <li className="break-inside-avoid py-1 text-base" key={name}>{name}</li>)}</ul></section>)}</div>
                         </section>
                     )}
