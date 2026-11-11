@@ -21,7 +21,7 @@ export default defineConfig({
   schema: {
     ...schema,
     templates: (templates) => [
-      ...templates.filter((template) => template.schemaType !== 'event' && template.schemaType !== 'speakerProgram'),
+      ...templates.filter((template) => template.schemaType !== 'event' && template.schemaType !== 'speakerProgram' && template.schemaType !== 'homePage'),
       {
         id: 'distinguished-speaker-event',
         title: 'Distinguished Speaker Series event',

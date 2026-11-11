@@ -5,7 +5,17 @@ import { useEffect, useState } from "react";
 import WildApricotEmbed from "@/components/wild-apricot-embed";
 import { newsletter } from "@/lib/site";
 
-export default function NewsletterSignup() {
+export default function NewsletterSignup({
+    heading = "Sign up for our email newsletter.",
+    text = "Upcoming programs, Council news, and conversations worth joining.",
+    openLabel = "Sign Up",
+    closeLabel = "Close form",
+}: {
+    heading?: string;
+    text?: string;
+    openLabel?: string;
+    closeLabel?: string;
+}) {
     const [expanded, setExpanded] = useState(false);
     const [hasOpened, setHasOpened] = useState(false);
 
@@ -47,8 +57,8 @@ export default function NewsletterSignup() {
             <div className="content-width">
                 <div className="home-newsletter-heading">
                     <div>
-                        <h2 id="newsletter-title">Sign up for our email newsletter.</h2>
-                        <p>Upcoming programs, Council news, and conversations worth joining.</p>
+                        <h2 id="newsletter-title">{heading}</h2>
+                        <p>{text}</p>
                     </div>
                     <button
                         className="home-button home-button--gold"
@@ -60,7 +70,7 @@ export default function NewsletterSignup() {
                             setExpanded((current) => !current);
                         }}
                     >
-                        {expanded ? "Close form" : "Sign Up"}
+                        {expanded ? closeLabel : openLabel}
                         <ChevronDown size={18} aria-hidden="true" className={expanded ? "is-expanded" : ""} />
                     </button>
                 </div>

@@ -27,6 +27,21 @@ export const SPEAKER_EVENTS_QUERY = defineQuery(`
   }
 `);
 
+export const HOME_PAGE_QUERY = defineQuery(`
+  *[_type == "homePage" && _id == "home-page"][0] {
+    heroSlides[]{_key, label, heading, text, "imageUrl": image.asset->url, imageAlt, buttonLabel, buttonHref},
+    programsHeading, programsText, programLinks, allProgramsLabel, allProgramsHref,
+    programGallery[]{_key, label, "imageUrl": image.asset->url, imageAlt},
+    eventsHeading, calendarLinkLabel, calendarLinkHref, eventDetailsLabel,
+    noEventsText, noEventsLinkLabel,
+    aboutHeading, aboutParagraphs, missionStatement,
+    "aboutImageUrl": aboutImage.asset->url, aboutImageAlt, aboutLinks,
+    newsletterHeading, newsletterText, newsletterOpenLabel, newsletterCloseLabel,
+    sponsorsHeading, sponsorsText,
+    sponsors[]{_key, name, "logoUrl": logo.asset->url}
+  }
+`);
+
 // listing page: every admin that has a slug, sorted by the order field
 export const TEAM_MEMBERS_QUERY = defineQuery(`
   *[_type == "teamMember" && defined(slug.current)] | order(order asc, name asc) {

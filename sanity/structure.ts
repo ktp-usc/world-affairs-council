@@ -10,6 +10,9 @@ const eventList = (S: Parameters<StructureResolver>[0], title: string, series: '
 
 export const structure: StructureResolver = (S) =>
   S.list().title('WACHH Content').items([
+    S.listItem()
+      .title('Landing Page')
+      .child(S.document().schemaType('homePage').documentId('home-page')),
     S.listItem().title('Distinguished Speaker Series').child(
       S.list().title('Distinguished Speaker Series').items([
         S.listItem()
