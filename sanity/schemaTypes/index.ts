@@ -6,4 +6,8 @@ import { program } from './program'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [eventType, teamMember, bookClubMeeting, program],
+import { headerNavigation } from './headerNavigation'
+
+export const schema: { types: SchemaTypeDefinition[] } = {
+  types: [eventType, teamMember, bookClubMeeting, headerNavigation],
 }

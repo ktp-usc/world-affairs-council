@@ -13,8 +13,9 @@ export const newsletter = {
 
 export const memberLogin = `${wildApricotBaseUrl}/Sys/Login`;
 
-export type NavLink = { label: string; href: string };
-export type NavItem = { label: string; href: string; children?: NavLink[] };
+// key is the Sanity id when the header menu comes from Sanity
+export type NavLink = { key?: string; label: string; href: string };
+export type NavItem = { key?: string; label: string; href: string; children?: NavLink[] };
 
 // Site navigation, shared by the header and footer. Every href is a real page.
 // A section's own page (/programs, /get-involved) is linked from the footer's section headings.
