@@ -5,6 +5,7 @@ import EventsView from "@/components/events-view";
 import PageHero, { Section } from "@/components/page-hero";
 import SpeakerEvent from "@/components/speaker-event";
 import { guestPolicy, isSpeakerSeries } from "@/lib/site";
+import { fetchGuestPage } from "@/sanity/lib/get-involved";
 
 export const revalidate = 60;
 
@@ -12,30 +13,23 @@ export const metadata: Metadata = { title: "Be a Guest" };
 
 export default async function GuestsPage() {
     const events = (await fetchUpcomingEvents()).filter(isSpeakerSeries);
+    const page = await fetchGuestPage();
 
     return (
         <>
             <PageHero
                 breadcrumbs={[{ label: "Home", href: "/" }, { label: "Get Involved", href: "/get-involved" }, { label: "Be a guest" }]}
-                title="Attend as a guest"
-                image={{ src: "/images/attend-as-guest.jpg", alt: "A WACHH speaker addressing an audience" }}
+                title={page.title}
+                image={{ src: page.heroImage.src, alt: page.heroImage.alt }}
             >
-                Non-members may register for individual Distinguished Speaker Series programs. WACHH members do not need to register or pay an additional event fee.
+                {page.intro}
             </PageHero>
 
-            <Section title="Attending as a guest">
-                <Image src="/programs/main/programs-speaker-crowd.png" alt="Guests and members attending a WACHH speaker program" width={1200} height={600} sizes="(max-width: 768px) 100vw, 1040px" className="mb-8 max-h-80 w-full object-cover" />
+            <Section title={page.sectionTitle}>
+                <Image src={page.sectionImage.src} alt={page.sectionImage.alt} width={1200} height={600} sizes="(max-width: 768px) 100vw, 1040px" className="mb-8 max-h-80 w-full object-cover" />
                 <div className="grid gap-10 lg:grid-cols-[3fr_2fr]">
                     <div className="space-y-4 text-lg leading-relaxed text-[#444]">
-                        <p>
-                            Guests must be registered and wear name tags for admission. Pre-registration and advance online payment
-                            saves time at the event but we do accept walk-ins. Please visit the Guest Table in the Gathering Space
-                            to register.
-                        </p>
-                        <p>
-                            We ask that guests arrive at { guestPolicy.arrival.toLowerCase() } in order to allow sufficient time to
-                            check in and enjoy a cup of coffee. Please check in at the Welcome Table at the event for a name badge.
-                        </p>
+                        {page.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                     </div>
                     <div className="self-start border-y border-[#d9d7d1] bg-white">
                         <h3 className="border-b border-[#d9d7d1] bg-[var(--off-white)] px-6 py-3 font-bold text-[var(--navy)]">Guest fees per event</h3>
