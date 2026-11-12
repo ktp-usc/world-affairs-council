@@ -32,7 +32,7 @@ export function TeamMemberCard({ member }: { member: TeamMemberCardData }) {
             src={urlFor(member.photo).width(600).height(800).fit('crop').auto('format').url()}
             alt={member.name}
             fill
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+            sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
             className="object-cover transition duration-300 group-hover:scale-105"
           />
         ) : (
@@ -41,9 +41,9 @@ export function TeamMemberCard({ member }: { member: TeamMemberCardData }) {
         )}
       </div>
 
-      <div className="mt-3">
-        <h3 className="font-bold text-neutral-900">{member.name}</h3>
-        {member.role && <p className="text-sm text-neutral-600 font-bold">{member.role}</p>}
+      <div className="mt-2 sm:mt-3">
+        <h3 className="text-[15px] leading-snug font-bold text-neutral-900 sm:text-base">{member.name}</h3>
+        {member.role && <p className="text-[13px] leading-snug text-neutral-600 font-bold sm:text-sm">{member.role}</p>}
       </div>
     </Link>
   )

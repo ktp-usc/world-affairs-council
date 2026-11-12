@@ -57,7 +57,7 @@ export default async function SponsorPage() {
             </Section>
 
             <Section id="sponsorship-form" title="Sponsorship Donation Form" muted>
-                <SponsorForm />
+                <SponsorForm presentations={schedule.presentations ?? []} />
             </Section>
 
             <Section muted><MemberStory photo="/images/richard-hammes.png" name="Richard Hammes" role="WACHH Member"><p>I cannot think of another organization that provides the wide array of speakers on such a broad range of topics as the World Affairs Council of Hilton Head. They bring to our community true experts in their fields that would be impossible to find anywhere else, especially for the cost of this membership. The nuggets of knowledge gained from these experts is why I try to never miss a presentation. Once you come to your first session you will be hooked.</p></MemberStory></Section>

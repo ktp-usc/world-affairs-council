@@ -19,7 +19,6 @@ export default function VolunteerPage() {
                     src: "/images/ways-to-give-banner.jpg",
                     alt: "WACHH supporters and volunteers gathering at a Council event",
                     verticalPosition: "60%",
-                    horizontalOffset: "7%",
                 }}
             >
                 Volunteers help plan programs, welcome guests, support student activities, and keep the Council connected to the community.
