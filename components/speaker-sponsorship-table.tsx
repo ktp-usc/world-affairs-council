@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Section } from "@/components/page-hero";
+import MobileScheduleList from "@/components/mobile-schedule-list";
 import { parseDate } from "@/lib/site";
 import type { SpeakerSponsorshipSchedule } from "@/lib/speaker-sponsorship";
 
@@ -10,11 +11,29 @@ import type { SpeakerSponsorshipSchedule } from "@/lib/speaker-sponsorship";
  */
 export default function SpeakerSponsorshipTable({ schedule }: { schedule: SpeakerSponsorshipSchedule }) {
     const presentations = schedule.presentations ?? [];
+    const shortDate = (iso: string) => parseDate(iso).toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "numeric" });
 
     return (
         <Section id="presentations" title={`${schedule.season} Speaker Presentations available for Sponsorship`}>
-            <p id="presentation-table-help" className="mb-6 text-muted-foreground">Select a presenter for presentation details. Use the sponsorship form above to submit your speaker preferences.<span className="mt-2 block text-sm sm:hidden">Swipe or scroll sideways to see all three columns.</span></p>
-            <div className="overflow-x-auto border border-[#d9d7d1]" role="region" aria-label={`${schedule.season} speaker presentation schedule`} tabIndex={0}>
+            <p id="presentation-table-help" className="mb-6 text-muted-foreground">Select a presenter for presentation details. Use the sponsorship form above to submit your speaker preferences.</p>
+            {/* Phones: date and presenter only; pressing a presenter shows the topic. */}
+            {presentations.length ? (
+                <MobileScheduleList items={presentations.map((presentation) => ({
+                    key: presentation._key,
+                    dateTime: presentation.date,
+                    dateLabel: shortDate(presentation.date),
+                    presenter: <>{presentation.presenter}{presentation.isGlobalSpeaker && <><span aria-hidden="true">**</span><span className="sr-only">, Global Speakers Program</span></>}</>,
+                    details: (
+                        <>
+                            <p>{presentation.topic}</p>
+                            {presentation.eventUrl && <a href={presentation.eventUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-11 items-center font-semibold text-primary underline underline-offset-4">Presentation details<span className="sr-only"> for {presentation.presenter} (opens in a new tab)</span></a>}
+                        </>
+                    ),
+                }))} />
+            ) : (
+                <p className="border-y border-[#d9d7d1] py-6 text-muted-foreground md:hidden">Speaker presentations will be announced soon.</p>
+            )}
+            <div className="hidden overflow-x-auto border border-[#d9d7d1] md:block" role="region" aria-label={`${schedule.season} speaker presentation schedule`} tabIndex={0}>
                 <table className="w-full min-w-[620px] border-collapse text-left" aria-describedby="presentation-table-help">
                     <caption className="sr-only">{schedule.season} speaker sponsorship presentations, sorted by date</caption>
                     <thead className="bg-[var(--navy)] text-white">
@@ -28,7 +47,7 @@ export default function SpeakerSponsorshipTable({ schedule }: { schedule: Speake
                         {presentations.map((presentation) => (
                             <tr key={presentation._key} className="border-t border-[#d9d7d1] even:bg-[var(--off-white)]">
                                 <td className="border-r border-[#d9d7d1] px-5 py-4 align-top whitespace-nowrap tabular-nums">
-                                    <time dateTime={presentation.date}>{parseDate(presentation.date).toLocaleDateString("en-US", {month: "numeric", day: "numeric", year: "numeric"})}</time>
+                                    <time dateTime={presentation.date}>{shortDate(presentation.date)}</time>
                                 </td>
                                 <th scope="row" className="border-r border-[#d9d7d1] px-5 py-4 align-top font-semibold text-primary">
                                     {presentation.eventUrl ? (

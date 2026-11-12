@@ -51,7 +51,7 @@ export default async function SponsorPage() {
             </Section>
 
             <Section id="sponsorship-form" title={page.formTitle} muted>
-                <SponsorForm />
+                <SponsorForm presentations={schedule.presentations ?? []} />
             </Section>
 
             <Section muted><MemberStory photo={page.testimonial.photo} name={page.testimonial.name} role={page.testimonial.role}><p>{page.testimonial.quote}</p></MemberStory></Section>

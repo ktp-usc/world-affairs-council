@@ -4,7 +4,8 @@ import { fetchUpcomingEvents } from "@/sanity/lib/events";
 import EventsView from "@/components/events-view";
 import PageHero, { Section } from "@/components/page-hero";
 import SpeakerEvent from "@/components/speaker-event";
-import { guestPolicy, isSpeakerSeries } from "@/lib/site";
+import WildApricotEmbed from "@/components/wild-apricot-embed";
+import { guestPolicy, isSpeakerSeries, wildApricotBaseUrl } from "@/lib/site";
 import { fetchGuestPage } from "@/sanity/lib/get-involved";
 
 export const revalidate = 60;

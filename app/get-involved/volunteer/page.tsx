@@ -21,7 +21,6 @@ export default async function VolunteerPage() {
                     src: page.heroImage.src,
                     alt: page.heroImage.alt,
                     verticalPosition: "60%",
-                    horizontalOffset: "7%",
                 }}
             >
                 {page.intro}
