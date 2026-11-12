@@ -17,6 +17,11 @@ type HeaderTab = {
 };
 
 // Home is always the first tab and can't be changed in Sanity
+// Exclude retired pages from existing published menus as well as the built-in menu.
+const retiredRoute = (href: string) => {
+    const path = href.split(/[?#]/)[0].replace(/\/$/, '');
+    return path === '/news' || path === '/about/community';
+};
 const homeTab: NavItem = { label: "Home", href: "/" };
 
 /** Turns the Sanity tabs into header items, skipping any tab or dropdown link that is missing its name or link. */
@@ -27,10 +32,10 @@ function toNavItems(tabs: HeaderTab[]): NavItem[] {
         const children = (tab.dropdownLinks ?? []).flatMap((dropdownLink) => {
             const childLabel = dropdownLink.label?.trim();
             const childHref = dropdownLink.link?.trim();
-            return childLabel && childHref ? [{ key: dropdownLink._key, label: childLabel, href: childHref }] : [];
+            return childLabel && childHref && !retiredRoute(childHref) ? [{ key: dropdownLink._key, label: childLabel, href: childHref }] : [];
         });
         const href = tab.link?.trim() || children[0]?.href;
-        if (!href) return [];
+        if (!href || retiredRoute(href)) return [];
         return [{ key: tab._key, label, href, children: children.length ? children : undefined }];
     });
 }

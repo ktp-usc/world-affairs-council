@@ -4,8 +4,9 @@ import { ArrowRight, CalendarDays } from "lucide-react";
 import HomeCarousel, { type HomeSlide } from "@/components/home-carousel";
 import ImageGallery from "@/components/ImageGallery";
 import NewsletterSignup from "@/components/newsletter-signup";
-import { events, parseDate, sponsors, wildApricotBaseUrl } from "@/lib/site";
-import { reports, waca } from "@/app/about/_data/about-content";
+import { isSpeakerSeries, parseDate, sponsors, wildApricotBaseUrl } from "@/lib/site";
+import { fetchAbout } from "@/sanity/lib/about";
+import { fetchUpcomingEvents } from "@/sanity/lib/events";
 import council from "@/components/ui/images/council.jpg";
 import audience from "@/components/ui/images/bk_wac_mem.jpg";
 import workshop from "@/components/ui/images/workshop.jpg";
@@ -13,8 +14,8 @@ import speaker from "@/components/ui/images/speaker2.jpg";
 import podium from "@/components/ui/images/speaker1.jpg";
 import "./home.css";
 
-// Refresh the upcoming list hourly, using the Council's time zone.
-export const revalidate = 3600;
+// Refresh published content every minute, using the Council's time zone.
+export const revalidate = 60;
 
 const featureSlides: HomeSlide[] = [
     {
@@ -76,9 +77,9 @@ const programLinks = [
     { title: "Student programs", href: "/programs/student-programs" },
 ];
 
-export default function Home() {
-    const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" });
-    const upcoming = events.filter((event) => event.date >= today).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 3);
+export default async function Home() {
+    const [events, about] = await Promise.all([fetchUpcomingEvents(), fetchAbout()]);
+    const upcoming = events.slice(0, 3);
 
     return (
         <main className="home-page">
@@ -113,9 +114,9 @@ export default function Home() {
                             {upcoming.map((event) => (
                                 <article className="home-event" key={event.slug}>
                                     <time dateTime={event.date}>{parseDate(event.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</time>
-                                    <h3><Link href={event.kind === "Book Club" ? "/programs/book-club" : `/get-involved/guests/${event.slug}`}>{event.title}</Link></h3>
+                                    <h3><Link href={isSpeakerSeries(event) ? `/get-involved/guests/${event.slug}` : event.kind === "Book Club" ? "/programs/book-club" : "/programs/student-programs"}>{event.title}</Link></h3>
                                     <p>{event.start} · {event.venue}</p>
-                                    <Link className="text-link" href={event.kind === "Book Club" ? "/programs/book-club" : `/get-involved/guests/${event.slug}`}>Event details <ArrowRight size={17} aria-hidden="true" /></Link>
+                                    <Link className="text-link" href={isSpeakerSeries(event) ? `/get-involved/guests/${event.slug}` : event.kind === "Book Club" ? "/programs/book-club" : "/programs/student-programs"}>Event details <ArrowRight size={17} aria-hidden="true" /></Link>
                                 </article>
                             ))}
                         </div>
@@ -139,8 +140,8 @@ export default function Home() {
                         <p>We take no political positions. Our role is to present informed voices and encourage open inquiry, so you can weigh the ideas for yourself. Through our national network, we also connect members with programs and resources from councils across the country.</p>
                         <div className="home-about-links">
                             <Link className="text-link" href="/about">More about the Council <ArrowRight size={17} aria-hidden="true" /></Link>
-                            <a className="text-link" href={reports[0].href} target="_blank" rel="noreferrer">Annual report (PDF) <ArrowRight size={17} aria-hidden="true" /></a>
-                            <a className="text-link" href={waca.href} target="_blank" rel="noreferrer">Our national network <ArrowRight size={17} aria-hidden="true" /></a>
+                            <a className="text-link" href={about.reports[0]?.href ?? "/about#annual-reports"} target="_blank" rel="noreferrer">Annual report (PDF) <ArrowRight size={17} aria-hidden="true" /></a>
+                            <a className="text-link" href={about.wacaHref} target="_blank" rel="noreferrer">Our national network <ArrowRight size={17} aria-hidden="true" /></a>
                         </div>
                     </div>
                 </div>

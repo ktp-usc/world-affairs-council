@@ -1,14 +1,17 @@
 import Image from "next/image";
 import type { Metadata } from "next";
-import WildApricotEmbed from "@/components/wild-apricot-embed";
+import { fetchUpcomingEvents } from "@/sanity/lib/events";
+import EventsView from "@/components/events-view";
 import PageHero, { Section } from "@/components/page-hero";
-import { guestPolicy, wildApricotBaseUrl } from "@/lib/site";
+import SpeakerEvent from "@/components/speaker-event";
+import { guestPolicy, isSpeakerSeries } from "@/lib/site";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export const metadata: Metadata = { title: "Be a Guest" };
 
-export default function GuestsPage() {
+export default async function GuestsPage() {
+    const events = (await fetchUpcomingEvents()).filter(isSpeakerSeries);
 
     return (
         <>

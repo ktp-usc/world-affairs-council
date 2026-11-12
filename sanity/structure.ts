@@ -10,6 +10,8 @@ export const structure: StructureResolver = (S) =>
         .title('Header Menu')
         .id('headerNavigation')
         .child(S.document().schemaType('headerNavigation').documentId('headerNavigation').title('Header Menu')),
+      S.listItem().title('About Us').id('aboutPage')
+        .child(S.document().schemaType('aboutPage').documentId('aboutPage').title('About Us')),
       S.divider(),
-      ...S.documentTypeListItems().filter((listItem) => listItem.getId() !== 'headerNavigation'),
+      ...S.documentTypeListItems().filter((listItem) => !['headerNavigation', 'aboutPage'].includes(listItem.getId() ?? '')),
     ])

@@ -12,10 +12,9 @@ export const SPEAKER_SPONSORSHIP_SCHEDULE_QUERY = defineQuery(`
 `);
 
 export const EVENTS_QUERY = defineQuery(`
-  *[_type == "event"] | order(date asc) {
-    date,
-    title,
-    "text" : description
+  *[_type == "event" && defined(slug.current) && defined(date) && defined(start) && defined(end) && defined(kind)] | order(date asc, start asc) {
+    "slug": slug.current, title, speaker, kind, date, start, end, venue, address,
+    "blurb": description, bio, "photo": coalesce(photo.asset->url, photoPath), registerUrl
   }
 `);
 
