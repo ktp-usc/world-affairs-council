@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import PageHero, { Section } from "@/components/page-hero";
 import WildApricotSignup from "@/components/wild-apricot-signup";
@@ -34,6 +35,7 @@ export default function JoinPage() {
             </PageHero>
 
             <Section>
+                <Image src="/programs/main/programs-speaker-crowd.png" alt="Members gathered at a Council speaker program" width={1200} height={600} sizes="(max-width: 768px) 100vw, 1040px" className="mb-8 max-h-72 w-full object-cover" />
                 <WildApricotSignup />
             </Section>
         </main>

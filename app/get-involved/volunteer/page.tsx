@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
 import Image from "next/image";
+import MemberStory from "@/components/member-story";
+import type { Metadata } from "next";
 import { Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHero, { Section } from "@/components/page-hero";
@@ -7,13 +8,6 @@ import VolunteerForm from "@/components/volunteer-form";
 import { volunteerContact, volunteerRoles } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Volunteer" };
-
-const volunteerPhotos = [
-    { src: "/images/volunteer/volunteer-welcome.jpg", alt: "Volunteers welcoming guests at a WACHH event" },
-    { src: "/images/volunteer/volunteer-registration.jpg", alt: "Volunteers preparing registration materials" },
-    { src: "/images/volunteer/volunteer-program.jpg", alt: "WACHH volunteers supporting a community program" },
-    { src: "/images/volunteer/volunteer-community.jpg", alt: "WACHH volunteers gathering with members" },
-];
 
 export default function VolunteerPage() {
     return (
@@ -33,28 +27,42 @@ export default function VolunteerPage() {
             </PageHero>
 
             <Section title="Volunteer opportunities">
-                <p className="mb-8 max-w-3xl text-lg leading-relaxed text-muted-foreground">Roles vary in schedule and time commitment. The Council works with volunteers to find assignments that match their interests and availability.</p>
+                <div className="mb-8 grid gap-6 sm:grid-cols-2">
+                    <figure>
+                        <Image src="/images/volunteer/volunteer-welcome.jpg" alt="Council volunteers welcoming a guest at the event registration table" width={500} height={333} sizes="(min-width: 640px) 500px, 100vw" className="h-auto w-full" />
+                        <figcaption className="mt-3 text-sm text-muted-foreground">Help members and guests feel welcome.</figcaption>
+                    </figure>
+                    <figure>
+                        <Image src="/images/volunteer/volunteer-community.jpg" alt="Three Council community members smiling together at a gathering" width={500} height={333} sizes="(min-width: 640px) 500px, 100vw" className="h-auto w-full" />
+                        <figcaption className="mt-3 text-sm text-muted-foreground">Meet new people and be part of the Council community.</figcaption>
+                    </figure>
+                </div>
+                <p className="mb-8 max-w-3xl text-lg leading-relaxed text-muted-foreground">Meet new people, share your talents in a meaningful way, and be part of a community. Our programs are run by dedicated volunteer teams who help events operate smoothly. We welcome people from all backgrounds and experiences; your time commitment can be as much or as little as you can afford.</p>
                 <ol className="divide-y divide-[#d9d7d1] border-y border-[#d9d7d1] md:grid md:grid-cols-2 md:divide-y-0">
                     { volunteerRoles.map((role, index) => (
                         <li key={ role.id } className="grid grid-cols-[2rem_1fr] gap-4 border-b border-[#d9d7d1] py-6 last:border-b-0 md:odd:pr-8 md:even:border-l md:even:pl-8">
                             <span className="font-serif text-xl text-gold">{ String(index + 1).padStart(2, "0") }</span>
-                            <div><h3 className="font-serif text-xl font-semibold text-primary">{ role.title }</h3><p className="mt-2 leading-relaxed text-muted-foreground">{ role.body }</p></div>
+                            <div>
+                                <h3 className="font-serif text-xl font-semibold text-primary">{ role.title }</h3>
+                                <p className="mt-2 leading-relaxed text-muted-foreground">{ role.body }</p>
+                                {role.id === "speaker-events" && <Image src="/images/volunteer/volunteer-registration.jpg" alt="Volunteers organizing name badges and checking in guests at a Council event" width={500} height={333} sizes="(min-width: 768px) 440px, 100vw" className="mt-5 h-auto w-full" />}
+                                {role.id === "students" && <div className="mt-5 space-y-4">
+                                    <Image src="/programs/academic-worldquest/gallery/l1007477.jpg" alt="Students in green shirts working together at an Academic WorldQuest table" width={2640} height={2112} sizes="(min-width: 768px) 440px, 100vw" className="h-auto w-full" />
+                                    <Image src="/programs/model-un/gallery/mun-2018-2.jpg" alt="High school delegates participating in a Model United Nations conference" width={960} height={640} sizes="(min-width: 768px) 440px, 100vw" className="h-auto w-full" />
+                                </div>}
+                            </div>
                         </li>
                     )) }
                 </ol>
-                <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4" aria-label="WACHH volunteers in action">
-                    {volunteerPhotos.map((photo) => (
-                        <figure className="relative aspect-[3/2] overflow-hidden bg-[var(--off-white)]" key={photo.src}>
-                            <Image className="object-cover" src={photo.src} alt={photo.alt} fill sizes="(min-width: 768px) 25vw, 50vw" />
-                        </figure>
-                    ))}
-                </div>
             </Section>
 
             <Section id="volunteer-form" title="Become a volunteer" muted>
                 <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
                     <div className="space-y-5">
-                        <Image className="h-auto w-40" src="/images/volunteer/kay-black.png" alt="Portrait of WACHH volunteer coordinator Kay Black" width={438} height={418} />
+                        <figure>
+                            <Image src="/images/volunteer/volunteer-program.jpg" alt="Two Council volunteers wearing event badges and smiling together" width={500} height={333} sizes="(min-width: 1024px) 320px, 100vw" className="h-auto w-full" />
+                            <figcaption className="mt-3 text-sm text-muted-foreground">Share your time and talents with the Council community.</figcaption>
+                        </figure>
                         <p className="text-muted-foreground">Complete the form or contact the Council office to discuss current needs and your availability.</p>
                         <ul className="space-y-3 text-sm">
                             <li><a href={ `mailto:${ volunteerContact.email }` } className="flex items-center gap-2 font-medium text-primary hover:text-gold"><Mail className="size-4" />{ volunteerContact.email }</a></li>
@@ -64,6 +72,7 @@ export default function VolunteerPage() {
                     <VolunteerForm />
                 </div>
             </Section>
+            <Section muted><MemberStory photo="/images/kaye-black.png" name="Kaye Black" role="WACHH Marketing Committee"><p>WACHH has given me a better understanding of what is happening in the world, and I love learning about the complexity behind the news headlines. World Affairs Council speakers consistently offer unique perspectives on the world’s most pressing international challenges. I can’t think of a better way to stay informed about today’s world order and what it means to us as Americans.</p></MemberStory></Section>
         </>
     );
 }

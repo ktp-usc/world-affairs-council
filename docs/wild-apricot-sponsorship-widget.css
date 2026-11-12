@@ -1,0 +1,13 @@
+/* WAC-17: add to the existing Wild Apricot site's CSS customization.
+   These rules affect only the embedded Sponsor a Speaker page.
+   The regular Wild Apricot page and the donation form remain unchanged. */
+
+/* The new website supplies the presentation table from Sanity. */
+body.widgetMode#PAGEID_18266 #id_Rth5zpF {
+    display: none !important;
+}
+
+/* The new website places Richard Hammes's quote directly below the form. */
+body.widgetMode#PAGEID_18266 #id_HAHZLtA {
+    display: none !important;
+}

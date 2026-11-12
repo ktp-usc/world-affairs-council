@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import { fetchUpcomingEvents } from "@/sanity/lib/events";
 import EventsView from "@/components/events-view";
@@ -23,6 +24,7 @@ export default async function GuestsPage() {
             </PageHero>
 
             <Section title="Attending as a guest">
+                <Image src="/programs/main/programs-speaker-crowd.png" alt="Guests and members attending a WACHH speaker program" width={1200} height={600} sizes="(max-width: 768px) 100vw, 1040px" className="mb-8 max-h-80 w-full object-cover" />
                 <div className="grid gap-10 lg:grid-cols-[3fr_2fr]">
                     <div className="space-y-4 text-lg leading-relaxed text-[#444]">
                         <p>
@@ -59,14 +61,8 @@ export default async function GuestsPage() {
                 <p className="mb-8 max-w-2xl text-[#555]">
                     Select an event for program details and guest registration.
                 </p>
-                { events.length ? (
-                    <EventsView
-                        events={ events }
-                        list={ <div className="space-y-6">{ events.map((e) => <SpeakerEvent key={ e.slug } event={ e } />) }</div> }
-                    />
-                ) : (
-                    <p className="text-muted-foreground">New programs are announced soon — check back or sign up for our newsletter.</p>
-                ) }
+                <a href={wildApricotBaseUrl + "/guest-policy"} target="_blank" rel="noopener noreferrer" className="mb-6 inline-flex min-h-11 items-center font-semibold text-primary underline">Open current events and guest registration in a new tab</a>
+                <WildApricotEmbed src={wildApricotBaseUrl + "/widget/guest-policy#FunctionalBlock1"} title="WACHH upcoming speaker events and guest registration" iframeClassName="h-[1100px] w-full border-0" />
             </Section>
         </>
     );
