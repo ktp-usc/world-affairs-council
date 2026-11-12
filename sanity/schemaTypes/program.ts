@@ -193,6 +193,13 @@ export const program = defineType({
             defineField({ name: 'name', title: 'Speaker', type: 'string', validation: (rule) => rule.required() }),
             defineField({ name: 'detail', title: 'Topic', type: 'string' }),
             defineField({ name: 'note', title: 'Note', type: 'string', description: 'Small text under the topic, like “Global Speakers Program”.' }),
+            defineField({
+              name: 'href',
+              title: 'Registration link',
+              type: 'url',
+              description: 'Optional link to the speaker registration page, for example /get-involved/guests/warrick#register.',
+              validation: (rule) => rule.uri({ allowRelative: true, scheme: ['http', 'https'] }),
+            }),
           ],
           preview: { select: { title: 'name', subtitle: 'date' } },
         }),

@@ -1,3 +1,4 @@
+import { speakerRegistration } from "./speakerRegistration";
 import { type SchemaTypeDefinition } from 'sanity'
 import { eventType } from "./eventType"
 import { teamMember } from './teamMember'
@@ -7,5 +8,5 @@ import { program } from './program'
 import { headerNavigation } from './headerNavigation'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [eventType, teamMember, speakerSponsorshipSchedule, bookClubMeeting],
+  types: [eventType, teamMember, bookClubMeeting, program, headerNavigation, speakerRegistration],
 }

@@ -92,7 +92,7 @@ const PROGRAM_FIELDS = `
   sections[]{ _key, eyebrow, title, body },
   featurePanel{ title, body, linkLabel, linkUrl, "image": image.asset->url, "imageAlt": image.alt, "imageWidth": image.asset->metadata.dimensions.width, "imageHeight": image.asset->metadata.dimensions.height },
   callout{ eyebrow, title, body },
-  eventsTitle, events[]{ _key, date, name, detail, note },
+  eventsTitle, events[]{ _key, date, name, detail, note, href },
   topicsTitle, topics[]{ _key, title, description },
   discussionGroupsTitle, discussionGroupsIntro, discussionGroups[]{ _key, name, time, location, dates },
   speakerArchiveTitle, speakerArchive[]{ _key, season, speakers[]{ _key, date, name, role, topic, "image": image.asset->url, "imageAlt": image.alt } },

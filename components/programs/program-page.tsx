@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import PageHero from "@/components/page-hero";
+import { Button } from "@/components/ui/button";
 import RichText from "@/components/rich-text";
 import ProgramGallery from "./program-gallery";
 import { formatLongDate, formatScheduleDate, hasItems, hasRichText, type Program, type ProgramFact } from "./program-types";
@@ -84,12 +85,13 @@ export default function ProgramPage({ program }: { program: Program }) {
                             <h2 className={`mb-6 ${sectionHeading}`}>{program.eventsTitle || "Speaker schedule"}</h2>
                             <div className="overflow-x-auto border-y border-[#d9d7d1]">
                                 <table className="w-full min-w-[680px] border-collapse text-left">
-                                    <thead className="bg-[var(--off-white)] text-sm text-[var(--navy)]"><tr><th className="w-28 px-4 py-3">Date</th><th className="w-52 px-4 py-3">Presenter</th><th className="px-4 py-3">Topic</th></tr></thead>
+                                    <thead className="bg-[var(--off-white)] text-sm text-[var(--navy)]"><tr><th className="w-28 px-4 py-3">Date</th><th className="w-52 px-4 py-3">Presenter</th><th className="px-4 py-3">Topic</th>{program.events.some(event => event.href) && <th className="px-4 py-3">Registration</th>}</tr></thead>
                                     <tbody>{program.events.map((event) => (
                                         <tr className="border-t border-[#d9d7d1] align-top" key={event._key}>
                                             <td className="px-4 py-4 font-bold text-[var(--teal)]"><time dateTime={event.date}>{formatScheduleDate(event.date)}</time></td>
                                             <td className="px-4 py-4 font-bold text-[var(--navy)]">{event.name}</td>
                                             <td className="px-4 py-4 text-[#444]">{event.detail}{event.note ? <span className="mt-1 block text-sm text-[#666]">{event.note}</span> : null}</td>
+                                            {program.events?.some(event => event.href) && <td className="px-4 py-4">{event.href && <Button asChild><Link href={event.href} aria-label={`Register for ${event.name}`}>Register</Link></Button>}</td>}
                                         </tr>
                                     ))}</tbody>
                                 </table>
