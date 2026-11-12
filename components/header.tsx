@@ -283,7 +283,7 @@ export default function Header({ navItems = nav }: { navItems?: NavItem[] }) {
                 last tab to the buttons) is the same size, and it grows or shrinks with the number of tabs. */}
             <div ref={barRef} className={`${pageWidth} flex h-[82px] items-center justify-between lg:h-[104px] ${density.gap}`}>
                 <Link href="/" aria-label="World Affairs Council of Hilton Head home" className={`shrink-0 ${focusRing}`}>
-                    <Image src={logo} alt="" priority className={`${logoBaseWidth} ${density.logoWidth}`} />
+                    <Image src={logo} alt="" loading="eager" sizes="(min-width: 1280px) 320px, 240px" className={`${logoBaseWidth} ${density.logoWidth}`} />
                 </Link>
 
                 <nav aria-label="Main" className={`hidden h-full flex-1 ${isCrowded ? "" : "lg:block"}`} onPointerLeave={(pointerEvent) => pointerEvent.pointerType === "mouse" && closeMenuSoon()}>

@@ -63,6 +63,9 @@ export default function PageHeroImage({
                 src={src}
                 alt={alt}
                 fill
+                // the banner is the largest thing on screen, so fetch it first instead of lazy-loading it
+                preload
+                fetchPriority="high"
                 sizes="62vw"
                 className="object-cover"
                 style={{ objectPosition: `${position} ${verticalPosition}` }}

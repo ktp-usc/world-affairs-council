@@ -143,7 +143,7 @@ export default function HomeCarousel({
                                 fill
                                 sizes="(min-width: 901px) 55vw, 100vw"
                                 className="home-carousel-image"
-                                priority={variant === "hero" && position === 0}
+                                preload={variant === "hero" && position === 0}
                             />
                         </div>
                     </div>
