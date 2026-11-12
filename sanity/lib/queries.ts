@@ -1,5 +1,16 @@
 import { defineQuery } from "next-sanity";
 
+export const SPEAKER_SPONSORSHIP_SCHEDULE_QUERY = defineQuery(`
+  *[_type == "speakerSponsorshipSchedule" && _id == "speaker-sponsorship-schedule"][0] {
+    season,
+    "presentations": presentations[] | order(date asc) {
+      _key, date, presenter, topic, eventUrl, isGlobalSpeaker
+    },
+    previousSeasonLabel,
+    previousSeasonUrl
+  }
+`);
+
 export const EVENTS_QUERY = defineQuery(`
   *[_type == "event"] | order(date asc) {
     date,

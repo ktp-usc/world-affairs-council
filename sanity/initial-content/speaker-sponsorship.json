@@ -1,0 +1,135 @@
+{
+  "_id": "speaker-sponsorship-schedule",
+  "_type": "speakerSponsorshipSchedule",
+  "season": "2026-2027",
+  "presentations": [
+    {
+      "_key": "presentation-2026-10-02",
+      "_type": "speakerPresentation",
+      "date": "2026-10-02",
+      "presenter": "Linda Thomas-Greenfield",
+      "topic": "Lessons in International Leadership: A Conversation with Ambassador Linda Thomas-Greenfield",
+      "eventUrl": "https://wachh.wildapricot.org/event-6682004",
+      "isGlobalSpeaker": false
+    },
+    {
+      "_key": "presentation-2026-10-16",
+      "_type": "speakerPresentation",
+      "date": "2026-10-16",
+      "presenter": "Michael Ratney",
+      "topic": "A New Saudi Arabia in a Volatile Region",
+      "eventUrl": "https://wachh.wildapricot.org/event-6682006",
+      "isGlobalSpeaker": false
+    },
+    {
+      "_key": "presentation-2026-10-30",
+      "_type": "speakerPresentation",
+      "date": "2026-10-30",
+      "presenter": "Peter Ammon",
+      "topic": "A European Perspective on the War in Ukraine and the Future of NATO",
+      "eventUrl": "https://wachh.wildapricot.org/event-6684338",
+      "isGlobalSpeaker": false
+    },
+    {
+      "_key": "presentation-2026-11-13",
+      "_type": "speakerPresentation",
+      "date": "2026-11-13",
+      "presenter": "Joby Warrick",
+      "topic": "Twilight of the Jackal: The World's First Super-Terrorist to Syria 2026",
+      "eventUrl": "https://wachh.wildapricot.org/event-6685680",
+      "isGlobalSpeaker": false
+    },
+    {
+      "_key": "presentation-2026-12-04",
+      "_type": "speakerPresentation",
+      "date": "2026-12-04",
+      "presenter": "John McKay",
+      "topic": "The Future of U.S.-Canada Relations",
+      "eventUrl": "https://wachh.wildapricot.org/event-6684344",
+      "isGlobalSpeaker": true
+    },
+    {
+      "_key": "presentation-2027-01-08",
+      "_type": "speakerPresentation",
+      "date": "2027-01-08",
+      "presenter": "Lobsang Sangay",
+      "topic": "Tibet: A Failure of China's World Order",
+      "eventUrl": "https://wachh.wildapricot.org/event-6684341",
+      "isGlobalSpeaker": false
+    },
+    {
+      "_key": "presentation-2027-01-22",
+      "_type": "speakerPresentation",
+      "date": "2027-01-22",
+      "presenter": "Mihaela Papa",
+      "topic": "BRICS -- Its Evolution, Impact on Global Finance, and Relationship with the U.S.",
+      "eventUrl": "https://wachh.wildapricot.org/event-6685692",
+      "isGlobalSpeaker": false
+    },
+    {
+      "_key": "presentation-2027-02-05",
+      "_type": "speakerPresentation",
+      "date": "2027-02-05",
+      "presenter": "Adam Segal",
+      "topic": "The AI race between the US and China.",
+      "eventUrl": "https://wachh.wildapricot.org/event-6775802",
+      "isGlobalSpeaker": false
+    },
+    {
+      "_key": "presentation-2027-02-19",
+      "_type": "speakerPresentation",
+      "date": "2027-02-19",
+      "presenter": "Dr. Manuel Orozco",
+      "topic": "Remittances and their Implications for Immigration and Displacement Worldwide",
+      "eventUrl": "https://wachh.wildapricot.org/event-6685702",
+      "isGlobalSpeaker": false
+    },
+    {
+      "_key": "presentation-2027-03-05",
+      "_type": "speakerPresentation",
+      "date": "2027-03-05",
+      "presenter": "Ann Butler",
+      "topic": "Wife, Mother, Spy",
+      "eventUrl": "https://wachh.wildapricot.org/event-6686840",
+      "isGlobalSpeaker": false
+    },
+    {
+      "_key": "presentation-2027-03-19",
+      "_type": "speakerPresentation",
+      "date": "2027-03-19",
+      "presenter": "Dr. Anna Wieslander",
+      "topic": "Russian Intimidation Actions Affecting the Baltic Region",
+      "eventUrl": "https://wachh.wildapricot.org/event-6686860",
+      "isGlobalSpeaker": true
+    },
+    {
+      "_key": "presentation-2027-04-02",
+      "_type": "speakerPresentation",
+      "date": "2027-04-02",
+      "presenter": "Sherri Goodman",
+      "topic": "Environmental Change & Its Impact on Global Security",
+      "eventUrl": "https://wachh.wildapricot.org/event-6686946",
+      "isGlobalSpeaker": false
+    },
+    {
+      "_key": "presentation-2027-04-23",
+      "_type": "speakerPresentation",
+      "date": "2027-04-23",
+      "presenter": "Chidi Blyden",
+      "topic": "How Africa's Growth & Geopolitics are Reshaping Global Power -- Is the U.S. Paying Attention?",
+      "eventUrl": "https://wachh.wildapricot.org/event-6686970",
+      "isGlobalSpeaker": false
+    },
+    {
+      "_key": "presentation-2027-05-07",
+      "_type": "speakerPresentation",
+      "date": "2027-05-07",
+      "presenter": "Heidi Urben",
+      "topic": "Crisis in Civil Military Relations",
+      "eventUrl": "https://wachh.wildapricot.org/event-6686980",
+      "isGlobalSpeaker": false
+    }
+  ],
+  "previousSeasonLabel": "2025-2026 Speakers Program Calendar",
+  "previousSeasonUrl": "https://wachh.wildapricot.org/resources/Documents/2025-2026%20summary%20calendarR.pdf"
+}

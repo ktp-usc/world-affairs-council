@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -9,7 +10,7 @@ const ways = [
     { title: "Become a Member", body: "Attend the Distinguished Speaker Series, receive member communications, and take part in member programs.", href: "/get-involved/membership" },
     { title: "Attend as a Guest", body: "Non-members may register for individual Distinguished Speaker Series programs, subject to seating availability.", href: "/get-involved/guests" },
     { title: "Volunteer", body: "Help with speaker events, discussion groups, membership, fundraising, or student outreach.", href: "/get-involved/volunteer" },
-    { title: "Make a Gift", body: "Support Council operations, speaker programs, and Academic WorldQuest and Model United Nations activities.", href: "/get-involved/give" },
+    { title: "Opportunities to Give", body: "Support Council operations, speaker programs, and Academic WorldQuest and Model United Nations activities.", href: "/get-involved/give" },
     { title: "Sponsor a Speaker", body: "Individuals and organizations may support a specific presentation through a seasonal sponsorship.", href: "/get-involved/sponsor" },
 ];
 
@@ -25,6 +26,7 @@ export default function GetInvolvedPage() {
             </PageHero>
 
             <Section title="Get involved with WACHH">
+                <Image src="/programs/student-programs/students-banner.jpg" alt="Students participating in Council educational programs" width={1200} height={500} sizes="(max-width: 768px) 100vw, 1040px" className="mb-8 max-h-80 w-full object-cover" />
                 <div className="divide-y divide-[#d9d7d1] border-y border-[#d9d7d1]">
                     {ways.map((way) => (
                         <article className="grid gap-3 py-6 md:grid-cols-[240px_minmax(0,1fr)_auto] md:items-center md:gap-8" key={way.title}>
