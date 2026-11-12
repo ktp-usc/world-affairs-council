@@ -1,15 +1,53 @@
 import type {StructureResolver} from 'sanity/structure'
 
-// https://www.sanity.io/docs/structure-builder-cheat-sheet
+const managedTypes = new Set(['event', 'headerNavigation', 'homePage', 'program', 'speakerProgram'])
+
+const eventList = (
+  S: Parameters<StructureResolver>[0],
+  title: string,
+  series: 'distinguished' | 'global',
+  templateId: string,
+) => S.documentTypeList('event')
+  .title(title)
+  .filter('_type == "event" && series == $series')
+  .params({series})
+  .defaultOrdering([{field: 'date', direction: 'asc'}])
+  .initialValueTemplates([S.initialValueTemplateItem(templateId)])
+
 export const structure: StructureResolver = (S) =>
-  S.list()
-    .title('Content')
-    .items([
-      // the header menu is a single document, so it opens straight into the editor
-      S.listItem()
-        .title('Header Menu')
-        .id('headerNavigation')
-        .child(S.document().schemaType('headerNavigation').documentId('headerNavigation').title('Header Menu')),
-      S.divider(),
-      ...S.documentTypeListItems().filter((listItem) => listItem.getId() !== 'headerNavigation'),
-    ])
+  S.list().title('WACHH Content').items([
+    S.listItem()
+      .title('Landing Page')
+      .child(S.document().schemaType('homePage').documentId('home-page')),
+    S.listItem()
+      .title('Header Menu')
+      .id('headerNavigation')
+      .child(S.document().schemaType('headerNavigation').documentId('headerNavigation').title('Header Menu')),
+    S.listItem().title('Distinguished Speaker Series').child(
+      S.list().title('Distinguished Speaker Series').items([
+        S.listItem()
+          .title('Page content')
+          .child(S.document().schemaType('speakerProgram').documentId('speaker-program-distinguished-speaker-series')),
+        S.listItem()
+          .title('Speaker schedule')
+          .child(eventList(S, 'Speaker schedule', 'distinguished', 'distinguished-speaker-event')),
+      ]),
+    ),
+    S.listItem().title('Global Speakers Program').child(
+      S.list().title('Robert & Lynn Burt Global Speakers Program').items([
+        S.listItem()
+          .title('Page content')
+          .child(S.document().schemaType('speakerProgram').documentId('speaker-program-global-speakers-program')),
+        S.listItem()
+          .title('Global speakers table')
+          .child(eventList(S, 'Global speakers table', 'global', 'global-speaker-event')),
+      ]),
+    ),
+    S.listItem().title('Other Programs').child(
+      S.documentTypeList('program')
+        .title('Other Programs')
+        .filter('_type == "program" && !(slug.current in $managedSlugs)')
+        .params({managedSlugs: ['distinguished-speaker-series', 'global-speakers-program']}),
+    ),
+    ...S.documentTypeListItems().filter((listItem) => !managedTypes.has(listItem.getId() ?? '')),
+  ])

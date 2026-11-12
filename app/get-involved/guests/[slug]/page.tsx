@@ -9,18 +9,17 @@ import AddToCalendar from "@/components/add-to-calendar";
 import PageHero, { Section } from "@/components/page-hero";
 import { When } from "@/components/speaker-event";
 import SpeakerPhoto from "@/components/speaker-photo";
-import { events, guestPolicy, isSpeakerSeries, preRegisterDeadline } from "@/lib/site";
+import { getSpeakerEvent, getSpeakerEvents } from "@/lib/sanity-speakers";
+import { guestPolicy, preRegisterDeadline } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
-const find = (slug: string) => events.find((e) => e.slug === slug && isSpeakerSeries(e));
-
-export function generateStaticParams() {
-    return events.filter(isSpeakerSeries).map((e) => ({ slug: e.slug }));
+export async function generateStaticParams() {
+    return (await getSpeakerEvents()).map((event) => ({ slug: event.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const event = find((await params).slug);
+    const event = await getSpeakerEvent((await params).slug);
     return event ? { title: `${ event.speaker }: ${ event.title }`, description: event.blurb } : {};
 }
 
@@ -28,7 +27,7 @@ const membersNote = "WACHH Members do NOT need to register or pay for themselves
 
 /** Render a speaker's details with an embedded registration or the standard guest options. */
 export default async function GuestEventPage({ params }: Props) {
-    const event = find((await params).slug);
+    const event = await getSpeakerEvent((await params).slug);
     if (!event) notFound();
 
     const deadline = preRegisterDeadline(event).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" });
