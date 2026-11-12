@@ -107,7 +107,7 @@ export default async function TeamMemberPage({
                     sizes="(min-width: 1024px) 33vw, 100vw"
                     className="object-cover"
                     // this is the main image on the page, so load it right away
-                    priority
+                    preload
                   />
                 ) : (
                   <span className="text-6xl font-semibold text-neutral-400">
