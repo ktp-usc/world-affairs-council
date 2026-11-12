@@ -5,6 +5,7 @@ import { CircleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { field, label } from "@/lib/form";
 import { giving, parseDate, sponsorship } from "@/lib/site";
+import type { SpeakerPresentation } from "@/lib/speaker-sponsorship";
 
 // Error styling only shows after someone has used a field (:user-invalid), never on first load.
 const checkedField = `peer ${ field } user-invalid:border-[#b42318] user-invalid:bg-[#fef3f2]`;
@@ -90,7 +91,7 @@ function useAccessibleFieldErrors(formRef: React.RefObject<HTMLFormElement | nul
 
 const short = (iso: string) => parseDate(iso).toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "numeric" });
 
-export default function SponsorForm() {
+export default function SponsorForm({ presentations }: { presentations: SpeakerPresentation[] }) {
     const [level, setLevel] = useState(sponsorship.levels[0].id);
     const [sent, setSent] = useState(false);
     const chosen = sponsorship.levels.find((l) => l.id === level)!;
@@ -149,7 +150,7 @@ export default function SponsorForm() {
                         </label>
                         <select id={ `sf-choice${ n }` } name={ `choice${ n }` } required={ n === 1 } defaultValue="" className={ checkedField } data-error={ n === 1 ? "sf-choice1-error" : undefined }>
                             <option value="">{ n === 1 ? "Select a speaker" : "Optional" }</option>
-                            { sponsorship.presentations.map((p) => (
+                            { presentations.map((p) => (
                                 <option key={ p.date } value={ `${ short(p.date) } – ${ p.presenter }` }>{ short(p.date) } – { p.presenter }</option>
                             )) }
                         </select>

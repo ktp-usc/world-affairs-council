@@ -1,5 +1,6 @@
 import MemberStory from "@/components/member-story";
 import type { Metadata } from "next";
+import { Check, X } from "lucide-react";
 import PageHero, { Section } from "@/components/page-hero";
 import { memberBenefits, membership } from "@/lib/site";
 
@@ -41,10 +42,21 @@ export default function MembershipPage() {
 
             <Section id="benefits" title="Member benefits" muted>
                 <div className="overflow-x-auto border-y border-[#d9d7d1] bg-white">
-                    <table className="w-full min-w-[680px] border-collapse text-left">
-                        <thead className="bg-[var(--navy)] text-white"><tr><th className="px-5 py-4">Benefit</th><th className="w-32 px-4 py-4 text-center">Member</th><th className="w-36 px-4 py-4 text-center">Non-member</th></tr></thead>
+                    {/* Phones: narrow columns with checks and X's so the table fits without sideways scrolling. */}
+                    <table className="w-full border-collapse text-left md:min-w-[680px]">
+                        <thead className="bg-[var(--navy)] text-white"><tr><th scope="col" className="px-3 py-3 text-sm md:px-5 md:py-4 md:text-base">Benefit</th><th scope="col" className="w-16 px-1 py-3 text-center text-sm md:w-32 md:px-4 md:py-4 md:text-base">Member</th><th scope="col" className="w-16 px-1 py-3 text-center text-sm md:w-36 md:px-4 md:py-4 md:text-base">Non-<br className="md:hidden" />member</th></tr></thead>
                         <tbody>{memberBenefits.map(({ benefit, nonMember }) => (
-                            <tr className="border-t border-[#d9d7d1]" key={benefit}><th className="px-5 py-4 font-normal">{benefit}</th><td className="px-4 py-4 text-center font-bold text-[var(--teal)]">Included</td><td className="px-4 py-4 text-center">{nonMember ? "Available" : "—"}</td></tr>
+                            <tr className="border-t border-[#d9d7d1]" key={benefit}>
+                                <th scope="row" className="px-3 py-3 text-[15px] leading-snug font-normal md:px-5 md:py-4 md:text-base">{benefit}</th>
+                                <td className="px-1 py-3 text-center font-bold text-[var(--teal)] md:px-4 md:py-4">
+                                    <Check size={22} strokeWidth={3} aria-hidden="true" className="mx-auto md:hidden" /><span className="sr-only md:not-sr-only">Included</span>
+                                </td>
+                                <td className="px-1 py-3 text-center md:px-4 md:py-4">
+                                    {nonMember
+                                        ? <><Check size={22} strokeWidth={3} aria-hidden="true" className="mx-auto text-[var(--teal)] md:hidden" /><span className="sr-only md:not-sr-only">Available</span></>
+                                        : <><X size={22} strokeWidth={2.5} aria-hidden="true" className="mx-auto text-[#9a9a9a] md:hidden" /><span className="sr-only">Not included</span><span aria-hidden="true" className="hidden md:inline">—</span></>}
+                                </td>
+                            </tr>
                         ))}</tbody>
                     </table>
                 </div>

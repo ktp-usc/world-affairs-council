@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function PageHeroImage({
     src,
     alt,
-    position = "left",
+    position = "center",
     verticalPosition = "center",
     parallax = false,
 }: {

@@ -3,6 +3,7 @@ import Image from "next/image";
 import PageHero from "@/components/page-hero";
 import { Button } from "@/components/ui/button";
 import RichText from "@/components/rich-text";
+import MobileScheduleList from "@/components/mobile-schedule-list";
 import ProgramGallery from "./program-gallery";
 import { formatLongDate, formatScheduleDate, hasItems, hasRichText, type Program, type ProgramFact } from "./program-types";
 
@@ -83,7 +84,21 @@ export default function ProgramPage({ program }: { program: Program }) {
                     {hasItems(program.events) && (
                         <section className={optionalSection}>
                             <h2 className={`mb-6 ${sectionHeading}`}>{program.eventsTitle || "Speaker schedule"}</h2>
-                            <div className="overflow-x-auto border-y border-[#d9d7d1]">
+                            {/* Phones: date and speaker only; pressing a speaker shows the topic. */}
+                            <MobileScheduleList items={program.events.map((event) => ({
+                                key: event._key,
+                                dateTime: event.date,
+                                dateLabel: formatScheduleDate(event.date),
+                                presenter: event.name,
+                                details: (
+                                    <>
+                                        <p>{event.detail}</p>
+                                        {event.note ? <p className="mt-1 text-sm text-[#666]">{event.note}</p> : null}
+                                        {event.href && <Button asChild className="mt-3"><Link href={event.href} aria-label={`Register for ${event.name}`}>Register</Link></Button>}
+                                    </>
+                                ),
+                            }))} />
+                            <div className="hidden overflow-x-auto border-y border-[#d9d7d1] md:block">
                                 <table className="w-full min-w-[680px] border-collapse text-left">
                                     <thead className="bg-[var(--off-white)] text-sm text-[var(--navy)]"><tr><th className="w-28 px-4 py-3">Date</th><th className="w-52 px-4 py-3">Presenter</th><th className="px-4 py-3">Topic</th>{program.events.some(event => event.href) && <th className="px-4 py-3">Registration</th>}</tr></thead>
                                     <tbody>{program.events.map((event) => (
