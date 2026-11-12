@@ -1,5 +1,5 @@
-// All About-section content lives here. Edit this file to update names, dates, or links —
-// the pages only display what's in it. Source: wachh.org (checked Oct 2026).
+// Default About copy used until fields are populated in Sanity.
+// Edit published About Us content in /studio.
 
 export type Stat = { value: string; label: string };
 export type Milestone = { year: string; text: string; photo?: Photo };
@@ -135,10 +135,3 @@ export const contact = {
 };
 
 export const teamTitle = "Meet the volunteers and staff behind the Council";
-
-// TODO: community content — this tab is a placeholder until the team decides what goes here.
-export const community = {
-    heading: "Bringing the world to the Lowcountry",
-    intro: "This page will share stories from our members, partners, and student programs across the Lowcountry. It is coming soon.",
-    stat: { value: "1,100+", text: "Members across Hilton Head Island and Beaufort County." },
-};

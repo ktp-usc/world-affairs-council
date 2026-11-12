@@ -47,7 +47,6 @@ export default function Footer() {
                     <div>
                         <h3>Explore</h3>
                         <Link href="/programs">Programs</Link>
-                        <Link href="/news">News &amp; Insights</Link>
                         <Link href="/get-involved/give">Support Us</Link>
                     </div>
                 </div>

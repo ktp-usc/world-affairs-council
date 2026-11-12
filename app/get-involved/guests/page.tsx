@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { fetchUpcomingEvents } from "@/sanity/lib/events";
 import EventsView from "@/components/events-view";
 import PageHero, { Section } from "@/components/page-hero";
 import SpeakerEvent from "@/components/speaker-event";
-import { guestPolicy, isSpeakerSeries, upcomingEvents } from "@/lib/site";
+import { guestPolicy, isSpeakerSeries } from "@/lib/site";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export const metadata: Metadata = { title: "Be a Guest" };
 
-export default function GuestsPage() {
-    const events = upcomingEvents().filter(isSpeakerSeries);
+export default async function GuestsPage() {
+    const events = (await fetchUpcomingEvents()).filter(isSpeakerSeries);
 
     return (
         <>

@@ -1,7 +1,9 @@
 import { client } from "@/sanity/lib/client";
 import { PROGRAM_QUERY, PROGRAM_SLUGS_QUERY, PROGRAMS_QUERY } from "@/sanity/lib/queries";
 import type { Program, ProgramListing } from "./program-types";
-import { events, isSpeakerSeries } from "@/lib/site";
+import { isSpeakerSeries } from "@/lib/site";
+
+import { fetchEvents } from "@/sanity/lib/events";
 
 // programs with their own page layout instead of app/programs/[slug]
 export const DEDICATED_PROGRAM_ROUTES = ["book-club", "past-book-club-selections"];
@@ -11,6 +13,7 @@ export async function fetchProgram(slug: string) {
     const program = await client.fetch<Program | null>(PROGRAM_QUERY, { slug }, { next: { revalidate: 60 } });
     if (!program || slug !== "distinguished-speaker-series") return program;
 
+    const events = await fetchEvents();
     return {
         ...program,
         events: program.events?.map(event => {

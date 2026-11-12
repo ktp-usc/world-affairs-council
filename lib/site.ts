@@ -27,7 +27,6 @@ export const nav: NavItem[] = [
         children: [
             { label: "About Us", href: "/about" },
             { label: "Our Team", href: "/about/team" },
-            { label: "Community", href: "/about/community" },
         ],
     },
     {
@@ -56,7 +55,6 @@ export const nav: NavItem[] = [
             { label: "Members Only", href: "/members" },
         ],
     },
-    { label: "News", href: "/news" },
 ];
 
 // The two actions on the right of the header.
@@ -81,214 +79,10 @@ export type Event = {
     registerUrl?: string; // online registration/payment page for this event
 };
 
-const church = { venue: "First Presbyterian Church", address: "540 William Hilton Pkwy, Hilton Head Island, SC" };
-const islandRec = { venue: "Island Recreation Center", address: "20 Wilborn Rd, Hilton Head Island, SC" };
-
-export const events: Event[] = [
-    {
-        slug: "thomas-greenfield",
-        registerUrl: "https://wachh.org/event-6682004",
-        title: "Lessons in International Leadership",
-        speaker: "Ambassador Linda Thomas-Greenfield",
-        kind: "Speaker Series",
-        date: "2026-10-02",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "A conversation with the former U.S. Ambassador to the United Nations on diplomacy, coalition-building and leading through crisis.",
-    },
-    {
-        slug: "book-club-elements-of-power",
-        title: "The Elements of Power",
-        speaker: "by Nicolas Niarchos",
-        kind: "Book Club",
-        date: "2026-10-08",
-        start: "4:30 PM",
-        end: "6:00 PM",
-        ...islandRec,
-        blurb: "Our monthly discussion of a book on world affairs. Members and non-members are welcome.",
-    },
-    {
-        slug: "ratney",
-        registerUrl: "https://wachh.org/event-6682006",
-        title: "A New Saudi Arabia in a Volatile Region",
-        speaker: "Michael Ratney",
-        kind: "Speaker Series",
-        date: "2026-10-16",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "The former U.S. Ambassador to Saudi Arabia on the kingdom's transformation and its role in a shifting Middle East.",
-    },
-    {
-        slug: "ammon",
-        registerUrl: "https://wachh.org/event-6684338",
-        title: "A European Perspective on the War in Ukraine and the Future of NATO",
-        speaker: "Peter Ammon",
-        kind: "Global Speaker",
-        date: "2026-10-30",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "A veteran German diplomat offers a view from across the Atlantic on the war, European security and the alliance.",
-    },
-    {
-        slug: "book-club-jackal",
-        title: "The Jackal",
-        speaker: "by Joby Warrick",
-        kind: "Book Club",
-        date: "2026-11-12",
-        start: "4:30 PM",
-        end: "6:00 PM",
-        ...islandRec,
-        blurb: "Read ahead of the author's visit the following morning, then join the discussion.",
-    },
-    {
-        slug: "warrick",
-        registerUrl: "https://wachh.org/event-6685680",
-        title: "Twilight of the Jackal: The World's First Super-Terrorist to Syria 2026",
-        speaker: "Joby Warrick",
-        kind: "Speaker Series",
-        date: "2026-11-13",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "The Pulitzer Prize-winning national security reporter on the reporting behind his latest book.",
-        bio: "Joby Warrick is a best-selling author and a national security correspondent for The Washington Post. A two-time Pulitzer Prize winner, he served for 27 years with the Post’s national and investigative staffs, reporting from Washington and scores of cities around the world. In addition to his latest book, “Red Line,” he is the author of two previous nonfiction books, including “The Triple Agent” (Doubleday, 2011), a New York Times best-seller about a CIA operation in Afghanistan; as well as “Black Flags” (Doubleday, 2015), a narrative account of the personalities and events that gave rise to the Islamic State. “Black Flags” was listed as one of the best books of 2015 by the New York Times, The Washington Post, the San Francisco Chronicle and numerous other publications, and was the recipient of the 2016 Pulitzer Prize for general non-fiction.",
-        photo: "/images/speakers/joby-warrick.png",
-    },
-    {
-        slug: "mckay",
-        registerUrl: "https://wachh.org/event-6684344",
-        title: "The Future of U.S.-Canada Relations",
-        speaker: "John McKay",
-        kind: "Speaker Series",
-        date: "2026-12-04",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "A longtime Canadian parliamentarian on trade, defense and the state of the northern partnership.",
-    },
-    {
-        slug: "sangay",
-        title: "Tibet: A Failure of China's World Order",
-        speaker: "Lobsang Sangay",
-        kind: "Speaker Series",
-        date: "2027-01-08",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "Lobsang Sangay: Tibet: A Failure of China's World Order.",
-        registerUrl: "https://wachh.org/event-6684341",
-    },
-    {
-        slug: "papa",
-        title: "BRICS: Its Evolution, Impact on Global Finance, and Relationship with the U.S.",
-        speaker: "Mihaela Papa",
-        kind: "Speaker Series",
-        date: "2027-01-22",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "Mihaela Papa: BRICS: Its Evolution, Impact on Global Finance, and Relationship with the U.S.",
-        registerUrl: "https://wachh.org/event-6685692",
-    },
-    {
-        slug: "segal",
-        title: "The AI Race Between the U.S. and China",
-        speaker: "Adam Segal",
-        kind: "Speaker Series",
-        date: "2027-02-05",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "Adam Segal: The AI Race Between the U.S. and China.",
-        registerUrl: "https://wachh.org/event-6775802",
-    },
-    {
-        slug: "orozco",
-        title: "Remittances and Their Implications for Immigration and Displacement Worldwide",
-        speaker: "Dr. Manuel Orozco",
-        kind: "Speaker Series",
-        date: "2027-02-19",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "Dr. Manuel Orozco: Remittances and Their Implications for Immigration and Displacement Worldwide.",
-        registerUrl: "https://wachh.org/event-6685702",
-    },
-    {
-        slug: "butler",
-        title: "Wife, Mother, Spy",
-        speaker: "Ann Butler",
-        kind: "Speaker Series",
-        date: "2027-03-05",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "Ann Butler: Wife, Mother, Spy.",
-        registerUrl: "https://wachh.org/event-6686840",
-    },
-    {
-        slug: "wieslander",
-        title: "Russian Intimidation Actions Affecting the Baltic Region",
-        speaker: "Dr. Anna Wieslander",
-        kind: "Global Speaker",
-        date: "2027-03-19",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "Dr. Anna Wieslander: Russian Intimidation Actions Affecting the Baltic Region.",
-        registerUrl: "https://wachh.org/event-6686860",
-    },
-    {
-        slug: "goodman",
-        title: "Environmental Change and Its Impact on Global Security",
-        speaker: "Sherri Goodman",
-        kind: "Speaker Series",
-        date: "2027-04-02",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "Sherri Goodman: Environmental Change and Its Impact on Global Security.",
-        registerUrl: "https://wachh.org/event-6686946",
-    },
-    {
-        slug: "blyden",
-        title: "How Africa's Growth and Geopolitics Are Reshaping Global Power: Is the U.S. Paying Attention?",
-        speaker: "Chidi Blyden",
-        kind: "Speaker Series",
-        date: "2027-04-23",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "Chidi Blyden: How Africa's Growth and Geopolitics Are Reshaping Global Power: Is the U.S. Paying Attention?",
-        registerUrl: "https://wachh.org/event-6686970",
-    },
-    {
-        slug: "urben",
-        title: "Crisis in Civil-Military Relations",
-        speaker: "Heidi Urben",
-        kind: "Speaker Series",
-        date: "2027-05-07",
-        start: "10:00 AM",
-        end: "11:30 AM",
-        ...church,
-        blurb: "Heidi Urben: Crisis in Civil-Military Relations.",
-        registerUrl: "https://wachh.org/event-6686980",
-    },
-];
-
 /** Turns a `YYYY-MM-DD` date into a local-time Date (avoids the UTC shift of `new Date("YYYY-MM-DD")`). */
 export function parseDate(iso: string) {
     const [y, m, d] = iso.split("-").map(Number);
     return new Date(y, m - 1, d);
-}
-
-/** Events happening today or later. */
-export function upcomingEvents(today = new Date()) {
-    const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    return events.filter((e) => parseDate(e.date) >= start);
 }
 
 /** Whether an event is part of the Distinguished Speaker Series or Global Speakers Program. */
