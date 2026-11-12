@@ -9,7 +9,7 @@ export type ProgramFactIcon = "calendar" | "location" | "users" | "book" | "glob
 
 export type ProgramFact = { _key: string; label: string; value: string; icon?: Maybe<ProgramFactIcon> };
 export type ProgramSection = { _key: string; eyebrow?: Maybe<string>; title: string; body?: RichText };
-export type ProgramEvent = { _key: string; date: string; name: string; detail?: Maybe<string>; note?: Maybe<string> };
+export type ProgramEvent = { _key: string; date: string; name: string; detail?: Maybe<string>; note?: Maybe<string>; href?: Maybe<string> };
 export type ProgramTopic = { _key: string; title: string; description?: RichText };
 export type ProgramGroup = { _key: string; name: string; time?: Maybe<string>; location?: Maybe<string>; dates?: Maybe<string> };
 export type ProgramSpeaker = { _key: string; date: string; name: string; role?: Maybe<string>; topic?: Maybe<string>; image?: Maybe<string>; imageAlt?: Maybe<string> };
