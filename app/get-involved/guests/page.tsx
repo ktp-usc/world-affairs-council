@@ -2,14 +2,17 @@ import type { Metadata } from "next";
 import EventsView from "@/components/events-view";
 import PageHero, { Section } from "@/components/page-hero";
 import SpeakerEvent from "@/components/speaker-event";
-import { guestPolicy, isSpeakerSeries, upcomingEvents } from "@/lib/site";
+import { getSpeakerEvents } from "@/lib/sanity-speakers";
+import { guestPolicy, parseDate } from "@/lib/site";
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = { title: "Be a Guest" };
 
-export default function GuestsPage() {
-    const events = upcomingEvents().filter(isSpeakerSeries);
+export default async function GuestsPage() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const events = (await getSpeakerEvents()).filter((event) => parseDate(event.date) >= today).sort((a, b) => a.date.localeCompare(b.date));
 
     return (
         <>

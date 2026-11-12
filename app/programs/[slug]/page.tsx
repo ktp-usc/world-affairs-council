@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ProgramPage from "@/components/programs/program-page";
 import { DEDICATED_PROGRAM_ROUTES, fetchProgram, fetchProgramSlugs } from "@/components/programs/fetch-programs";
+import { getSpeakerProgramPage, isManagedSpeakerProgram } from "@/lib/sanity-speakers";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -15,7 +16,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
-    const program = await fetchProgram(slug);
+    const program = isManagedSpeakerProgram(slug) ? await getSpeakerProgramPage(slug) : await fetchProgram(slug);
     if (!program) return {};
     return {
         title: `${program.title} | WACHH Programs`,
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProgramDetailPage({ params }: PageProps) {
     const { slug } = await params;
-    const program = await fetchProgram(slug);
+    const program = isManagedSpeakerProgram(slug) ? await getSpeakerProgramPage(slug) : await fetchProgram(slug);
     // a typo'd or deleted slug gets a real 404 instead of a crash
     if (!program) notFound();
     return <ProgramPage program={program} />;

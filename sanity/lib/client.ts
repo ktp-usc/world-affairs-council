@@ -6,5 +6,6 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
+  // Fetch published edits directly; these pages use Next.js ISR for caching.
+  useCdn: false,
 })

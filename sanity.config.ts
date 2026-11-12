@@ -18,7 +18,24 @@ export default defineConfig({
   projectId,
   dataset,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
-  schema,
+  schema: {
+    ...schema,
+    templates: (templates) => [
+      ...templates.filter((template) => template.schemaType !== 'event' && template.schemaType !== 'speakerProgram' && template.schemaType !== 'homePage'),
+      {
+        id: 'distinguished-speaker-event',
+        title: 'Distinguished Speaker Series event',
+        schemaType: 'event',
+        value: {series: 'distinguished', season: '2026–2027', startTime: '10:00 AM', endTime: '11:30 AM', venue: 'First Presbyterian Church', address: '540 William Hilton Pkwy, Hilton Head Island, SC', published: true},
+      },
+      {
+        id: 'global-speaker-event',
+        title: 'Global Speakers Program event',
+        schemaType: 'event',
+        value: {series: 'global', season: '2026–2027', startTime: '10:00 AM', endTime: '11:30 AM', venue: 'First Presbyterian Church', address: '540 William Hilton Pkwy, Hilton Head Island, SC', published: true},
+      },
+    ],
+  },
   plugins: [
     structureTool({structure}),
     // Vision is for querying with GROQ from inside the Studio

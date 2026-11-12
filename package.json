@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sanity:seed-speakers": "sanity exec scripts/seed-speaker-content.ts --with-user-token",
+    "sanity:seed-home": "sanity exec scripts/seed-home-page.ts --with-user-token"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",
