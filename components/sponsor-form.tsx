@@ -90,7 +90,6 @@ function useAccessibleFieldErrors(formRef: React.RefObject<HTMLFormElement | nul
 
 const short = (iso: string) => parseDate(iso).toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "numeric" });
 
-// No backend yet: submitting opens the visitor's email app with the form filled in.
 export default function SponsorForm() {
     const [level, setLevel] = useState(sponsorship.levels[0].id);
     const [sent, setSent] = useState(false);

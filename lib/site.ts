@@ -51,7 +51,8 @@ export const nav: NavItem[] = [
             { label: "Become a Member", href: "/get-involved/membership" },
             { label: "Be a Guest", href: "/get-involved/guests" },
             { label: "Volunteer", href: "/get-involved/volunteer" },
-            { label: "Ways to Give", href: "/get-involved/give" },
+            { label: "Opportunities to Give", href: "/get-involved/give" },
+            { label: "Online Donation Form", href: "/get-involved/give#donation-form" },
             { label: "Sponsor a Speaker", href: "/get-involved/sponsor" },
             { label: "Members Only", href: "/members" },
         ],
@@ -380,7 +381,7 @@ export const membership = {
     widgetJoin: `${wildApricotBaseUrl}/widget/join`,
     renew: memberLogin,
 
-    printForm: "/membership-form.pdf",
+    printForm: "https://acrobat.adobe.com/id/urn:aaid:sc:VA6C2:15d38b9c-548a-46e0-9f33-daa38532934b",
 };
 
 export const memberBenefits: { benefit: string; nonMember: boolean }[] = [
@@ -453,13 +454,19 @@ export const giving = {
     donateOnline: "/get-involved/give#donation-form",
     hostedDonate: `${wildApricotBaseUrl}/online-donation-form`,
     widgetDonate: `${wildApricotBaseUrl}/widget/online-donation-form`,
+    hostedStudent: `${wildApricotBaseUrl}/student-program-fund`,
+    widgetStudent: `${wildApricotBaseUrl}/widget/student-program-fund`,
+    hostedMonthly: `${wildApricotBaseUrl}/monthly-giving`,
+    widgetMonthly: `${wildApricotBaseUrl}/widget/monthly-giving`,
+    globalSpeakerFund: "https://lowcountry.fcsuite.com/erp/donate/create/fund?funit_id=1239",
     heritage: "https://www.heritageclassicfoundation.com/giving-opportunities/",
-    birdiesEnd: "April 19, 2026", // last day of the RBC Heritage
+    birdiesEnd: "April 18, 2027", // Campaign date published on Opportunities to Give.
 };
 
 export const sponsorship = {
-    season: "2025-2026",
     email: contact.email,
+    hostedForm: `${wildApricotBaseUrl}/sponsor-a-speaker#id_8UQIm9b`,
+    widgetForm: `${wildApricotBaseUrl}/widget/sponsor-a-speaker#id_8UQIm9b`,
     levels: [
         {
             id: "ambassador",
@@ -475,23 +482,6 @@ export const sponsorship = {
             limit: 4,
             perks: "Comes with two tickets to the sponsored presentation and two invitations to the speaker lunch after the program.",
         },
-        {
-            id: "attache",
-            name: "Attaché Sponsorship",
-            amount: 250,
-            limit: 4,
-            perks: "Comes with one ticket to the sponsored presentation and one invitation to speaker lunch after the program.",
-        },
     ],
-    presentations: [
-        { date: "2026-01-09", presenter: "David Satterfield", topic: "The Trump Foreign Policy: A First Year Assessment" },
-        { date: "2026-01-23", presenter: "Ajay Chhibber", topic: "India’s Rise in a Changing World" },
-        { date: "2026-02-06", presenter: "Barbara Slavin", topic: "Risks and Opportunities in Iran-US Relations" },
-        { date: "2026-02-20", presenter: "Feisal al-Istrabadi", topic: "Iraq-Two Decades After the War" },
-        { date: "2026-03-06", presenter: "Juan Cruz Diaz", topic: "Argentina-US Relations under presidents Javier Milei and Donald Trump" },
-        { date: "2026-03-20", presenter: "Sean McFate", topic: "Sneaky War and the Dark Arts" },
-        { date: "2026-04-10", presenter: "Mary Thompson-Jones", topic: "The Arctic: Competition in the Melting North" },
-        { date: "2026-04-24", presenter: "Joby Warrick", topic: "Twilight of the Jackal – From the World’s First Super-Terrorist to Syria 2026" },
-        { date: "2026-05-08", presenter: "Linda Weissgold", topic: "Seeing the World Through an Intelligence Lens" },
-    ],
+
 };
