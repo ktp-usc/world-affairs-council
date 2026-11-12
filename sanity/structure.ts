@@ -1,4 +1,5 @@
 import type {StructureResolver} from 'sanity/structure'
+import {getInvolvedFolder, getInvolvedTypeNames} from './getInvolvedStructure'
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
@@ -12,6 +13,7 @@ export const structure: StructureResolver = (S) =>
         .child(S.document().schemaType('headerNavigation').documentId('headerNavigation').title('Header Menu')),
       S.listItem().title('About Us').id('aboutPage')
         .child(S.document().schemaType('aboutPage').documentId('aboutPage').title('About Us')),
+      getInvolvedFolder(S),
       S.divider(),
-      ...S.documentTypeListItems().filter((listItem) => !['headerNavigation', 'aboutPage'].includes(listItem.getId() ?? '')),
+      ...S.documentTypeListItems().filter((listItem) => !['headerNavigation', 'aboutPage', ...getInvolvedTypeNames].includes(listItem.getId() ?? '')),
     ])
