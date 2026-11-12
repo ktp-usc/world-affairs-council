@@ -5,12 +5,11 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
     .items([
+      // the header menu is a single document, so it opens straight into the editor
       S.listItem()
-        .title('Speaker Sponsorship Schedule')
-        .id('speaker-sponsorship-schedule')
-        .child(S.document()
-          .schemaType('speakerSponsorshipSchedule')
-          .documentId('speaker-sponsorship-schedule')
-          .title('Speaker Sponsorship Schedule')),
-      ...S.documentTypeListItems().filter((item) => item.getId() !== 'speakerSponsorshipSchedule'),
+        .title('Header Menu')
+        .id('headerNavigation')
+        .child(S.document().schemaType('headerNavigation').documentId('headerNavigation').title('Header Menu')),
+      S.divider(),
+      ...S.documentTypeListItems().filter((listItem) => listItem.getId() !== 'headerNavigation'),
     ])

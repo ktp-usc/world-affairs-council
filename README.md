@@ -35,6 +35,10 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Program pages
+
+The program pages (`/programs/...`) are Sanity `program` documents, edited in the Studio at `/studio`. The Book Club page and the Past Book Club Selections archive list `bookClubMeeting` documents: meetings move from "upcoming" to the archive once they have ended. The original hardcoded content was migrated with a one-off script (`scripts/migrate-programs-to-sanity.ts`), which can be recovered from git history if it is ever needed again.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

@@ -13,8 +13,9 @@ export const newsletter = {
 
 export const memberLogin = `${wildApricotBaseUrl}/Sys/Login`;
 
-export type NavLink = { label: string; href: string };
-export type NavItem = { label: string; href: string; children?: NavLink[] };
+// key is the Sanity id when the header menu comes from Sanity
+export type NavLink = { key?: string; label: string; href: string };
+export type NavItem = { key?: string; label: string; href: string; children?: NavLink[] };
 
 // Site navigation, shared by the header and footer. Every href is a real page.
 // A section's own page (/programs, /get-involved) is linked from the footer's section headings.
@@ -215,10 +216,10 @@ export const social = [
     { label: "Instagram", href: "https://www.instagram.com/worldaffairshhi/" },
 ];
 
-// Pages that only exist on the original wachh.org site so far; the footer links to them there.
-export const originalSitePages = [
-    { label: "Privacy Notice", href: "https://wachh.org/Privacy-Notice" },
-    { label: "Resources and Links", href: "https://wachh.org/Resources-and-Links" },
+// Pages linked from the footer's legal line.
+export const legalLinks = [
+    { label: "Privacy Notice", href: "/privacy" },
+    { label: "Resources and Links", href: "/resources" },
 ];
 
 export type Post = {
