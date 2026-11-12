@@ -1,25 +1,35 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import PageHero from "@/components/page-hero";
-import { focusRing, textLinkHover } from "@/components/book-club/book-club-meetings";
-import { programPages } from "@/components/programs/programs-data";
+import { fetchPastMeetings, focusRing, textLinkHover } from "@/components/book-club/book-club-meetings";
+import { formatArchiveDate, type PastBookClubMeeting } from "@/components/book-club/meeting-details";
+import { fetchProgram } from "@/components/programs/fetch-programs";
 
-const pastSelections = programPages["past-book-club-selections"];
+// the program document in Sanity that holds this page's header; the books themselves are past Book Club Meeting documents
+const archiveSlug = "past-book-club-selections";
 
-export const metadata: Metadata = {
-    title: `${pastSelections.title} | WACHH Programs`,
-    description: pastSelections.deck,
-};
+export async function generateMetadata(): Promise<Metadata> {
+    const archive = await fetchProgram(archiveSlug);
+    if (!archive) return {};
+    return {
+        title: `${archive.title} | WACHH Programs`,
+        description: archive.deck || archive.overviewText || undefined,
+    };
+}
 
 const contentWidth = "mx-auto w-[min(1040px,calc(100%-48px))]";
 
 /** The Book Club archive: every past selection, grouped by year, newest first. */
-export default function PastBookClubSelectionsPage() {
-    // dates look like "Oct 8, 2026", so the year is the last four digits
-    const booksByYear = (pastSelections.books ?? []).reduce<Record<string, NonNullable<typeof pastSelections.books>>>((booksGroupedByYear, book) => {
-        const year = book.date.match(/\d{4}$/)?.[0] ?? "Earlier";
-        (booksGroupedByYear[year] ??= []).push(book);
+export default async function PastBookClubSelectionsPage() {
+    const [archive, pastMeetings] = await Promise.all([fetchProgram(archiveSlug), fetchPastMeetings()]);
+    if (!archive) notFound();
+
+    // the query returns meetings newest first, so each year's list stays newest first too
+    const booksByYear = pastMeetings.reduce<Record<string, { meeting: PastBookClubMeeting; monthDay: string }[]>>((booksGroupedByYear, meeting) => {
+        const { monthDay, year } = formatArchiveDate(meeting.startsAt);
+        (booksGroupedByYear[year] ??= []).push({ meeting, monthDay });
         return booksGroupedByYear;
     }, {});
     // newest year first
@@ -29,11 +39,11 @@ export default function PastBookClubSelectionsPage() {
         <div className="min-h-svh bg-white font-[var(--sans)] text-[17px] leading-[1.65] text-[var(--charcoal)] md:text-[18px]">
             <main>
                 <PageHero
-                    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: "Book Club", href: "/programs/book-club" }, { label: pastSelections.title }]}
-                    title={pastSelections.title}
-                    image={{ src: pastSelections.heroImage, alt: pastSelections.heroAlt, position: pastSelections.heroPosition }}
+                    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: "Book Club", href: "/programs/book-club" }, { label: archive.title }]}
+                    title={archive.title}
+                    image={archive.heroImage ? { src: archive.heroImage, alt: archive.heroAlt ?? "", position: archive.heroPosition ?? undefined } : undefined}
                 >
-                    {pastSelections.deck}
+                    {archive.deck}
                 </PageHero>
 
                 <div className={`${contentWidth} flex flex-col gap-12 py-16 md:gap-16 md:py-20`}>
@@ -41,12 +51,12 @@ export default function PastBookClubSelectionsPage() {
                         <section className="grid gap-4 md:grid-cols-[140px_minmax(0,1fr)] md:gap-10" key={year} aria-labelledby={`year-${year}`}>
                             <h2 id={`year-${year}`} className="self-start font-[family-name:var(--serif)] text-[40px] leading-none font-normal text-[var(--navy)] tabular-nums md:sticky md:top-8 md:text-[48px]">{year}</h2>
                             <ol className="m-0 list-none border-t-2 border-[var(--gold)] p-0">
-                                {booksByYear[year].map((book) => (
-                                    <li className="grid gap-1 border-b border-[var(--line)] py-5 sm:grid-cols-[110px_minmax(0,1fr)] sm:gap-6" key={`${book.date}-${book.title}`}>
-                                        <span className="font-[family-name:var(--serif)] text-[19px] text-[var(--navy)] tabular-nums">{book.date.replace(`, ${year}`, "")}</span>
+                                {booksByYear[year].map(({ meeting, monthDay }) => (
+                                    <li className="grid gap-1 border-b border-[var(--line)] py-5 sm:grid-cols-[110px_minmax(0,1fr)] sm:gap-6" key={meeting._id}>
+                                        <time className="font-[family-name:var(--serif)] text-[19px] text-[var(--navy)] tabular-nums" dateTime={meeting.startsAt}>{monthDay}</time>
                                         <span>
-                                            <span className="block font-bold leading-[1.4] text-[var(--charcoal)]">{book.title}</span>
-                                            <span className="text-[15px] text-[#5b6168]">by {book.author}</span>
+                                            <span className="block font-bold leading-[1.4] text-[var(--charcoal)]">{meeting.title}</span>
+                                            {meeting.author && <span className="text-[15px] text-[#5b6168]">by {meeting.author}</span>}
                                         </span>
                                     </li>
                                 ))}

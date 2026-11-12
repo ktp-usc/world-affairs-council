@@ -1,18 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import PageHero from "@/components/page-hero";
-import { BookCover, MeetingShelf, RegisterButton, fetchUpcomingMeetings, focusRing, textLinkHover } from "@/components/book-club/book-club-meetings";
-import { formatMeetingDate, formatMeetingTime, formatSpacesLeft, splitBookTitle, type BookClubMeetingSummary } from "@/components/book-club/meeting-details";
-import { programPages } from "@/components/programs/programs-data";
+import RichText from "@/components/rich-text";
+import { BookCover, MeetingShelf, RegisterButton, fetchPastMeetings, fetchUpcomingMeetings, focusRing, textLinkHover } from "@/components/book-club/book-club-meetings";
+import { formatArchiveDate, formatMeetingDate, formatMeetingTime, formatSpacesLeft, splitBookTitle, type BookClubMeetingSummary } from "@/components/book-club/meeting-details";
+import { fetchProgram } from "@/components/programs/fetch-programs";
+import { hasItems, hasRichText } from "@/components/programs/program-types";
 
-const bookClub = programPages["book-club"];
-const pastSelections = programPages["past-book-club-selections"]?.books ?? [];
+// the program document in Sanity that holds this page's header, overview and details
+const bookClubSlug = "book-club";
 
-export const metadata: Metadata = {
-    title: `${bookClub.title} | WACHH Programs`,
-    description: bookClub.overview,
-};
+export async function generateMetadata(): Promise<Metadata> {
+    const bookClub = await fetchProgram(bookClubSlug);
+    if (!bookClub) return {};
+    return {
+        title: `${bookClub.title} | WACHH Programs`,
+        description: bookClub.overviewText || bookClub.deck || undefined,
+    };
+}
 
 const contentWidth = "mx-auto w-[min(1040px,calc(100%-48px))]";
 const sectionHeadingStyle = "font-[family-name:var(--serif)] text-[32px] leading-[1.15] font-normal text-[var(--navy)] md:text-[40px]";
@@ -72,7 +79,8 @@ function NextDiscussion({ meeting }: { meeting: BookClubMeetingSummary }) {
 
 /** The Book Club page: the program details, the upcoming discussions from Sanity, and the most recent past books. */
 export default async function BookClubPage() {
-    const upcomingMeetings = await fetchUpcomingMeetings();
+    const [bookClub, upcomingMeetings, pastMeetings] = await Promise.all([fetchProgram(bookClubSlug), fetchUpcomingMeetings(), fetchPastMeetings()]);
+    if (!bookClub) notFound();
     const [nextMeeting, ...laterMeetings] = upcomingMeetings;
 
     return (
@@ -81,24 +89,26 @@ export default async function BookClubPage() {
                 <PageHero
                     breadcrumbs={[{ label: "Home", href: "/" }, { label: "Programs", href: "/programs" }, { label: bookClub.title }]}
                     title={bookClub.title}
-                    image={{ src: bookClub.heroImage, alt: bookClub.heroAlt, position: bookClub.heroPosition }}
+                    image={bookClub.heroImage ? { src: bookClub.heroImage, alt: bookClub.heroAlt ?? "", position: bookClub.heroPosition ?? undefined } : undefined}
                 >
                     {bookClub.deck}
                 </PageHero>
 
                 <section className={`${contentWidth} grid gap-12 py-16 md:grid-cols-[minmax(0,1fr)_330px] md:gap-16 md:py-20`} aria-label="About the Book Club">
                     <div className="max-w-[620px]">
-                        <p className="m-0 font-[family-name:var(--serif)] text-[22px] leading-[1.45] text-[var(--navy)] md:text-[25px]">{bookClub.overview}</p>
+                        {hasRichText(bookClub.overview) && <RichText value={bookClub.overview} className="space-y-4 font-[family-name:var(--serif)] text-[22px] leading-[1.45] text-[var(--navy)] md:text-[25px]" />}
                         <p className="mt-6 mb-0">Read the month&apos;s book at your own pace, then join the conversation. Each discussion has 30 seats, so register once registration opens a month ahead.</p>
                     </div>
-                    <dl className="m-0 self-start border-t-2 border-[var(--gold)]">
-                        {bookClub.facts.map((fact) => (
-                            <div className="border-b border-[var(--line)] py-4" key={fact.label}>
-                                <dt className="text-[15px] font-bold text-[var(--navy)]">{fact.label}</dt>
-                                <dd className="m-0 mt-1 text-[16px] leading-[1.5]">{fact.value}</dd>
-                            </div>
-                        ))}
-                    </dl>
+                    {hasItems(bookClub.facts) && (
+                        <dl className="m-0 self-start border-t-2 border-[var(--gold)]">
+                            {bookClub.facts.map((fact) => (
+                                <div className="border-b border-[var(--line)] py-4" key={fact._key}>
+                                    <dt className="text-[15px] font-bold text-[var(--navy)]">{fact.label}</dt>
+                                    <dd className="m-0 mt-1 text-[16px] leading-[1.5]">{fact.value}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    )}
                 </section>
 
                 <section className="border-y border-[var(--line)] bg-[var(--off-white)]" aria-labelledby={nextMeeting ? "next-discussion" : "upcoming-discussions"}>
@@ -121,23 +131,26 @@ export default async function BookClubPage() {
                     </section>
                 )}
 
-                {pastSelections.length > 0 && (
+                {pastMeetings.length > 0 && (
                     <section className="border-t border-[var(--line)] bg-[var(--off-white)]" aria-labelledby="recent-books">
                         <div className={`${contentWidth} py-16 md:py-20`}>
                             <h2 id="recent-books" className={sectionHeadingStyle}>Recent Books</h2>
                             <ol className="mt-8 max-w-[820px] list-none border-t border-[var(--line)] p-0">
-                                {pastSelections.slice(0, 5).map((book) => (
-                                    <li className="grid gap-1 border-b border-[var(--line)] py-5 sm:grid-cols-[150px_minmax(0,1fr)] sm:gap-6" key={`${book.date}-${book.title}`}>
-                                        <span className="font-[family-name:var(--serif)] text-[19px] text-[var(--navy)] tabular-nums">{book.date}</span>
-                                        <span>
-                                            <span className="block font-bold leading-[1.4] text-[var(--charcoal)]">{book.title}</span>
-                                            <span className="text-[15px] text-[#5b6168]">by {book.author}</span>
-                                        </span>
-                                    </li>
-                                ))}
+                                {pastMeetings.slice(0, 5).map((meeting) => {
+                                    const { monthDay, year } = formatArchiveDate(meeting.startsAt);
+                                    return (
+                                        <li className="grid gap-1 border-b border-[var(--line)] py-5 sm:grid-cols-[150px_minmax(0,1fr)] sm:gap-6" key={meeting._id}>
+                                            <time className="font-[family-name:var(--serif)] text-[19px] text-[var(--navy)] tabular-nums" dateTime={meeting.startsAt}>{`${monthDay}, ${year}`}</time>
+                                            <span>
+                                                <span className="block font-bold leading-[1.4] text-[var(--charcoal)]">{meeting.title}</span>
+                                                {meeting.author && <span className="text-[15px] text-[#5b6168]">by {meeting.author}</span>}
+                                            </span>
+                                        </li>
+                                    );
+                                })}
                             </ol>
                             <Link className={`mt-8 inline-flex min-h-11 items-center gap-2 font-bold text-[var(--teal)] underline underline-offset-4 ${textLinkHover} ${focusRing}`} href="/programs/past-book-club-selections">
-                                All {pastSelections.length} past selections <ArrowRight size={17} aria-hidden="true" />
+                                All {pastMeetings.length} past selections <ArrowRight size={17} aria-hidden="true" />
                             </Link>
                         </div>
                     </section>

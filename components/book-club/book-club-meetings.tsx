@@ -1,7 +1,7 @@
 import { client } from "@/sanity/lib/client";
-import { UPCOMING_BOOK_CLUB_MEETINGS_QUERY } from "@/sanity/lib/queries";
+import { PAST_BOOK_CLUB_MEETINGS_QUERY, UPCOMING_BOOK_CLUB_MEETINGS_QUERY } from "@/sanity/lib/queries";
 import { focusRing } from "./book-cover";
-import type { BookClubMeetingSummary } from "./meeting-details";
+import type { BookClubMeetingSummary, PastBookClubMeeting } from "./meeting-details";
 
 export { BookCover, focusRing, textLinkHover } from "./book-cover";
 export { MeetingShelf } from "./meeting-shelf";
@@ -16,6 +16,16 @@ export async function fetchUpcomingMeetings() {
         return await client.fetch<BookClubMeetingSummary[]>(UPCOMING_BOOK_CLUB_MEETINGS_QUERY, {}, { next: { revalidate: 60 } });
     } catch (error) {
         console.error("Could not load Book Club meetings from Sanity", error);
+        return [];
+    }
+}
+
+/** Fetches meetings that have already happened, newest first, or an empty list if Sanity can't be reached. */
+export async function fetchPastMeetings() {
+    try {
+        return await client.fetch<PastBookClubMeeting[]>(PAST_BOOK_CLUB_MEETINGS_QUERY, {}, { next: { revalidate: 60 } });
+    } catch (error) {
+        console.error("Could not load past Book Club meetings from Sanity", error);
         return [];
     }
 }
