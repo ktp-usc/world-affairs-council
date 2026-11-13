@@ -118,3 +118,53 @@ test('preserved images and seed IDs match the defaults', () => {
     assert.deepEqual(body, value);
   }
 });
+
+function withoutType(value) {
+  if (Array.isArray(value)) return value.map(withoutType);
+  if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).filter(([key]) => key !== '_type').map(([key, value]) => [key, withoutType(value)]));
+  return value;
+}
+
+for (const key of Object.keys(defaults)) {
+  test(`${key}: every editable field survives the published query`, async () => {
+    const body = structuredClone(defaults[key]);
+    const edited = value => {
+      if (Array.isArray(value)) return value.map(edited).reverse();
+      if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([field, value]) => [field, field.startsWith('_') ? value : edited(value)]));
+      if (typeof value === 'string') return `edited:${value}`;
+      if (typeof value === 'number') return value + 1;
+      if (typeof value === 'boolean') return !value;
+      return value;
+    };
+    const changed = edited(body);
+    const dataset = [{_id: `landing-${key}`, _type: `landing${key[0].toUpperCase()}${key.slice(1)}`, ...changed}];
+    const api = loader(async query => (await groq.evaluate(groq.parse(query), {dataset})).get());
+    assert.deepEqual(withoutType((await api.fetchLandingPage())[key]), withoutType(changed));
+  });
+}
+
+test('every image surface accepts a new uploaded asset without a local image path', async () => {
+  const dataset = fs.readFileSync(path.join(root, 'sanity/seed/wac39.ndjson'), 'utf8').trim().split('\n').map(JSON.parse);
+  const hero = dataset.find(doc => doc._type === 'landingHero');
+  const programs = dataset.find(doc => doc._type === 'landingPrograms');
+  const about = dataset.find(doc => doc._type === 'landingAbout');
+  const sponsors = dataset.find(doc => doc._type === 'landingSponsors');
+  const surfaces = [hero.slides[0], programs.photos[0], about, sponsors.sponsors[0]];
+  for (const [index, surface] of surfaces.entries()) {
+    delete surface.imagePath;
+    surface.image = {asset: {_ref: `asset-${index}`, _type: 'reference'}};
+    dataset.push({_id: `asset-${index}`, _type: 'sanity.imageAsset', url: `https://cdn.sanity.io/images/asset-${index}.jpg`});
+  }
+  const api = loader(async query => (await groq.evaluate(groq.parse(query), {dataset})).get());
+  const content = await api.fetchLandingPage();
+  assert.equal(content.hero.slides[0].imagePath, 'https://cdn.sanity.io/images/asset-0.jpg');
+  assert.equal(content.programs.photos[0].imagePath, 'https://cdn.sanity.io/images/asset-1.jpg');
+  assert.equal(content.about.imagePath, 'https://cdn.sanity.io/images/asset-2.jpg');
+  assert.equal(content.sponsors.sponsors[0].imagePath, 'https://cdn.sanity.io/images/asset-3.jpg');
+});
+
+test('unpublished drafts cannot replace published sections', async () => {
+  const dataset = [{_id: 'drafts.landing-newsletter', _type: 'landingNewsletter', ...defaults.newsletter, title: 'Unpublished draft'}];
+  const api = loader(async query => (await groq.evaluate(groq.parse(query), {dataset})).get());
+  assert.equal((await api.fetchLandingPage()).newsletter.title, defaults.newsletter.title);
+});

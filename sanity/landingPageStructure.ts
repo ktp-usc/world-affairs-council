@@ -8,7 +8,8 @@ export const landingPageFolder = (S: StructureBuilder) => S.listItem().title('La
     ...landingPageTypes.map((type, index) => S.listItem().title(type.title!).id(type.name).child(
       S.document().schemaType(type.name).documentId(`landing-${Object.keys(defaults)[index]}`).title(type.title!),
     )),
-    S.listItem().title('Events').id('landingEvents').child(S.documentTypeList('event').title('Events')),
+    // Keep the shared records distinct from the landingEvents section settings.
+    S.listItem().title('Events').id('landingEventRecords').child(S.documentTypeList('event').title('Events')),
     S.listItem().title('Header Menu (shared)').id('landingHeader').child(S.document().schemaType('headerNavigation').documentId('headerNavigation').title('Header Menu')),
   ]),
 )
