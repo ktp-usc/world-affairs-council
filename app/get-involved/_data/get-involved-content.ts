@@ -74,10 +74,10 @@ export const volunteerDefaults = {
         text: body,
         photos: ({
             "speaker-events": [{ src: "/images/volunteer/volunteer-registration.jpg", alt: "Volunteers organizing name badges and checking in guests at a Council event", width: 500, height: 333 }],
-            students: [
-                { src: "/programs/academic-worldquest/gallery/l1007477.jpg", alt: "Students in green shirts working together at an Academic WorldQuest table", width: 2640, height: 2112 },
-                { src: "/programs/model-un/gallery/mun-2018-2.jpg", alt: "High school delegates participating in a Model United Nations conference", width: 960, height: 640 },
-            ],
+            facilitators: [{ src: "/images/volunteer/volunteer-discussion-lunch.jpg", alt: "Council members in conversation around a lunch table", width: 3360, height: 2240 }],
+            development: [{ src: "/images/volunteer/volunteer-school-visit.jpg", alt: "Council volunteers and students in a classroom during a school visit", width: 5712, height: 4284 }],
+            membership: [{ src: "/images/volunteer/volunteer-student-group.jpg", alt: "Council members and students gathered on stage in front of the World Affairs Council banner", width: 2400, height: 1594 }],
+            students: [{ src: "/programs/academic-worldquest/gallery/l1007477.jpg", alt: "Students in green shirts working together at an Academic WorldQuest table", width: 2640, height: 2112 }],
         } as Record<string, GetInvolvedPhoto[]>)[id] ?? [],
     })),
     formTitle: "Become a volunteer",

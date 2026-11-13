@@ -9,6 +9,9 @@ import { fetchVolunteerPage } from "@/sanity/lib/get-involved";
 
 export const metadata: Metadata = { title: "Volunteer" };
 
+/** Every photo on this page is cropped to the same 3:2 frame so they line up regardless of the upload's shape. */
+const photoFit = "aspect-[3/2] w-full object-cover";
+
 /** The Volunteer page; its text, photos, roles and quote come from Studio > Get Involved > Volunteer. */
 export default async function VolunteerPage() {
     const page = await fetchVolunteerPage();
@@ -31,7 +34,7 @@ export default async function VolunteerPage() {
                 {page.photos.length > 0 && <div className="mb-8 grid gap-6 sm:grid-cols-2">
                     {page.photos.map(({ photo, caption }) => (
                         <figure key={photo.src}>
-                            <Image src={photo.src} alt={photo.alt} width={photo.width ?? 500} height={photo.height ?? 333} sizes="(min-width: 640px) 500px, 100vw" className="h-auto w-full" />
+                            <Image src={photo.src} alt={photo.alt} width={photo.width ?? 500} height={photo.height ?? 333} sizes="(min-width: 640px) 500px, 100vw" className={photoFit} />
                             <figcaption className="mt-3 text-sm text-muted-foreground">{caption}</figcaption>
                         </figure>
                     ))}
@@ -44,10 +47,8 @@ export default async function VolunteerPage() {
                             <div>
                                 <h3 className="font-serif text-xl font-semibold text-primary">{ role.title }</h3>
                                 <p className="mt-2 leading-relaxed text-muted-foreground">{ role.text }</p>
-                                {/* one photo sits on its own; two or more stack with a gap */}
-                                {role.photos.length === 1 && <Image src={role.photos[0].src} alt={role.photos[0].alt} width={role.photos[0].width ?? 500} height={role.photos[0].height ?? 333} sizes="(min-width: 768px) 440px, 100vw" className="mt-5 h-auto w-full" />}
-                                {role.photos.length > 1 && <div className="mt-5 space-y-4">
-                                    {role.photos.map((rolePhoto) => <Image key={rolePhoto.src} src={rolePhoto.src} alt={rolePhoto.alt} width={rolePhoto.width ?? 500} height={rolePhoto.height ?? 333} sizes="(min-width: 768px) 440px, 100vw" className="h-auto w-full" />)}
+                                {role.photos.length > 0 && <div className="mt-5 space-y-4">
+                                    {role.photos.map((rolePhoto) => <Image key={rolePhoto.src} src={rolePhoto.src} alt={rolePhoto.alt} width={rolePhoto.width ?? 500} height={rolePhoto.height ?? 333} sizes="(min-width: 768px) 440px, 100vw" className={photoFit} />)}
                                 </div>}
                             </div>
                         </li>
@@ -59,7 +60,7 @@ export default async function VolunteerPage() {
                 <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
                     <div className="space-y-5">
                         <figure>
-                            <Image src={page.formPhoto.photo.src} alt={page.formPhoto.photo.alt} width={page.formPhoto.photo.width ?? 500} height={page.formPhoto.photo.height ?? 333} sizes="(min-width: 1024px) 320px, 100vw" className="h-auto w-full" />
+                            <Image src={page.formPhoto.photo.src} alt={page.formPhoto.photo.alt} width={page.formPhoto.photo.width ?? 500} height={page.formPhoto.photo.height ?? 333} sizes="(min-width: 1024px) 320px, 100vw" className={photoFit} />
                             <figcaption className="mt-3 text-sm text-muted-foreground">{page.formPhoto.caption}</figcaption>
                         </figure>
                         <p className="text-muted-foreground">{page.formText}</p>
