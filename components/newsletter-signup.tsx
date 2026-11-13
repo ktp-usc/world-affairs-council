@@ -3,9 +3,10 @@
 import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import WildApricotEmbed from "@/components/wild-apricot-embed";
-import { newsletter } from "@/lib/site";
+import type { NewsletterContent } from "@/sanity/lib/landing-page";
+import defaults from "@/sanity/defaults/landing-page.json";
 
-export default function NewsletterSignup() {
+export default function NewsletterSignup({ content = defaults.newsletter }: { content?: NewsletterContent }) {
     const [expanded, setExpanded] = useState(false);
     const [hasOpened, setHasOpened] = useState(false);
 
@@ -47,8 +48,8 @@ export default function NewsletterSignup() {
             <div className="content-width">
                 <div className="home-newsletter-heading">
                     <div>
-                        <h2 id="newsletter-title">Sign up for our email newsletter.</h2>
-                        <p>Upcoming programs, Council news, and conversations worth joining.</p>
+                        <h2 id="newsletter-title">{content.title}</h2>
+                        <p>{content.body}</p>
                     </div>
                     <button
                         className="home-button home-button--gold"
@@ -60,7 +61,7 @@ export default function NewsletterSignup() {
                             setExpanded((current) => !current);
                         }}
                     >
-                        {expanded ? "Close form" : "Sign Up"}
+                        {expanded ? content.closeLabel : content.openLabel}
                         <ChevronDown size={18} aria-hidden="true" className={expanded ? "is-expanded" : ""} />
                     </button>
                 </div>
@@ -68,7 +69,7 @@ export default function NewsletterSignup() {
                     id="newsletter-signup-panel"
                     className={`home-newsletter-reveal${expanded ? " is-open" : ""}`}
                     role="region"
-                    aria-label="Newsletter signup form"
+                    aria-label={content.formLabel}
                     aria-hidden={!expanded}
                     inert={!expanded}
                 >
@@ -76,8 +77,8 @@ export default function NewsletterSignup() {
                         {hasOpened && (
                             <div className="home-newsletter-form">
                                 <WildApricotEmbed
-                                    src={newsletter.widgetSignup}
-                                    title="Email newsletter signup"
+                                    src={content.embedUrl}
+                                    title={content.formTitle}
                                     iframeClassName="h-[650px] w-full border-0"
                                 />
                             </div>

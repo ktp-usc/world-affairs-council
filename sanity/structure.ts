@@ -1,11 +1,13 @@
 import type {StructureResolver} from 'sanity/structure'
 import {getInvolvedFolder, getInvolvedTypeNames} from './getInvolvedStructure'
+import {landingPageFolder, landingPageTypeNames} from './landingPageStructure'
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
     .items([
+      landingPageFolder(S),
       // the header menu is a single document, so it opens straight into the editor
       S.listItem()
         .title('Header Menu')
@@ -15,5 +17,5 @@ export const structure: StructureResolver = (S) =>
         .child(S.document().schemaType('aboutPage').documentId('aboutPage').title('About Us')),
       getInvolvedFolder(S),
       S.divider(),
-      ...S.documentTypeListItems().filter((listItem) => !['headerNavigation', 'aboutPage', ...getInvolvedTypeNames].includes(listItem.getId() ?? '')),
+      ...S.documentTypeListItems().filter((listItem) => !['headerNavigation', 'aboutPage', ...getInvolvedTypeNames, ...landingPageTypeNames].includes(listItem.getId() ?? '')),
     ])

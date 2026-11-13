@@ -1,4 +1,5 @@
 import { aboutPage } from './aboutPage'
+import { landingPageTypes } from './landingPage'
 import { getInvolvedPageTypes } from './getInvolvedPages'
 import { speakerRegistration } from "./speakerRegistration";
 import { type SchemaTypeDefinition } from 'sanity'
@@ -10,5 +11,5 @@ import { program } from './program'
 import { headerNavigation } from './headerNavigation'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [aboutPage, eventType, teamMember, bookClubMeeting, program, headerNavigation, speakerRegistration, ...getInvolvedPageTypes],
+  types: [aboutPage, eventType, teamMember, bookClubMeeting, program, headerNavigation, speakerRegistration, ...getInvolvedPageTypes, ...landingPageTypes],
 }
