@@ -94,7 +94,12 @@ export default async function BookClubMeetingPage({ params }: PageProps) {
                             </nav>
                             <h1 className="font-[family-name:var(--serif)] text-[44px] leading-[1.05] font-normal text-balance text-white md:text-[62px]">{mainTitle}</h1>
                             {subtitle && <p className="mt-4 max-w-[620px] text-[19px] leading-[1.45] text-balance text-slate-200 md:text-[21px]">{subtitle}</p>}
-                            {meeting.author && <p className="mt-5 font-bold text-[var(--header-gold)]">by {meeting.author}</p>}
+                            {(meeting.author || registrationWidget) && (
+                                <div className="mt-5 flex flex-wrap items-center gap-4">
+                                    {meeting.author && <p className="font-bold text-[var(--header-gold)]">by {meeting.author}</p>}
+                                    {registrationWidget && <RegisterButton meeting={{ ...meeting, registerUrl: "#register" }} />}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </section>
