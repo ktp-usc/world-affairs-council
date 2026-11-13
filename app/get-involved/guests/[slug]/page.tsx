@@ -52,7 +52,8 @@ export default async function GuestEventPage({ params }: Props) {
                         <Button asChild size="lg"><Link href="#register">Register</Link></Button>
                         <div className="border-t pt-6">
                             <h2 className="mb-3 font-serif text-2xl font-semibold text-primary">{event.bio ? "Biography" : "About the program"}</h2>
-                            <p className="text-lg leading-relaxed">{ event.bio ?? event.blurb }</p>
+                            {/* biographies are copied from wachh.org with a blank line between paragraphs */}
+                            <div className="space-y-4 text-lg leading-relaxed">{ (event.bio ?? event.blurb).split(/\n\s*\n/).map((paragraph) => <p key={ paragraph }>{ paragraph }</p>) }</div>
                         </div>
                     </div>
                 </div>

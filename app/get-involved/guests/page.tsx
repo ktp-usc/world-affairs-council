@@ -1,11 +1,9 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { fetchUpcomingEvents } from "@/sanity/lib/events";
-import EventsView from "@/components/events-view";
 import PageHero, { Section } from "@/components/page-hero";
-import SpeakerEvent from "@/components/speaker-event";
-import WildApricotEmbed from "@/components/wild-apricot-embed";
-import { guestPolicy, isSpeakerSeries, wildApricotBaseUrl } from "@/lib/site";
+import UpcomingPrograms from "@/components/speaker-events/upcoming-programs";
+import { guestPolicy, isSpeakerSeries } from "@/lib/site";
 import { fetchGuestPage } from "@/sanity/lib/get-involved";
 
 export const revalidate = 60;
@@ -52,13 +50,7 @@ export default async function GuestsPage() {
                 </div>
             </Section>
 
-            <Section id="events" title="Upcoming Distinguished Speaker Series programs" muted>
-                <p className="mb-8 max-w-2xl text-[#555]">
-                    Select an event for program details and guest registration.
-                </p>
-                <a href={wildApricotBaseUrl + "/guest-policy"} target="_blank" rel="noopener noreferrer" className="mb-6 inline-flex min-h-11 items-center font-semibold text-primary underline">Open current events and guest registration in a new tab</a>
-                <WildApricotEmbed src={wildApricotBaseUrl + "/widget/guest-policy#FunctionalBlock1"} title="WACHH upcoming speaker events and guest registration" iframeClassName="h-[1100px] w-full border-0" />
-            </Section>
+            <UpcomingPrograms events={events} />
         </>
     );
 }

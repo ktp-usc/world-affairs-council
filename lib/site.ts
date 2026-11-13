@@ -42,7 +42,6 @@ export const nav: NavItem[] = [
             { label: "Model UN", href: "/programs/model-un" },
         ],
     },
-    { label: "Events", href: "/get-involved/guests#events" },
     {
         label: "Get Involved",
         href: "/get-involved",
