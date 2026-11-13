@@ -11,10 +11,18 @@ export const SPEAKER_SPONSORSHIP_SCHEDULE_QUERY = defineQuery(`
   }
 `);
 
+// Reads both event shapes in Sanity: the original fields (kind, start, end, bio) and the
+// speaker-series fields (series, startTime, endTime, biography). The registration link falls back
+// to the matching date in the speaker sponsorship schedule.
 export const EVENTS_QUERY = defineQuery(`
-  *[_type == "event" && defined(slug.current) && defined(date) && defined(start) && defined(end) && defined(kind)] | order(date asc, start asc) {
-    "slug": slug.current, title, speaker, kind, date, start, end, venue, address,
-    "blurb": description, bio, "photo": coalesce(photo.asset->url, photoPath), registerUrl
+  *[_type == "event" && defined(slug.current) && defined(date) && coalesce(published, true)
+    && defined(coalesce(start, startTime)) && defined(coalesce(end, endTime)) && defined(coalesce(kind, series))]
+  | order(date asc, coalesce(start, startTime) asc) {
+    "slug": slug.current, title, speaker,
+    "kind": coalesce(kind, select(series == "distinguished" => "Speaker Series", series == "global" => "Global Speaker")),
+    date, "start": coalesce(start, startTime), "end": coalesce(end, endTime), venue, address,
+    "blurb": description, "bio": coalesce(bio, biography), "photo": coalesce(photo.asset->url, photoPath),
+    "registerUrl": coalesce(registerUrl, *[_id == "speaker-sponsorship-schedule"][0].presentations[date == ^.date][0].eventUrl)
   }
 `);
 
