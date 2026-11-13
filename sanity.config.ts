@@ -12,6 +12,7 @@ import {structureTool} from 'sanity/structure'
 import {apiVersion, dataset, projectId} from './sanity/env'
 import {schema} from './sanity/schemaTypes'
 import {structure} from './sanity/structure'
+import {landingPageTypeNames} from './sanity/landingPageStructure'
 
 export default defineConfig({
   basePath: '/studio',
@@ -19,6 +20,12 @@ export default defineConfig({
   dataset,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
+  document: {
+    newDocumentOptions: (options) => options.filter(option => !landingPageTypeNames.includes(option.templateId)),
+    actions: (actions, context) => landingPageTypeNames.includes(context.schemaType)
+      ? actions.filter(action => action.action !== 'duplicate' && action.action !== 'delete')
+      : actions,
+  },
   plugins: [
     structureTool({structure}),
     // Vision is for querying with GROQ from inside the Studio
